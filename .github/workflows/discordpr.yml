@@ -1,0 +1,35 @@
+name: Notify Discord on PR Activity
+on:
+  pull_request:
+    types: [opened, synchronize]
+  pull_request_review:
+    types: [submitted]
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post to Discord
+        if: >-
+          github.event_name == 'pull_request' ||
+          (github.event_name == 'pull_request_review' && github.event.review.state == 'approved')
+        env:
+          TITLE: ${{ github.event.pull_request.title }}
+          AUTHOR: ${{ github.event.pull_request.user.login }}
+          URL: ${{ github.event.pull_request.html_url }}
+          EVENT: ${{ github.event_name }}
+          ACTION: ${{ github.event.action }}
+          REVIEWER: ${{ github.event.review.user.login }}
+          PUSHER: ${{ github.event.sender.login }}
+          WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        run: |
+          if [ "$EVENT" = "pull_request" ] && [ "$ACTION" = "opened" ]; then
+            PREFIX="New PR"
+            MSG=$(jq -n --arg c "$PREFIX, $AUTHOR: $TITLE"$'\n'"$URL" '{content: $c}')
+          elif [ "$EVENT" = "pull_request" ] && [ "$ACTION" = "synchronize" ]; then
+            PREFIX="New push to PR"
+            MSG=$(jq -n --arg c "$PREFIX by $PUSHER: $TITLE"$'\n'"$URL" '{content: $c}')
+          else
+            PREFIX="PR Approved"
+            MSG=$(jq -n --arg c "$PREFIX by $REVIEWER: $TITLE"$'\n'"$URL" '{content: $c}')
+          fi
+          curl -fsS -H "Content-Type: application/json" -d "$MSG" "$WEBHOOK"

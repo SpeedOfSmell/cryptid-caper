@@ -1,0 +1,63 @@
+name: Deploy to itch.io
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - 'feature/dy/**'
+      - 'feature/vm/**'
+
+jobs:
+  export-and-upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Determine deploy target
+        id: target
+        run: |
+          BRANCH="${GITHUB_REF#refs/heads/}"
+          echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
+
+          if [[ "$BRANCH" == "main" ]]; then
+            echo "channel=web" >> "$GITHUB_OUTPUT"
+            echo "itch_username=${{ secrets.ITCH_USERNAME_PROD }}" >> "$GITHUB_OUTPUT"
+            echo "game_id=${{ secrets.ITCH_GAME_ID_PROD }}" >> "$GITHUB_OUTPUT"
+            echo "butler_secret=BUTLER_PROD_KEY" >> "$GITHUB_OUTPUT"
+          elif [[ "$BRANCH" == "develop" ]]; then
+            echo "channel=web" >> "$GITHUB_OUTPUT"
+            echo "itch_username=${{ secrets.ITCH_USERNAME_DY }}" >> "$GITHUB_OUTPUT"
+            echo "game_id=${{ secrets.ITCH_GAME_ID_DEV }}" >> "$GITHUB_OUTPUT"
+            echo "butler_secret=BUTLER_KEY_DY" >> "$GITHUB_OUTPUT"
+          elif [[ "$BRANCH" == feature/dy/* ]]; then
+            echo "channel=web" >> "$GITHUB_OUTPUT"
+            echo "itch_username=${{ secrets.ITCH_USERNAME_DY }}" >> "$GITHUB_OUTPUT"
+            echo "game_id=${{ secrets.ITCH_GAME_ID_DY }}" >> "$GITHUB_OUTPUT"
+            echo "butler_secret=BUTLER_KEY_DY" >> "$GITHUB_OUTPUT"
+          elif [[ "$BRANCH" == feature/vm/* ]]; then
+            echo "channel=web" >> "$GITHUB_OUTPUT"
+            echo "itch_username=${{ secrets.ITCH_USERNAME_PROD }}" >> "$GITHUB_OUTPUT"
+            echo "game_id=${{ secrets.ITCH_GAME_ID_VM }}" >> "$GITHUB_OUTPUT"
+            echo "butler_secret=BUTLER_PROD_KEY" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Export game
+        id: export
+        uses: firebelley/godot-export@v8.0.0
+        with:
+          godot_executable_download_url: https://github.com/godotengine/godot-builds/releases/download/4.7-stable/Godot_v4.7-stable_linux.x86_64.zip
+          godot_export_templates_download_url: https://github.com/godotengine/godot-builds/releases/download/4.7-stable/Godot_v4.7-stable_export_templates.tpz
+          relative_project_path: ./
+          relative_export_path: ./build
+          archive_output: false
+
+      - name: Upload to itch.io
+        uses: KikimoraGames/itch-publish@v0.0.3
+        with:
+          butlerApiKey: ${{ secrets[steps.target.outputs.butler_secret] }}
+          gameData: ./build/Web
+          itchUsername: ${{ steps.target.outputs.itch_username }}
+          itchGameId: ${{ steps.target.outputs.game_id }}
+          buildChannel: ${{ steps.target.outputs.channel }}
