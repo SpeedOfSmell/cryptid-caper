@@ -19,9 +19,5 @@ func _process(delta):
 
 func generate_first_room() -> Room:
 	var first_room = ROOM_SCENE.instantiate()
-	first_room.setup(64, 32)
-	
-	first_room.previous_room = null
-	first_room.generate_walls()
-	
+	first_room.generate(null)
 	return first_room
