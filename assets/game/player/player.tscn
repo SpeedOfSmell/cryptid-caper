@@ -1,0 +1,75 @@
+[gd_scene format=3 uid="uid://b1jbsp8xj45we"]
+
+[ext_resource type="Texture2D" uid="uid://bindynisp4dpp" path="res://assets/game/player/Ch_idle_48x96.png" id="1_buion"]
+[ext_resource type="Script" uid="uid://d3xulsxarhdp8" path="res://assets/game/player/player_controller.gd" id="2_43lnt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_buion"]
+size = Vector2(15, 23)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_43lnt"]
+atlas = ExtResource("1_buion")
+region = Rect2(0, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2u2wg"]
+atlas = ExtResource("1_buion")
+region = Rect2(16, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e1gxu"]
+atlas = ExtResource("1_buion")
+region = Rect2(32, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rc4mk"]
+atlas = ExtResource("1_buion")
+region = Rect2(0, 32, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4cae2"]
+atlas = ExtResource("1_buion")
+region = Rect2(16, 32, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mdg0c"]
+atlas = ExtResource("1_buion")
+region = Rect2(32, 32, 16, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qe432"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_43lnt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2u2wg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e1gxu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rc4mk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4cae2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mdg0c")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 8.0
+}]
+
+[node name="Player" type="Node2D" unique_id=2137851023]
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=182611236]
+position = Vector2(0, -16)
+script = ExtResource("2_43lnt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1864006372]
+position = Vector2(-0.5, 4.5)
+shape = SubResource("RectangleShape2D_buion")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D" unique_id=232347387]
+sprite_frames = SubResource("SpriteFrames_qe432")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.95405537
+
+[node name="Camera2D" type="Camera2D" parent="CharacterBody2D" unique_id=1086983367]
