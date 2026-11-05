@@ -26,7 +26,7 @@ var room_height: int
 var tile_size: Vector2i
 
 var previous_room: Room
-var next_room: Array[Room]
+var next_rooms: Array[Room]
 
 func generate(prev_room: Room):
 	room_width = 64
@@ -88,9 +88,23 @@ func generate_doors() -> Vector2i:
 		tilemap.set_cell(Vector2i(room_width - 1, exit_door_y), TILEMAP_SOURCE_ID, DOOR_TILE)
 		tilemap.set_cell(Vector2i(room_width - 1, exit_door_y - 1), TILEMAP_SOURCE_ID, DOOR_TILE)
 		
+		# Create collision area exact shape and position of the door
+		var door_area: Area2D = Area2D.new()
+		var door_col_shape: CollisionShape2D = CollisionShape2D.new()
+		var rect_shape: RectangleShape2D = RectangleShape2D.new()
+		rect_shape.size = Vector2i(tile_size.x, tile_size.y * 2)
+		door_col_shape.shape = rect_shape
+		door_area.add_child(door_col_shape)
+		door_area.position = Vector2i((room_width - 1) * tile_size.x + (tile_size.x / 2), exit_door_y * tile_size.y)
+		door_area.body_entered.connect(door_entered.bind(i))
+		add_child(door_area)
+		
 		# Exit platform
 		tilemap.set_cell(Vector2i(room_width - 2, exit_door_y + 1), TILEMAP_SOURCE_ID, FLOOR_TILES.pick_random())
 		tilemap.set_cell(Vector2i(room_width - 3, exit_door_y + 1), TILEMAP_SOURCE_ID, FLOOR_TILES.pick_random())
+		
+		# Add placeholder for a room cooresponding to each door but don't generate it yet
+		next_rooms.append(null)
 		
 	return Vector2i(0, entry_door_y)
 	
@@ -98,3 +112,9 @@ func spawn_player(entry_door_pos: Vector2i):
 	var player: Node2D = player_scene.instantiate()
 	player.position = Vector2i((entry_door_pos.x + 1) * tile_size.x, entry_door_pos.y * tile_size.y)
 	add_child(player)
+	
+func door_entered(body: Node2D, door: int):
+	if body is not CharacterBody2D:
+		return
+		
+	print("door %s was entered" % door)
