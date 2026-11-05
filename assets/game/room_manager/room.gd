@@ -1,6 +1,9 @@
 class_name Room
 extends Node2D
 
+signal request_room_change(room: Room)
+
+const room_scene = preload("res://assets/game/room_manager/room.tscn")
 const player_scene = preload("res://assets/game/player/player.tscn")
 
 const CEILING_TILES: Array[Vector2i] = [Vector2i(1,0), Vector2i(2,0), Vector2i(3,0), Vector2i(4,0)]
@@ -15,7 +18,6 @@ const DOOR_TILE: Vector2i = Vector2i(4, 1)
 
 const TILEMAP_SOURCE_ID = 0
 
-
 var tilemap: TileMapLayer 
 
 # Width of the room in tiles
@@ -25,12 +27,15 @@ var room_height: int
 # Size of tiles in pixels
 var tile_size: Vector2i
 
+var player: Node2D
 var previous_room: Room
 var next_rooms: Array[Room]
 
 func generate(prev_room: Room):
 	room_width = 64
 	room_height = 32
+	
+	previous_room = prev_room
 	
 	tilemap = $TileMapLayer
 	tile_size = tilemap.tile_set.tile_size
@@ -72,6 +77,10 @@ func generate_doors() -> Vector2i:
 	tilemap.set_cell(Vector2i(0, entry_door_y), TILEMAP_SOURCE_ID, DOOR_TILE)
 	tilemap.set_cell(Vector2i(0, entry_door_y - 1), TILEMAP_SOURCE_ID, DOOR_TILE)
 	
+	var entry_door_area: Area2D = generate_door_collisionbox(Vector2i(0, entry_door_y))
+	entry_door_area.body_entered.connect(door_entered.bind(-1))
+	add_child(entry_door_area)
+	
 	# Entry platform
 	tilemap.set_cell(Vector2i(1, entry_door_y + 1), TILEMAP_SOURCE_ID, FLOOR_TILES.pick_random())
 	tilemap.set_cell(Vector2i(2, entry_door_y + 1), TILEMAP_SOURCE_ID, FLOOR_TILES.pick_random())
@@ -88,16 +97,9 @@ func generate_doors() -> Vector2i:
 		tilemap.set_cell(Vector2i(room_width - 1, exit_door_y), TILEMAP_SOURCE_ID, DOOR_TILE)
 		tilemap.set_cell(Vector2i(room_width - 1, exit_door_y - 1), TILEMAP_SOURCE_ID, DOOR_TILE)
 		
-		# Create collision area exact shape and position of the door
-		var door_area: Area2D = Area2D.new()
-		var door_col_shape: CollisionShape2D = CollisionShape2D.new()
-		var rect_shape: RectangleShape2D = RectangleShape2D.new()
-		rect_shape.size = Vector2i(tile_size.x, tile_size.y * 2)
-		door_col_shape.shape = rect_shape
-		door_area.add_child(door_col_shape)
-		door_area.position = Vector2i((room_width - 1) * tile_size.x + (tile_size.x / 2), exit_door_y * tile_size.y)
-		door_area.body_entered.connect(door_entered.bind(i))
-		add_child(door_area)
+		var exit_door_area: Area2D = generate_door_collisionbox(Vector2i(room_width - 1, exit_door_y))
+		exit_door_area.body_entered.connect(door_entered.bind(i))
+		add_child(exit_door_area)
 		
 		# Exit platform
 		tilemap.set_cell(Vector2i(room_width - 2, exit_door_y + 1), TILEMAP_SOURCE_ID, FLOOR_TILES.pick_random())
@@ -107,10 +109,22 @@ func generate_doors() -> Vector2i:
 		next_rooms.append(null)
 		
 	return Vector2i(0, entry_door_y)
-	
+
+# door_pos is tile coordinates of bottom door tile
+func generate_door_collisionbox(door_pos: Vector2i) -> Area2D:
+	# Create collision area exact shape and position of the door
+	var door_area: Area2D = Area2D.new()
+	var door_col_shape: CollisionShape2D = CollisionShape2D.new()
+	var rect_shape: RectangleShape2D = RectangleShape2D.new()
+	rect_shape.size = Vector2i(tile_size.x, tile_size.y * 2)
+	door_col_shape.shape = rect_shape
+	door_area.add_child(door_col_shape)
+	door_area.position = Vector2i(door_pos.x * tile_size.x + (tile_size.x / 2), door_pos.y * tile_size.y)
+	return door_area
+
 func spawn_player(entry_door_pos: Vector2i):
-	var player: Node2D = player_scene.instantiate()
-	player.position = Vector2i((entry_door_pos.x + 1) * tile_size.x, entry_door_pos.y * tile_size.y)
+	player = player_scene.instantiate()
+	player.position = Vector2i((entry_door_pos.x + 2) * tile_size.x, entry_door_pos.y * tile_size.y)
 	add_child(player)
 	
 func door_entered(body: Node2D, door: int):
@@ -118,3 +132,18 @@ func door_entered(body: Node2D, door: int):
 		return
 		
 	print("door %s was entered" % door)
+	
+	if door == -1:
+		if previous_room != null:
+			request_room_change.emit(previous_room)
+			return
+		else:
+			return
+	
+	if next_rooms[door] == null:
+		var new_room: Room = room_scene.instantiate()
+		new_room.generate(self)
+		next_rooms[door] = new_room
+	
+	player.position.x -= tile_size.x
+	request_room_change.emit(next_rooms[door])
