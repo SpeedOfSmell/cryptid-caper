@@ -1,20 +1,8 @@
 [gd_scene format=3 uid="uid://cxwdpb4m6ahak"]
 
 [ext_resource type="Script" uid="uid://dnkdnq7pum2mv" path="res://assets/game/room_manager/room_manager.gd" id="1_66d57"]
-[ext_resource type="PackedScene" uid="uid://dr2pihnrs5v5v" path="res://assets/game/character/character.tscn" id="2_chr01"]
-
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_floor"]
 
 [node name="Game Manager" type="Node" unique_id=175650822]
 
 [node name="Room Manager" type="Node" parent="." unique_id=2010213947]
 script = ExtResource("1_66d57")
-
-[node name="Character" parent="." unique_id=913466207 instance=ExtResource("2_chr01")]
-position = Vector2(512, 400)
-
-[node name="Temp Floor" type="StaticBody2D" parent="." unique_id=1427095386]
-position = Vector2(0, 496)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Temp Floor" unique_id=650318742]
-shape = SubResource("WorldBoundaryShape2D_floor")

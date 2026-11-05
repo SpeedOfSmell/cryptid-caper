@@ -1,4 +1,4 @@
-class_name CharacterState
+class_name PlayerState
 extends Node
 
 # Returned from next_state() to pick a state. Each value is a node name under State Machine.
@@ -10,12 +10,13 @@ const JUMP := &"Jump"
 const FALL := &"Fall"
 
 #ADDING NEW STATE:
-# 1) Add new state extending grounded, air or character state
+# 1) Add new state extending grounded, air or player state
 # 2) ADd a node under the state machine, matching constant
 # 3) Add constant to this script
 # 4) Add rule that triggers it
 
-@onready var character: Character = owner
+# Set by the state machine.
+var player: PlayerController
 
 # Called once when this state becomes the current state.
 func enter():
