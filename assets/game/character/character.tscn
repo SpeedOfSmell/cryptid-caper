@@ -1,0 +1,136 @@
+[gd_scene format=3 uid="uid://dr2pihnrs5v5v"]
+
+[ext_resource type="Script" uid="uid://co7g3oq4f8ntu" path="res://assets/game/character/character.gd" id="1_chr01"]
+[ext_resource type="Script" uid="uid://bsmkr2hwyde1n" path="res://assets/game/character/animated_sprite_2d.gd" id="2_spr01"]
+[ext_resource type="Texture2D" uid="uid://dpu2qyv4wmvd7" path="res://assets/game/character/Ch1 left idle.png" id="3_idl01"]
+[ext_resource type="Texture2D" uid="uid://kwog3ls8am3t" path="res://assets/game/character/Ch1 right idle.png" id="4_idr01"]
+[ext_resource type="Script" path="res://assets/game/character/states/character_state_machine.gd" id="5_stm01"]
+[ext_resource type="Script" path="res://assets/game/character/states/idle_state.gd" id="6_idl01"]
+[ext_resource type="Script" path="res://assets/game/character/states/walk_state.gd" id="7_wlk01"]
+[ext_resource type="Script" path="res://assets/game/character/states/duck_state.gd" id="8_dck01"]
+[ext_resource type="Script" path="res://assets/game/character/states/jump_state.gd" id="9_jmp01"]
+[ext_resource type="Script" path="res://assets/game/character/states/fall_state.gd" id="10_fal01"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_left0"]
+atlas = ExtResource("3_idl01")
+region = Rect2(0, 0, 62, 73)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_left1"]
+atlas = ExtResource("3_idl01")
+region = Rect2(62, 0, 62, 73)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_left2"]
+atlas = ExtResource("3_idl01")
+region = Rect2(0, 73, 62, 73)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_left3"]
+atlas = ExtResource("3_idl01")
+region = Rect2(62, 73, 62, 73)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_right0"]
+atlas = ExtResource("4_idr01")
+region = Rect2(0, 0, 62, 73)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_right1"]
+atlas = ExtResource("4_idr01")
+region = Rect2(62, 0, 62, 73)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_right2"]
+atlas = ExtResource("4_idr01")
+region = Rect2(0, 73, 62, 73)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_right3"]
+atlas = ExtResource("4_idr01")
+region = Rect2(62, 73, 62, 73)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_chr01"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_left0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_left1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_left2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_left3")
+}],
+"loop": true,
+"name": &"idle_left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_right0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_right1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_right2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_right3")
+}],
+"loop": true,
+"name": &"idle_right",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_stand"]
+size = Vector2(24, 56)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_duck"]
+size = Vector2(24, 28)
+
+[node name="Character" type="CharacterBody2D" unique_id=1604827351 node_paths=PackedStringArray("sprite_node", "standing_shape", "ducking_shape")]
+script = ExtResource("1_chr01")
+sprite_node = NodePath("AnimatedSprite2D")
+standing_shape = NodePath("Standing Shape")
+ducking_shape = NodePath("Ducking Shape")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=738215904]
+process_mode = 3
+sprite_frames = SubResource("SpriteFrames_chr01")
+animation = &"idle_right"
+autoplay = "idle_right"
+centered = false
+offset = Vector2(-31, -69)
+script = ExtResource("2_spr01")
+
+[node name="Standing Shape" type="CollisionShape2D" parent="." unique_id=1182640573]
+position = Vector2(0, -28)
+shape = SubResource("RectangleShape2D_stand")
+
+[node name="Ducking Shape" type="CollisionShape2D" parent="." unique_id=296471038]
+position = Vector2(0, -14)
+shape = SubResource("RectangleShape2D_duck")
+disabled = true
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1875302946]
+limit_left = 0
+limit_top = 0
+limit_right = 1024
+limit_bottom = 512
+
+[node name="State Machine" type="Node" parent="." unique_id=1349072658 node_paths=PackedStringArray("initial_state")]
+script = ExtResource("5_stm01")
+initial_state = NodePath("Fall")
+
+[node name="Idle" type="Node" parent="State Machine" unique_id=524180397]
+script = ExtResource("6_idl01")
+
+[node name="Walk" type="Node" parent="State Machine" unique_id=1720946315]
+script = ExtResource("7_wlk01")
+
+[node name="Duck" type="Node" parent="State Machine" unique_id=861357204]
+script = ExtResource("8_dck01")
+
+[node name="Jump" type="Node" parent="State Machine" unique_id=2038461957]
+script = ExtResource("9_jmp01")
+
+[node name="Fall" type="Node" parent="State Machine" unique_id=417693820]
+script = ExtResource("10_fal01")
