@@ -1,6 +1,8 @@
 class_name Room
 extends Node2D
 
+const player_scene = preload("res://assets/game/player/player.tscn")
+
 const CEILING_TILES: Array[Vector2i] = [Vector2i(1,0), Vector2i(2,0), Vector2i(3,0), Vector2i(4,0)]
 const FLOOR_TILES: Array[Vector2i] = [Vector2i(1,2), Vector2i(2,2), Vector2i(3,2), Vector2i(4,2)]
 const LEFTWALL_TILES: Array[Vector2i] = [Vector2i(0,1)]
@@ -13,12 +15,15 @@ const DOOR_TILE: Vector2i = Vector2i(4, 1)
 
 const TILEMAP_SOURCE_ID = 0
 
+
 var tilemap: TileMapLayer 
 
 # Width of the room in tiles
-var room_width
+var room_width: int
 # Height of the room in tiles
-var room_height
+var room_height: int
+# Size of tiles in pixels
+var tile_size: Vector2i
 
 var previous_room: Room
 var next_room: Array[Room]
@@ -28,9 +33,11 @@ func generate(prev_room: Room):
 	room_height = 32
 	
 	tilemap = $TileMapLayer
+	tile_size = tilemap.tile_set.tile_size
 	
 	generate_walls()
-	generate_doors()
+	var entry_door_pos:Vector2i = generate_doors()
+	spawn_player(entry_door_pos)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -57,8 +64,9 @@ func generate_walls():
 	tilemap.set_cell(Vector2i(room_width - 1, 0), TILEMAP_SOURCE_ID, RIGHTCEILING_TILE)
 	tilemap.set_cell(Vector2i(0, room_height - 1), TILEMAP_SOURCE_ID, LEFTFLOOR_TILE)
 	tilemap.set_cell(Vector2i(room_width - 1, room_height - 1), TILEMAP_SOURCE_ID, RIGHTFLOOR_TILE)
-	
-func generate_doors():
+
+# Returns bottom of entry door in tile coordinates
+func generate_doors() -> Vector2i:
 	# Bottom tile of the entry door will be in the center of the height of the room +/- 10% of the total room height
 	var entry_door_y = room_height / 2 + randi_range(-int(room_height * .10), int(room_height * .10))
 	tilemap.set_cell(Vector2i(0, entry_door_y), TILEMAP_SOURCE_ID, DOOR_TILE)
@@ -83,4 +91,10 @@ func generate_doors():
 		# Exit platform
 		tilemap.set_cell(Vector2i(room_width - 2, exit_door_y + 1), TILEMAP_SOURCE_ID, FLOOR_TILES.pick_random())
 		tilemap.set_cell(Vector2i(room_width - 3, exit_door_y + 1), TILEMAP_SOURCE_ID, FLOOR_TILES.pick_random())
+		
+	return Vector2i(0, entry_door_y)
 	
+func spawn_player(entry_door_pos: Vector2i):
+	var player: Node2D = player_scene.instantiate()
+	player.position = Vector2i((entry_door_pos.x + 1) * tile_size.x, entry_door_pos.y * tile_size.y)
+	add_child(player)
