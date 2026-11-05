@@ -2,9 +2,18 @@
 
 [ext_resource type="Texture2D" uid="uid://bindynisp4dpp" path="res://assets/game/player/Ch_idle_48x96.png" id="1_buion"]
 [ext_resource type="Script" uid="uid://d3xulsxarhdp8" path="res://assets/game/player/player_controller.gd" id="2_43lnt"]
+[ext_resource type="Script" uid="uid://5y18mcpwtirr" path="res://assets/game/player/states/player_state_machine.gd" id="3_stm01"]
+[ext_resource type="Script" uid="uid://b3pstievwfyw2" path="res://assets/game/player/states/idle_state.gd" id="4_idl01"]
+[ext_resource type="Script" uid="uid://d2u24chmvgtcb" path="res://assets/game/player/states/walk_state.gd" id="5_wlk01"]
+[ext_resource type="Script" uid="uid://d3d6uhgu1c4wj" path="res://assets/game/player/states/duck_state.gd" id="6_dck01"]
+[ext_resource type="Script" uid="uid://iju4o5bqabn3" path="res://assets/game/player/states/jump_state.gd" id="7_jmp01"]
+[ext_resource type="Script" uid="uid://b40cqiifg6b6b" path="res://assets/game/player/states/fall_state.gd" id="8_fal01"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_buion"]
 size = Vector2(15, 23)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_duck"]
+size = Vector2(15, 12)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_43lnt"]
 atlas = ExtResource("1_buion")
@@ -58,18 +67,47 @@ animations = [{
 
 [node name="Player" type="Node2D" unique_id=2137851023]
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=182611236]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=182611236 node_paths=PackedStringArray("sprite_node", "standing_shape", "ducking_shape")]
 position = Vector2(0, -16)
 script = ExtResource("2_43lnt")
+sprite_node = NodePath("AnimatedSprite2D")
+standing_shape = NodePath("Standing Shape")
+ducking_shape = NodePath("Ducking Shape")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1864006372]
+[node name="Standing Shape" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1864006372]
 position = Vector2(-0.5, 4.5)
 shape = SubResource("RectangleShape2D_buion")
 
+[node name="Ducking Shape" type="CollisionShape2D" parent="CharacterBody2D" unique_id=1537204896]
+position = Vector2(-0.5, 10)
+shape = SubResource("RectangleShape2D_duck")
+disabled = true
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterBody2D" unique_id=232347387]
+position = Vector2(0, 16)
 sprite_frames = SubResource("SpriteFrames_qe432")
 animation = &"idle"
 autoplay = "idle"
 frame_progress = 0.95405537
+offset = Vector2(0, -16)
 
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D" unique_id=1086983367]
+
+[node name="State Machine" type="Node" parent="CharacterBody2D" unique_id=668210453 node_paths=PackedStringArray("initial_state")]
+script = ExtResource("3_stm01")
+initial_state = NodePath("Fall")
+
+[node name="Idle" type="Node" parent="CharacterBody2D/State Machine" unique_id=1093857216]
+script = ExtResource("4_idl01")
+
+[node name="Walk" type="Node" parent="CharacterBody2D/State Machine" unique_id=1778340265]
+script = ExtResource("5_wlk01")
+
+[node name="Duck" type="Node" parent="CharacterBody2D/State Machine" unique_id=304916782]
+script = ExtResource("6_dck01")
+
+[node name="Jump" type="Node" parent="CharacterBody2D/State Machine" unique_id=1456028193]
+script = ExtResource("7_jmp01")
+
+[node name="Fall" type="Node" parent="CharacterBody2D/State Machine" unique_id=935172648]
+script = ExtResource("8_fal01")
