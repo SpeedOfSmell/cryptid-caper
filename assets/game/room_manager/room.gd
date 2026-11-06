@@ -1,7 +1,7 @@
 class_name Room
 extends Node2D
 
-signal request_room_change(room: Room, spawn_position: Vector2, source_room: Room)
+signal request_room_change(source_room: Room, destination_room: Room, spawn_position: Vector2)
 
 const ROOM_SCENE = preload("res://assets/game/room_manager/room.tscn")
 
@@ -150,7 +150,7 @@ func door_entered(body: Node2D, door: int) -> void:
 		if previous_room == null:
 			return
 		transition_requested = true
-		request_room_change.emit(previous_room, previous_room.get_exit_spawn_position(previous_exit_door_index), self)
+		request_room_change.emit(self, previous_room, previous_room.get_exit_spawn_position(previous_exit_door_index))
 		return
 
 	if door < 0 or door >= next_rooms.size():
@@ -163,4 +163,4 @@ func door_entered(body: Node2D, door: int) -> void:
 		next_rooms[door] = destination_room
 
 	transition_requested = true
-	request_room_change.emit(destination_room, destination_room.get_entry_spawn_position(), self)
+	request_room_change.emit(self, destination_room, destination_room.get_entry_spawn_position())
