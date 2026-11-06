@@ -25,7 +25,7 @@ func _ready() -> void:
 # source_room: previous room that leads to this new room
 # door index: index of door in previous room that connects the rooms
 func _generate_new_room(source_room: Room, door_index: int) -> Room:
-	var room = _room_generator.generate_room()
+	var room = _room_generator.generate_room(2, 3, 1)
 	room.previous_room = source_room
 	room.previous_exit_door_index = door_index
 	
