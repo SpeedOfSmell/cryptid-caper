@@ -1,0 +1,110 @@
+[gd_scene format=3 uid="uid://b1jbsp8xj45we"]
+
+[ext_resource type="Script" uid="uid://d3xulsxarhdp8" path="res://assets/game/room_manager/player/player_controller.gd" id="1_6efgi"]
+[ext_resource type="Texture2D" uid="uid://bindynisp4dpp" path="res://assets/game/room_manager/player/Ch_idle_48x96.png" id="2_u3l8h"]
+[ext_resource type="Script" uid="uid://5y18mcpwtirr" path="res://assets/game/room_manager/player/states/player_state_machine.gd" id="3_vusm5"]
+[ext_resource type="Script" uid="uid://b3pstievwfyw2" path="res://assets/game/room_manager/player/states/idle_state.gd" id="4_o0waw"]
+[ext_resource type="Script" uid="uid://d2u24chmvgtcb" path="res://assets/game/room_manager/player/states/walk_state.gd" id="5_m3wu7"]
+[ext_resource type="Script" uid="uid://d3d6uhgu1c4wj" path="res://assets/game/room_manager/player/states/duck_state.gd" id="6_l7p8j"]
+[ext_resource type="Script" uid="uid://iju4o5bqabn3" path="res://assets/game/room_manager/player/states/jump_state.gd" id="7_a0gya"]
+[ext_resource type="Script" uid="uid://b40cqiifg6b6b" path="res://assets/game/room_manager/player/states/fall_state.gd" id="8_y5rae"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_buion"]
+size = Vector2(15, 23)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_duck"]
+size = Vector2(15, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_43lnt"]
+atlas = ExtResource("2_u3l8h")
+region = Rect2(0, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2u2wg"]
+atlas = ExtResource("2_u3l8h")
+region = Rect2(16, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e1gxu"]
+atlas = ExtResource("2_u3l8h")
+region = Rect2(32, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rc4mk"]
+atlas = ExtResource("2_u3l8h")
+region = Rect2(0, 32, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4cae2"]
+atlas = ExtResource("2_u3l8h")
+region = Rect2(16, 32, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mdg0c"]
+atlas = ExtResource("2_u3l8h")
+region = Rect2(32, 32, 16, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qe432"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_43lnt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2u2wg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e1gxu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rc4mk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4cae2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mdg0c")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 8.0
+}]
+
+[node name="Player" type="CharacterBody2D" unique_id=182611236 node_paths=PackedStringArray("sprite_node", "standing_shape", "ducking_shape")]
+script = ExtResource("1_6efgi")
+sprite_node = NodePath("AnimatedSprite2D")
+standing_shape = NodePath("Standing Shape")
+ducking_shape = NodePath("Ducking Shape")
+
+[node name="Standing Shape" type="CollisionShape2D" parent="." unique_id=1864006372]
+position = Vector2(-0.5, -11.5)
+shape = SubResource("RectangleShape2D_buion")
+
+[node name="Ducking Shape" type="CollisionShape2D" parent="." unique_id=1537204896]
+position = Vector2(-0.5, -6)
+shape = SubResource("RectangleShape2D_duck")
+disabled = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=232347387]
+sprite_frames = SubResource("SpriteFrames_qe432")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.95405537
+offset = Vector2(0, -16)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1086983367]
+position = Vector2(0, -16)
+
+[node name="State Machine" type="Node" parent="." unique_id=668210453 node_paths=PackedStringArray("initial_state")]
+script = ExtResource("3_vusm5")
+initial_state = NodePath("Fall")
+
+[node name="Idle" type="Node" parent="State Machine" unique_id=1093857216]
+script = ExtResource("4_o0waw")
+
+[node name="Walk" type="Node" parent="State Machine" unique_id=1778340265]
+script = ExtResource("5_m3wu7")
+
+[node name="Duck" type="Node" parent="State Machine" unique_id=304916782]
+script = ExtResource("6_l7p8j")
+
+[node name="Jump" type="Node" parent="State Machine" unique_id=1456028193]
+script = ExtResource("7_a0gya")
+
+[node name="Fall" type="Node" parent="State Machine" unique_id=935172648]
+script = ExtResource("8_y5rae")
