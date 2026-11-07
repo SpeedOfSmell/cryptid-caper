@@ -1,7 +1,9 @@
 extends Node
 
 signal upgrade_changed(upgrade_type: Upgrade.UpgradeType, new_level: int)
-signal money_changed(new_amount: int)
+signal health_changed(new_health: int)
+signal player_died
+signal score_changed(new_score: int)
 
 const SAVE_PATH := "user://player_data.tres" #i think this is right? we'll have to figure this out but seems simple enough
 
@@ -14,22 +16,21 @@ func _ready() -> void:
 	if data == null:
 		data = PlayerData.new()
 		
-func add_money(amount: int) -> void:
-	data.money += amount
-	money_changed.emit(data.money)
+func lose_health(amount: int = 1) -> void:
+	if data.health <= 0:
+		return # already dead, don't emit player_died twice
+	data.health = maxi(data.health - amount, 0)
+	health_changed.emit(data.health)
+	if data.health == 0:
+		player_died.emit()
 
-	# TODO: re-enable once AudioManager + sfx streams are ported
-	#if amount < 200:
-		#AudioManager.play_sfx(money_small_sfx)
-	#else:
-		#AudioManager.play_sfx(money_big_sfx)
+func gain_health(amount: int = 1) -> void:
+	data.health = mini(data.health + amount, data.max_health)
+	health_changed.emit(data.health)
 
-func spend_money(amount: int) -> bool:
-	if data.money < amount:
-		return false
-	data.money -= amount
-	money_changed.emit(data.money)
-	return true
+func add_score(amount: int) -> void:
+	data.score += amount
+	score_changed.emit(data.score)
 	
 func get_upgrade_level(type: Upgrade.UpgradeType) -> int:
 	return data.upgrades.get(type, 0) #i mean, do we need this? or can we just do data.upgrades.get from the consumer. maybe we keep this just in case for calcs later, safest option
@@ -70,4 +71,5 @@ func new_game() -> void:
 	data = PlayerData.new()
 	
 	#PauseMenu._refresh()
-	money_changed.emit(data.money)
+	health_changed.emit(data.health)
+	score_changed.emit(data.score)

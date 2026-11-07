@@ -5,7 +5,9 @@ class_name PlayerData
 enum GameEvent { 
 }
 
-@export var money: int = 0
+@export var max_health: int = 3
+@export var health: int = 3
+@export var score: int = 0
 @export var upgrades: Dictionary[Upgrade.UpgradeType, int] = {
 	Upgrade.UpgradeType.JUMP_LEVEL: 0,
 	Upgrade.UpgradeType.SPEED: 0,
