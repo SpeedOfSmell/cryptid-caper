@@ -33,10 +33,11 @@ func generate_room() -> Room:
 	
 	var room: Room = _room_scene.instantiate()
 	room.tilemap = room.get_node("TileMapLayer")
+	room.tile_size = room.tilemap.tile_set.tile_size
 	
 	_spawn_chunks(chunk_map, room.tilemap, starting_coords, ending_coords)
 	_fill_walls(room.tilemap, room_size)
-	_create_room_exits(room.tilemap, starting_coords, ending_coords)
+	_create_room_exits(room, starting_coords, ending_coords)
 	
 	return room
 
@@ -406,7 +407,8 @@ func _fill_walls(tilemap: TileMapLayer, room_size: Vector2i):
 				continue   # inside the chunk area, leave it alone
 			tilemap.set_cell(cell, 0, Vector2i(5,1))
 
-func _create_room_exits(tilemap: TileMapLayer, starting_coords: Vector2i, ending_coords: Vector2i):
+func _create_room_exits(room: Room, starting_coords: Vector2i, ending_coords: Vector2i):
+	var tilemap := room.tilemap
 	var start_entrance_top := (starting_coords.y * CHUNK_SIZE.y) + (CHUNK_SIZE.y / 2) - 2
 	var start_entrance_left := -10
 	var entrance_rect: Rect2i = Rect2i(Vector2i(start_entrance_left, start_entrance_top), Vector2i(10, 4))
@@ -417,6 +419,29 @@ func _create_room_exits(tilemap: TileMapLayer, starting_coords: Vector2i, ending
 	
 	_erase_rect(tilemap, entrance_rect)
 	_erase_rect(tilemap, exit_rect)
+
+	room.entrance_rect = entrance_rect
+	room.exit_rect = exit_rect
+	_create_door_area(room, entrance_rect, -1)
+	_create_door_area(room, exit_rect, 0)
+
+
+func _create_door_area(room: Room, door_rect: Rect2i, door_index: int) -> void:
+	var door_area := Area2D.new()
+	var door_collision := CollisionShape2D.new()
+	var door_shape := RectangleShape2D.new()
+	door_shape.size = Vector2(
+		door_rect.size.x * room.tile_size.x,
+		door_rect.size.y * room.tile_size.y
+	)
+	door_collision.shape = door_shape
+	door_area.add_child(door_collision)
+	door_area.position = Vector2(
+		door_rect.position.x * room.tile_size.x + door_shape.size.x / 2.0,
+		door_rect.position.y * room.tile_size.y + door_shape.size.y / 2.0
+	)
+	door_area.body_entered.connect(room.door_entered.bind(door_index))
+	room.add_child(door_area)
 
 func _erase_rect(layer: TileMapLayer, rect: Rect2i) -> void:
 	for y in range(rect.position.y, rect.end.y):
