@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://de3hvi1hq1dkq"]
+
+[ext_resource type="Script" uid="uid://bcbebn7p3tjms" path="res://assets/global/upgrades/upgrade_database.gd" id="1_s6vli"]
+
+[node name="UpgradeDatabase" type="Node2D" unique_id=1333451300]
+script = ExtResource("1_s6vli")

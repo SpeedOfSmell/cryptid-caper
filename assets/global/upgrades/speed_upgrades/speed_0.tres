@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Upgrade" format=3 uid="uid://caico1nl8s5wg"]
+
+[ext_resource type="Script" uid="uid://n0qanvi11kb1" path="res://assets/global/upgrades/upgrade.gd" id="1_nhl42"]
+
+[resource]
+script = ExtResource("1_nhl42")
+type = 1
+value = 2.0
+name = "Speed"
+description = "Increases movespeed"
