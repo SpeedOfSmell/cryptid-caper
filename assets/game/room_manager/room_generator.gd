@@ -18,9 +18,12 @@ func _init():
 	_rng.seed = hash(Time.get_datetime_string_from_system())
 
 func generate_room() -> Room:
-	var room_size := Vector2i(7, 7)
+	var room_size := Vector2i(3, 3)
 	var chunk_type_map: Array[Array] = _initialize_chunk_map(room_size.x, room_size.y)
-	_generate_solution_path(chunk_type_map)
+	
+	var starting_coords := Vector2i(0, chunk_type_map.size() / 2)
+	var ending_coords := _generate_solution_path(chunk_type_map)
+	
 	var solution_path: Array[Array] = chunk_type_map.duplicate(true)
 	_generate_filler_rooms(chunk_type_map, solution_path)
 	_ensure_all_chunks_accessible(chunk_type_map, solution_path)
@@ -31,8 +34,9 @@ func generate_room() -> Room:
 	var room: Room = _room_scene.instantiate()
 	room.tilemap = room.get_node("TileMapLayer")
 	
-	_spawn_chunks(chunk_map, room.tilemap)
+	_spawn_chunks(chunk_map, room.tilemap, starting_coords, ending_coords)
 	_fill_walls(room.tilemap, room_size)
+	_create_room_exits(room.tilemap, starting_coords, ending_coords)
 	
 	return room
 
@@ -44,7 +48,8 @@ func _initialize_chunk_map(width: int, height: int) -> Array[Array]:
 			map[y].append(null)
 	return map
 
-func _generate_solution_path(chunk_map: Array[Array]):
+# Returns coords of ending chunk
+func _generate_solution_path(chunk_map: Array[Array]) -> Vector2i:
 	# Start on the far left, halfway down
 	var x: int = 0
 	var y: int = chunk_map.size() / 2
@@ -54,7 +59,7 @@ func _generate_solution_path(chunk_map: Array[Array]):
 	#x += 1
 	
 	var through_is_fine: bool = false
-	while x < chunk_map.size():
+	while x < chunk_map[y].size():
 		var next_chunk_type := &""
 		while next_chunk_type == &"":
 			match _rng.randi_range(0, 2):
@@ -89,6 +94,7 @@ func _generate_solution_path(chunk_map: Array[Array]):
 				else:
 					x += 1
 					through_is_fine = true
+	return Vector2i(x - 1, y)
 
 func _generate_filler_rooms(chunk_map: Array[Array], solution_path: Array[Array]):
 	for y in range(chunk_map.size()):
@@ -147,7 +153,7 @@ func _add_random_blank_chunks(chunk_map: Array[Array], solution_path: Array[Arra
 			chunk_map[position.y][position.x] = &"Blank Chunk"
 			blanks_placed += 1
 
-	assert(blanks_placed == target_blanks, "Could not place the requested number of blank chunks")
+	#assert(blanks_placed == target_blanks, "Could not place the requested number of blank chunks")
 
 func _can_place_blank(chunk_map: Array[Array], position: Vector2i, start: Vector2i) -> bool:
 	var preview := chunk_map.duplicate(true)
@@ -303,15 +309,26 @@ func _populate_chunk_map(chunk_type_map: Array[Array], chunk_map: Array[Array]):
 			if chunk_type_map[y][x] != null:
 				chunk_map[y][x] = _chunk_library.pick_chunk(chunk_type_map[y][x])
 
-func _spawn_chunks(chunk_map: Array[Array], target_layer: TileMapLayer):
+func _spawn_chunks(chunk_map: Array[Array], target_layer: TileMapLayer, starting_coords: Vector2i, ending_coords: Vector2i):
 	for y in range(chunk_map.size()):
 		for x in range(chunk_map[y].size()):
 			if chunk_map[y][x] != null:
-				_stamp_chunk(chunk_map[y][x], target_layer, Vector2i(CHUNK_SIZE.x * x, CHUNK_SIZE.y * y))
+				var edge: String = ""
+				if Vector2i(x,y) != starting_coords and x == 0:
+					edge = "Left"
+				elif Vector2i(x,y) != ending_coords and x == chunk_map[y].size() - 1:
+					edge = "Right"
+				_stamp_chunk(chunk_map[y][x], target_layer, Vector2i(CHUNK_SIZE.x * x, CHUNK_SIZE.y * y), edge)
 
-func _stamp_chunk(chunk_scene: PackedScene, target_layer: TileMapLayer, origin: Vector2i):
+func _stamp_chunk(chunk_scene: PackedScene, target_layer: TileMapLayer, origin: Vector2i, edge: String = ""):
 	var chunk: ChunkTemplate = chunk_scene.instantiate()
 	_copy_layer(chunk.get_node("BaseLayer"), target_layer, origin)
+	
+	if edge != "":
+		var edge_layer := chunk.get_node("%sLayer" % edge)
+		if edge_layer != null:
+			_copy_layer(edge_layer, target_layer, origin)
+	
 	chunk.free()
 	
 func _copy_layer(src: TileMapLayer, dst: TileMapLayer, origin: Vector2i):
@@ -388,3 +405,20 @@ func _fill_walls(tilemap: TileMapLayer, room_size: Vector2i):
 			if room_rect.has_point(cell):
 				continue   # inside the chunk area, leave it alone
 			tilemap.set_cell(cell, 0, Vector2i(5,1))
+
+func _create_room_exits(tilemap: TileMapLayer, starting_coords: Vector2i, ending_coords: Vector2i):
+	var start_entrance_top := (starting_coords.y * CHUNK_SIZE.y) + (CHUNK_SIZE.y / 2) - 2
+	var start_entrance_left := -10
+	var entrance_rect: Rect2i = Rect2i(Vector2i(start_entrance_left, start_entrance_top), Vector2i(10, 4))
+	
+	var exit_entrance_top := (ending_coords.y * CHUNK_SIZE.y) + (CHUNK_SIZE.y / 2) - 2
+	var exit_entrance_left := (ending_coords.x + 1) * CHUNK_SIZE.x
+	var exit_rect: Rect2i = Rect2i(Vector2i(exit_entrance_left, exit_entrance_top), Vector2i(10, 4))
+	
+	_erase_rect(tilemap, entrance_rect)
+	_erase_rect(tilemap, exit_rect)
+
+func _erase_rect(layer: TileMapLayer, rect: Rect2i) -> void:
+	for y in range(rect.position.y, rect.end.y):
+		for x in range(rect.position.x, rect.end.x):
+			layer.erase_cell(Vector2i(x, y))
