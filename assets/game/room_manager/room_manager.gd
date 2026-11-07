@@ -13,27 +13,23 @@ var _next_room_id := 1
 func _ready() -> void:
 	#TODO: move this music starting to somewhere else once its more organized, state machine?
 	AudioManager.play_music(music)
-	_current_room = _generate_new_room(null, -1)
-	_assign_room_id(_current_room)
+	_current_room = _generate_new_room(null)
 
 	_player = _player_scene.instantiate()
-	#_place_player(_current_room.get_entry_spawn_position())
-	_place_player(Vector2(10, 303))
+	_place_player(_current_room.get_entry_spawn_position())
 
 	add_child(_current_room)
 	add_child(_player)
 	print("Current room: %d" % _current_room.room_id)
 
 
-# source_room: previous room that leads to this new room
-# door index: index of door in previous room that connects the rooms
-func _generate_new_room(source_room: Room, door_index: int) -> Room:
-	var room = _room_generator.generate_room()
+func _generate_new_room(source_room: Room) -> Room:
+	var room = _room_generator.generate_room(_next_room_id)
 	room.previous_room = source_room
-	room.previous_exit_door_index = door_index
+	_next_room_id += 1
 	
 	if source_room != null:
-		source_room.next_rooms[door_index] = room
+		source_room.next_room = room
 	
 	room.request_room_change.connect(_change_room)
 	room.request_room_change_new_room.connect(_change_to_new_room)
@@ -41,8 +37,8 @@ func _generate_new_room(source_room: Room, door_index: int) -> Room:
 	return room
 
 
-func _change_to_new_room(source_room: Room, door_index: int):
-	var new_room := _generate_new_room(source_room, door_index)
+func _change_to_new_room(source_room: Room):
+	var new_room := _generate_new_room(source_room)
 	_change_room(source_room, new_room, new_room.get_entry_spawn_position())
 
 
@@ -51,7 +47,6 @@ func _change_room(source_room: Room, destination_room: Room, spawn_position: Vec
 	if _transition_pending or source_room != _current_room or destination_room == _current_room or not is_instance_valid(destination_room):
 		return
 
-	_assign_room_id(destination_room)
 	_transition_pending = true
 	
 	# Door signals arrive during physics processing, so change the scene tree after the physics query using call_deferred
@@ -75,9 +70,3 @@ func _change_room(source_room: Room, destination_room: Room, spawn_position: Vec
 func _place_player(spawn_position: Vector2) -> void:
 	_player.position = spawn_position
 	_player.velocity = Vector2.ZERO
-
-
-func _assign_room_id(room: Room) -> void:
-	if room.room_id < 0:
-		room.room_id = _next_room_id
-		_next_room_id += 1
