@@ -22,7 +22,7 @@ func generate_room() -> Room:
 	var chunk_type_map: Array[Array] = _initialize_chunk_map(room_size.x, room_size.y)
 	_generate_solution_path(chunk_type_map)
 	var solution_path: Array[Array] = chunk_type_map.duplicate(true)
-	_generate_filler_rooms(chunk_type_map)
+	_generate_filler_rooms(chunk_type_map, solution_path)
 	_ensure_all_chunks_accessible(chunk_type_map, solution_path)
 	
 	var chunk_map: Array[Array] = _initialize_chunk_map(room_size.x, room_size.y)
@@ -90,32 +90,25 @@ func _generate_solution_path(chunk_map: Array[Array]):
 					x += 1
 					through_is_fine = true
 
-func _generate_filler_rooms(chunk_map: Array[Array]):
+func _generate_filler_rooms(chunk_map: Array[Array], solution_path: Array[Array]):
 	for y in range(chunk_map.size()):
 		for x in range(chunk_map[y].size()):
 			if chunk_map[y][x] != null:
 				continue
-			chunk_map[y][x] = _random_non_blank_chunk_type()
+			chunk_map[y][x] = _random_non_blank_chunk_type(Vector2i(x, y), solution_path)
 
-func _random_non_blank_chunk_type() -> StringName:
-	match _rng.randi_range(0, 4):
-		0:
-			return &"Through Chunk"
-		1:
-			return &"Up Chunk"
-		2:
-			return &"Down Chunk"
-		3:
-			return &"Left Chunk"
-		4:
-			return &"Right Chunk"
-	return &"Through Chunk"
+func _random_non_blank_chunk_type(position: Vector2i, solution_path: Array[Array]) -> StringName:
+	var valid_types: Array[StringName] = []
+	for chunk_type in [&"Through Chunk", &"Up Chunk", &"Down Chunk", &"Left Chunk", &"Right Chunk"]:
+		if _chunk_type_is_allowed(chunk_type, position, solution_path):
+			valid_types.append(chunk_type)
+	return valid_types[_rng.randi_range(0, valid_types.size() - 1)]
 
 func _ensure_all_chunks_accessible(chunk_map: Array[Array], solution_path: Array[Array]):
 	var start := Vector2i(0, chunk_map.size() / 2)
 	while true:
 		var reachable := _find_reachable_chunks(chunk_map, start)
-		var repairs := _find_connection_repairs(chunk_map, reachable)
+		var repairs := _find_connection_repairs(chunk_map, reachable, solution_path)
 		if repairs.is_empty():
 			break
 
@@ -130,6 +123,7 @@ func _ensure_all_chunks_accessible(chunk_map: Array[Array], solution_path: Array
 				continue
 			assert(reachable[y][x], "A non-blank chunk is not connected to the solution path")
 			assert(_has_connected_exit(chunk_map, Vector2i(x, y)), "A chunk has no matching exit to a neighbor")
+			assert(_chunk_type_is_allowed(chunk_map[y][x], Vector2i(x, y), solution_path), "A chunk type is not allowed on this edge")
 
 	_add_random_blank_chunks(chunk_map, solution_path, start)
 
@@ -167,7 +161,7 @@ func _can_place_blank(chunk_map: Array[Array], position: Vector2i, start: Vector
 				return false
 	return true
 
-func _find_connection_repairs(chunk_map: Array[Array], reachable: Array[Array]) -> Array[Dictionary]:
+func _find_connection_repairs(chunk_map: Array[Array], reachable: Array[Array], solution_path: Array[Array]) -> Array[Dictionary]:
 	var repairs: Array[Dictionary] = []
 	for y in range(chunk_map.size()):
 		for x in range(chunk_map[y].size()):
@@ -184,11 +178,11 @@ func _find_connection_repairs(chunk_map: Array[Array], reachable: Array[Array]) 
 				# Direction points from this chunk toward its reachable neighbor.
 				var parent_exit = -direction
 				var parent_type: StringName = chunk_map[parent_position.y][parent_position.x]
-				var repaired_parent := _chunk_type_with_exit(parent_type, parent_exit, true)
+				var repaired_parent := _chunk_type_with_exit(parent_type, parent_exit, true, parent_position, solution_path)
 				if repaired_parent == &"":
 					# A conflicting vertical exit can be changed only if the rest of
 					# the connected area remains reachable afterward.
-					repaired_parent = _chunk_type_with_exit(parent_type, parent_exit, false)
+					repaired_parent = _chunk_type_with_exit(parent_type, parent_exit, false, parent_position, solution_path)
 					if repaired_parent == &"":
 						continue
 					var preview := chunk_map.duplicate(true)
@@ -196,7 +190,7 @@ func _find_connection_repairs(chunk_map: Array[Array], reachable: Array[Array]) 
 					if not _keeps_reachable_chunks(preview, reachable, Vector2i(0, chunk_map.size() / 2)):
 						continue
 
-				var repaired_chunk := _chunk_type_with_exit(chunk_type, direction, false)
+				var repaired_chunk := _chunk_type_with_exit(chunk_type, direction, false, chunk_position, solution_path)
 				repairs.append({
 					"parent": parent_position,
 					"parent_type": repaired_parent,
@@ -241,24 +235,31 @@ func _has_connected_exit(chunk_map: Array[Array], position: Vector2i) -> bool:
 			return true
 	return false
 
-func _chunk_type_with_exit(chunk_type: StringName, direction: Vector2i, preserve_existing: bool) -> StringName:
-	if _has_exit(chunk_type, direction):
+func _chunk_type_with_exit(chunk_type: StringName, direction: Vector2i, preserve_existing: bool, position: Vector2i, solution_path: Array[Array]) -> StringName:
+	if _chunk_type_is_allowed(chunk_type, position, solution_path) and _has_exit(chunk_type, direction):
 		return chunk_type
 
-	match direction:
-		Vector2i.LEFT, Vector2i.RIGHT:
-			if chunk_type == &"Blank Chunk":
-				return &"Left Chunk" if direction == Vector2i.LEFT else &"Right Chunk"
-			return &"Through Chunk"
-		Vector2i.UP:
-			if preserve_existing and chunk_type == &"Down Chunk":
-				return &""
-			return &"Up Chunk"
-		Vector2i.DOWN:
-			if preserve_existing and chunk_type == &"Up Chunk":
-				return &""
-			return &"Down Chunk"
+	var current_exits := _chunk_exits(chunk_type)
+	for candidate in [&"Through Chunk", &"Up Chunk", &"Down Chunk", &"Left Chunk", &"Right Chunk"]:
+		if not _chunk_type_is_allowed(candidate, position, solution_path):
+			continue
+		if not _has_exit(candidate, direction):
+			continue
+		if preserve_existing and (_chunk_exits(candidate) & current_exits) != current_exits:
+			continue
+		return candidate
 	return &""
+
+func _chunk_type_is_allowed(chunk_type: StringName, position: Vector2i, solution_path: Array[Array]) -> bool:
+	var height := solution_path.size()
+	var width := solution_path[position.y].size()
+	if chunk_type == &"Through Chunk" and (position.x == 0 or position.x == width - 1):
+		return solution_path[position.y][position.x] != null
+	if chunk_type == &"Up Chunk" and position.y == 0:
+		return false
+	if chunk_type == &"Down Chunk" and position.y == height - 1:
+		return false
+	return true
 
 func _has_exit(chunk_type: StringName, direction: Vector2i) -> bool:
 	return (_chunk_exits(chunk_type) & _exit_bit(direction)) != 0
