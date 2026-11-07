@@ -2,7 +2,7 @@ extends Node
 
 @export var _player_scene: PackedScene
 
-var _room_generator: RoomGenerator
+@onready var _room_generator: RoomGenerator = $"Room Generator"
 var _current_room: Room
 var _player: CharacterBody2D
 var _transition_pending := false
@@ -10,12 +10,12 @@ var _next_room_id := 1
 
 
 func _ready() -> void:
-	_room_generator = RoomGenerator.new()
 	_current_room = _generate_new_room(null, -1)
 	_assign_room_id(_current_room)
 
 	_player = _player_scene.instantiate()
-	_place_player(_current_room.get_entry_spawn_position())
+	#_place_player(_current_room.get_entry_spawn_position())
+	_place_player(Vector2(10, 303))
 
 	add_child(_current_room)
 	add_child(_player)
@@ -25,7 +25,7 @@ func _ready() -> void:
 # source_room: previous room that leads to this new room
 # door index: index of door in previous room that connects the rooms
 func _generate_new_room(source_room: Room, door_index: int) -> Room:
-	var room = _room_generator.generate_room(2, 3, 1)
+	var room = _room_generator.generate_room()
 	room.previous_room = source_room
 	room.previous_exit_door_index = door_index
 	
