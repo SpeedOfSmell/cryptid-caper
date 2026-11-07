@@ -17,8 +17,8 @@ func _init():
 	_rng = RandomNumberGenerator.new()
 	_rng.seed = hash(Time.get_datetime_string_from_system())
 
-func generate_room() -> Room:
-	var room_size := Vector2i(3, 3)
+func generate_room(room_id: int) -> Room:
+	var room_size := Vector2i(3 + floori(room_id / 8), 1 + floori((room_id - 1) / 2))
 	var chunk_type_map: Array[Array] = _initialize_chunk_map(room_size.x, room_size.y)
 	
 	var starting_coords := Vector2i(0, chunk_type_map.size() / 2)
@@ -34,6 +34,7 @@ func generate_room() -> Room:
 	var room: Room = _room_scene.instantiate()
 	room.tilemap = room.get_node("TileMapLayer")
 	room.tile_size = room.tilemap.tile_set.tile_size
+	room.room_id = room_id
 	
 	_spawn_chunks(chunk_map, room.tilemap, starting_coords, ending_coords)
 	_fill_walls(room.tilemap, room_size)
