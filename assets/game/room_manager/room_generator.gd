@@ -4,6 +4,8 @@ extends Node
 @export var _room_scene: PackedScene
 @export var _chunk_library: ChunkLibrary
 
+const CHUNK_SIZE := Vector2i(20, 12)
+
 var _rng: RandomNumberGenerator
 
 func _init():
@@ -11,16 +13,19 @@ func _init():
 	_rng.seed = hash(Time.get_datetime_string_from_system())
 
 func generate_room() -> Room:
-	var chunk_type_map: Array[Array] = _initialize_chunk_map(3, 3)	
+	var room_size := Vector2i(3, 3)
+	var chunk_type_map: Array[Array] = _initialize_chunk_map(room_size.x, room_size.y)
 	_generate_solution_path(chunk_type_map)
+	_generate_filler_rooms(chunk_type_map)
 	
-	var chunk_map: Array[Array] = _initialize_chunk_map(3, 3)
+	var chunk_map: Array[Array] = _initialize_chunk_map(room_size.x, room_size.y)
 	_populate_chunk_map(chunk_type_map, chunk_map)
 	
 	var room: Room = _room_scene.instantiate()
 	room.tilemap = room.get_node("TileMapLayer")
 	
 	_spawn_chunks(chunk_map, room.tilemap)
+	_fill_walls(room.tilemap, room_size)
 	
 	return room
 
@@ -78,6 +83,39 @@ func _generate_solution_path(chunk_map: Array[Array]):
 					x += 1
 					through_is_fine = true
 
+func _generate_filler_rooms(chunk_map: Array[Array]):
+	for y in range(chunk_map.size()):
+		for x in range(chunk_map[y].size()):
+			if chunk_map[y][x] != null:
+				continue
+			
+			var chunk_type: StringName
+			match _rng.randi_range(0, 5):
+				0:
+					chunk_type = &"Through Chunk"
+				1:
+					chunk_type = &"Up Chunk"
+				2:
+					chunk_type = &"Down Chunk"
+				3:
+					chunk_type = &"Left Chunk"
+				4:
+					chunk_type = &"Right Chunk"
+				5:
+					chunk_type = &"Blank Chunk"
+			chunk_map[y][x] = chunk_type
+			
+			#if x == 0:
+				#if _rng.randf() <= .75:
+					#chunk_map[y][x] = &"Right Chunk"
+				#else:
+					#chunk_map[y][x] = &"Blank Chunk"
+			#elif x == chunk_map[y].size() - 1:
+				#if _rng.randf() <= .75:
+					#chunk_map[y][x] = &"Left Chunk"
+				#else:
+					#chunk_map[y][x] = &"Blank Chunk"
+
 func _populate_chunk_map(chunk_type_map: Array[Array], chunk_map: Array[Array]):
 	assert(chunk_type_map.size() == chunk_map.size(), "Chunk map does not have same dimensions as chunk type map")
 	
@@ -90,14 +128,14 @@ func _spawn_chunks(chunk_map: Array[Array], target_layer: TileMapLayer):
 	for y in range(chunk_map.size()):
 		for x in range(chunk_map[y].size()):
 			if chunk_map[y][x] != null:
-				stamp_chunk(chunk_map[y][x], target_layer, Vector2i(20 * x, 12 * y))
+				_stamp_chunk(chunk_map[y][x], target_layer, Vector2i(CHUNK_SIZE.x * x, CHUNK_SIZE.y * y))
 
-func stamp_chunk(chunk_scene: PackedScene, target_layer: TileMapLayer, origin: Vector2i):
+func _stamp_chunk(chunk_scene: PackedScene, target_layer: TileMapLayer, origin: Vector2i):
 	var chunk: ChunkTemplate = chunk_scene.instantiate()
-	copy_layer(chunk.get_node("BaseLayer"), target_layer, origin)
+	_copy_layer(chunk.get_node("BaseLayer"), target_layer, origin)
 	chunk.free()
 	
-func copy_layer(src: TileMapLayer, dst: TileMapLayer, origin: Vector2i):
+func _copy_layer(src: TileMapLayer, dst: TileMapLayer, origin: Vector2i):
 	for cell in src.get_used_cells():
 		dst.set_cell(
 			cell + origin,
@@ -158,3 +196,16 @@ func copy_layer(src: TileMapLayer, dst: TileMapLayer, origin: Vector2i):
 	#door_area.add_child(door_col_shape)
 	#door_area.position = Vector2i(door_pos.x * _room.tile_size.x + (_room.tile_size.x / 2), door_pos.y * _room.tile_size.y)
 	#return door_area
+
+func _fill_walls(tilemap: TileMapLayer, room_size: Vector2i):
+	# The playable area covered by chunks, in tiles
+	var room_rect := Rect2i(Vector2i(0,0), room_size * CHUNK_SIZE)
+	# The same area expanded outward by `distance` tiles on every side
+	var outer_rect := room_rect.grow(20)
+
+	for x in range(outer_rect.position.x, outer_rect.end.x):
+		for y in range(outer_rect.position.y, outer_rect.end.y):
+			var cell := Vector2i(x, y)
+			if room_rect.has_point(cell):
+				continue   # inside the chunk area, leave it alone
+			tilemap.set_cell(cell, 0, Vector2i(5,1))
