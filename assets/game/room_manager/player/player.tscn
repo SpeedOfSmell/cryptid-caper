@@ -119,9 +119,6 @@ script = ExtResource("8_y5rae")
 
 [node name="Coyote" type="Node" parent="State Machine" unique_id=1266094371]
 script = ExtResource("9_coy01")
-<<<<<<< HEAD
 
 [node name="Drop" type="Node" parent="State Machine"]
 script = ExtResource("10_drop")
-=======
->>>>>>> develop
