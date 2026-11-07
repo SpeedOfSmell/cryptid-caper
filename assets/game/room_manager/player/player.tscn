@@ -10,6 +10,7 @@
 [ext_resource type="Resource" uid="uid://daama3v1v04qs" path="res://assets/audio/sfx/character/jump.tres" id="8_vusm5"]
 [ext_resource type="Script" uid="uid://b40cqiifg6b6b" path="res://assets/game/room_manager/player/states/fall_state.gd" id="8_y5rae"]
 [ext_resource type="Script" uid="uid://dphxw5srqv6ba" path="res://assets/game/room_manager/player/states/coyote_state.gd" id="9_coy01"]
+[ext_resource type="Script" path="res://assets/game/room_manager/player/states/drop_state.gd" id="10_drop"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_buion"]
 size = Vector2(15, 23)
@@ -114,3 +115,6 @@ script = ExtResource("8_y5rae")
 
 [node name="Coyote" type="Node" parent="State Machine" unique_id=1266094371]
 script = ExtResource("9_coy01")
+
+[node name="Drop" type="Node" parent="State Machine"]
+script = ExtResource("10_drop")
