@@ -2,9 +2,17 @@
 
 [ext_resource type="Script" uid="uid://dnkdnq7pum2mv" path="res://assets/game/room_manager/room_manager.gd" id="1_66d57"]
 [ext_resource type="PackedScene" uid="uid://b1jbsp8xj45we" path="res://assets/game/room_manager/player/player.tscn" id="3_nm2dn"]
+[ext_resource type="Script" uid="uid://bnatdry6yu4yv" path="res://assets/game/room_manager/room_generator.gd" id="3_seigl"]
+[ext_resource type="PackedScene" uid="uid://c3l28xjwi58ex" path="res://assets/game/room_manager/room.tscn" id="4_nm2dn"]
+[ext_resource type="Resource" uid="uid://cckd2ggtqurop" path="res://assets/game/room_manager/chunks/chunk_library.tres" id="5_bedwy"]
 
 [node name="Game Manager" type="Node" unique_id=175650822]
 
 [node name="Room Manager" type="Node" parent="." unique_id=2010213947]
 script = ExtResource("1_66d57")
 _player_scene = ExtResource("3_nm2dn")
+
+[node name="Room Generator" type="Node" parent="Room Manager" unique_id=1678689634]
+script = ExtResource("3_seigl")
+_room_scene = ExtResource("4_nm2dn")
+_chunk_library = ExtResource("5_bedwy")
