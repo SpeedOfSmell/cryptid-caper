@@ -5,6 +5,11 @@ extends Node
 @export var _chunk_library: ChunkLibrary
 
 const CHUNK_SIZE := Vector2i(20, 12)
+const EXIT_LEFT := 1
+const EXIT_RIGHT := 2
+const EXIT_UP := 4
+const EXIT_DOWN := 8
+const CHUNK_DIRECTIONS := [Vector2i.LEFT, Vector2i.RIGHT, Vector2i.UP, Vector2i.DOWN]
 
 var _rng: RandomNumberGenerator
 
@@ -13,10 +18,12 @@ func _init():
 	_rng.seed = hash(Time.get_datetime_string_from_system())
 
 func generate_room() -> Room:
-	var room_size := Vector2i(3, 3)
+	var room_size := Vector2i(7, 7)
 	var chunk_type_map: Array[Array] = _initialize_chunk_map(room_size.x, room_size.y)
 	_generate_solution_path(chunk_type_map)
+	var solution_path: Array[Array] = chunk_type_map.duplicate(true)
 	_generate_filler_rooms(chunk_type_map)
+	_ensure_all_chunks_accessible(chunk_type_map, solution_path)
 	
 	var chunk_map: Array[Array] = _initialize_chunk_map(room_size.x, room_size.y)
 	_populate_chunk_map(chunk_type_map, chunk_map)
@@ -88,33 +95,204 @@ func _generate_filler_rooms(chunk_map: Array[Array]):
 		for x in range(chunk_map[y].size()):
 			if chunk_map[y][x] != null:
 				continue
-			
-			var chunk_type: StringName
-			match _rng.randi_range(0, 5):
-				0:
-					chunk_type = &"Through Chunk"
-				1:
-					chunk_type = &"Up Chunk"
-				2:
-					chunk_type = &"Down Chunk"
-				3:
-					chunk_type = &"Left Chunk"
-				4:
-					chunk_type = &"Right Chunk"
-				5:
-					chunk_type = &"Blank Chunk"
-			chunk_map[y][x] = chunk_type
-			
-			#if x == 0:
-				#if _rng.randf() <= .75:
-					#chunk_map[y][x] = &"Right Chunk"
-				#else:
-					#chunk_map[y][x] = &"Blank Chunk"
-			#elif x == chunk_map[y].size() - 1:
-				#if _rng.randf() <= .75:
-					#chunk_map[y][x] = &"Left Chunk"
-				#else:
-					#chunk_map[y][x] = &"Blank Chunk"
+			chunk_map[y][x] = _random_non_blank_chunk_type()
+
+func _random_non_blank_chunk_type() -> StringName:
+	match _rng.randi_range(0, 4):
+		0:
+			return &"Through Chunk"
+		1:
+			return &"Up Chunk"
+		2:
+			return &"Down Chunk"
+		3:
+			return &"Left Chunk"
+		4:
+			return &"Right Chunk"
+	return &"Through Chunk"
+
+func _ensure_all_chunks_accessible(chunk_map: Array[Array], solution_path: Array[Array]):
+	var start := Vector2i(0, chunk_map.size() / 2)
+	while true:
+		var reachable := _find_reachable_chunks(chunk_map, start)
+		var repairs := _find_connection_repairs(chunk_map, reachable)
+		if repairs.is_empty():
+			break
+
+		var repair: Dictionary = repairs[_rng.randi_range(0, repairs.size() - 1)]
+		chunk_map[repair.parent.y][repair.parent.x] = repair.parent_type
+		chunk_map[repair.chunk.y][repair.chunk.x] = repair.chunk_type
+
+	var reachable := _find_reachable_chunks(chunk_map, start)
+	for y in range(chunk_map.size()):
+		for x in range(chunk_map[y].size()):
+			if chunk_map[y][x] == &"Blank Chunk":
+				continue
+			assert(reachable[y][x], "A non-blank chunk is not connected to the solution path")
+			assert(_has_connected_exit(chunk_map, Vector2i(x, y)), "A chunk has no matching exit to a neighbor")
+
+	_add_random_blank_chunks(chunk_map, solution_path, start)
+
+func _add_random_blank_chunks(chunk_map: Array[Array], solution_path: Array[Array], start: Vector2i):
+	var chunk_count := chunk_map.size() * chunk_map[0].size()
+	var min_blanks := ceili(chunk_count * 0.1)
+	var max_blanks := floori(chunk_count * 0.2)
+	var target_blanks := _rng.randi_range(min_blanks, max_blanks)
+	var candidates: Array[Vector2i] = []
+	for y in range(chunk_map.size()):
+		for x in range(chunk_map[y].size()):
+			if solution_path[y][x] == null:
+				candidates.append(Vector2i(x, y))
+
+	var blanks_placed := 0
+	while blanks_placed < target_blanks and not candidates.is_empty():
+		var index := _rng.randi_range(0, candidates.size() - 1)
+		var position: Vector2i = candidates[index]
+		candidates.remove_at(index)
+		if _can_place_blank(chunk_map, position, start):
+			chunk_map[position.y][position.x] = &"Blank Chunk"
+			blanks_placed += 1
+
+	assert(blanks_placed == target_blanks, "Could not place the requested number of blank chunks")
+
+func _can_place_blank(chunk_map: Array[Array], position: Vector2i, start: Vector2i) -> bool:
+	var preview := chunk_map.duplicate(true)
+	preview[position.y][position.x] = &"Blank Chunk"
+	var reachable := _find_reachable_chunks(preview, start)
+	for y in range(preview.size()):
+		for x in range(preview[y].size()):
+			if preview[y][x] == &"Blank Chunk":
+				continue
+			if not reachable[y][x] or not _has_connected_exit(preview, Vector2i(x, y)):
+				return false
+	return true
+
+func _find_connection_repairs(chunk_map: Array[Array], reachable: Array[Array]) -> Array[Dictionary]:
+	var repairs: Array[Dictionary] = []
+	for y in range(chunk_map.size()):
+		for x in range(chunk_map[y].size()):
+			var chunk_position := Vector2i(x, y)
+			var chunk_type: StringName = chunk_map[y][x]
+			if reachable[y][x]:
+				continue
+
+			for direction in CHUNK_DIRECTIONS:
+				var parent_position = chunk_position + direction
+				if not _is_in_bounds(chunk_map, parent_position) or not reachable[parent_position.y][parent_position.x]:
+					continue
+
+				# Direction points from this chunk toward its reachable neighbor.
+				var parent_exit = -direction
+				var parent_type: StringName = chunk_map[parent_position.y][parent_position.x]
+				var repaired_parent := _chunk_type_with_exit(parent_type, parent_exit, true)
+				if repaired_parent == &"":
+					# A conflicting vertical exit can be changed only if the rest of
+					# the connected area remains reachable afterward.
+					repaired_parent = _chunk_type_with_exit(parent_type, parent_exit, false)
+					if repaired_parent == &"":
+						continue
+					var preview := chunk_map.duplicate(true)
+					preview[parent_position.y][parent_position.x] = repaired_parent
+					if not _keeps_reachable_chunks(preview, reachable, Vector2i(0, chunk_map.size() / 2)):
+						continue
+
+				var repaired_chunk := _chunk_type_with_exit(chunk_type, direction, false)
+				repairs.append({
+					"parent": parent_position,
+					"parent_type": repaired_parent,
+					"chunk": chunk_position,
+					"chunk_type": repaired_chunk,
+				})
+	return repairs
+
+func _find_reachable_chunks(chunk_map: Array[Array], start: Vector2i) -> Array[Array]:
+	var reachable := _initialize_chunk_map(chunk_map[0].size(), chunk_map.size())
+	var frontier: Array[Vector2i] = [start]
+	reachable[start.y][start.x] = true
+
+	while not frontier.is_empty():
+		var position: Vector2i = frontier.pop_front()
+		for direction in CHUNK_DIRECTIONS:
+			var neighbor = position + direction
+			if not _is_in_bounds(chunk_map, neighbor) or reachable[neighbor.y][neighbor.x]:
+				continue
+			if not _has_exit(chunk_map[position.y][position.x], direction):
+				continue
+			if not _has_exit(chunk_map[neighbor.y][neighbor.x], -direction):
+				continue
+			reachable[neighbor.y][neighbor.x] = true
+			frontier.append(neighbor)
+	return reachable
+
+func _keeps_reachable_chunks(chunk_map: Array[Array], previous_reachable: Array[Array], start: Vector2i) -> bool:
+	var reachable := _find_reachable_chunks(chunk_map, start)
+	for y in range(chunk_map.size()):
+		for x in range(chunk_map[y].size()):
+			if previous_reachable[y][x] and not reachable[y][x]:
+				return false
+	return true
+
+func _has_connected_exit(chunk_map: Array[Array], position: Vector2i) -> bool:
+	for direction in CHUNK_DIRECTIONS:
+		var neighbor = position + direction
+		if not _is_in_bounds(chunk_map, neighbor):
+			continue
+		if _has_exit(chunk_map[position.y][position.x], direction) and _has_exit(chunk_map[neighbor.y][neighbor.x], -direction):
+			return true
+	return false
+
+func _chunk_type_with_exit(chunk_type: StringName, direction: Vector2i, preserve_existing: bool) -> StringName:
+	if _has_exit(chunk_type, direction):
+		return chunk_type
+
+	match direction:
+		Vector2i.LEFT, Vector2i.RIGHT:
+			if chunk_type == &"Blank Chunk":
+				return &"Left Chunk" if direction == Vector2i.LEFT else &"Right Chunk"
+			return &"Through Chunk"
+		Vector2i.UP:
+			if preserve_existing and chunk_type == &"Down Chunk":
+				return &""
+			return &"Up Chunk"
+		Vector2i.DOWN:
+			if preserve_existing and chunk_type == &"Up Chunk":
+				return &""
+			return &"Down Chunk"
+	return &""
+
+func _has_exit(chunk_type: StringName, direction: Vector2i) -> bool:
+	return (_chunk_exits(chunk_type) & _exit_bit(direction)) != 0
+
+func _chunk_exits(chunk_type: StringName) -> int:
+	match chunk_type:
+		&"Through Chunk":
+			return EXIT_LEFT | EXIT_RIGHT
+		&"Up Chunk":
+			return EXIT_LEFT | EXIT_RIGHT | EXIT_UP
+		&"Down Chunk":
+			return EXIT_LEFT | EXIT_RIGHT | EXIT_DOWN
+		&"Left Chunk":
+			return EXIT_LEFT
+		&"Right Chunk":
+			return EXIT_RIGHT
+		&"Blank Chunk":
+			return 0
+	return 0
+
+func _exit_bit(direction: Vector2i) -> int:
+	match direction:
+		Vector2i.LEFT:
+			return EXIT_LEFT
+		Vector2i.RIGHT:
+			return EXIT_RIGHT
+		Vector2i.UP:
+			return EXIT_UP
+		Vector2i.DOWN:
+			return EXIT_DOWN
+	return 0
+
+func _is_in_bounds(chunk_map: Array[Array], position: Vector2i) -> bool:
+	return position.y >= 0 and position.y < chunk_map.size() and position.x >= 0 and position.x < chunk_map[position.y].size()
 
 func _populate_chunk_map(chunk_type_map: Array[Array], chunk_map: Array[Array]):
 	assert(chunk_type_map.size() == chunk_map.size(), "Chunk map does not have same dimensions as chunk type map")
