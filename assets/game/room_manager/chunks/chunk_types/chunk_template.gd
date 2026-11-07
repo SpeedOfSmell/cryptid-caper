@@ -1,0 +1,2 @@
+class_name ChunkTemplate
+extends Node2D
