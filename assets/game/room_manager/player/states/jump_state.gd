@@ -1,7 +1,7 @@
 class_name JumpState
 extends AirState
 
-@export var jump_speed : float = 440
+@export var jump_speed : float = 290
 
 var _just_entered := false
 
