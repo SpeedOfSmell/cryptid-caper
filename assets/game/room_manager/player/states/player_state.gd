@@ -9,7 +9,10 @@ const DUCK := &"Duck"
 const JUMP := &"Jump"
 const FALL := &"Fall"
 const COYOTE := &"Coyote"
+<<<<<<< HEAD
 const DROP := &"Drop"
+=======
+>>>>>>> develop
 
 #ADDING NEW STATE:
 # 1) Add new state extending grounded, air or player state
