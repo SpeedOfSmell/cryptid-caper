@@ -1,5 +1,6 @@
 extends Node
 
+@export var music: Resource
 @export var _player_scene: PackedScene
 
 @onready var _room_generator: RoomGenerator = $"Room Generator"
@@ -10,6 +11,8 @@ var _next_room_id := 1
 
 
 func _ready() -> void:
+	#TODO: move this music starting to somewhere else once its more organized, state machine?
+	AudioManager.play_music(music)
 	_current_room = _generate_new_room(null, -1)
 	_assign_room_id(_current_room)
 

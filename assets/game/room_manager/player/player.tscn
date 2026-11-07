@@ -7,8 +7,9 @@
 [ext_resource type="Script" uid="uid://d2u24chmvgtcb" path="res://assets/game/room_manager/player/states/walk_state.gd" id="5_m3wu7"]
 [ext_resource type="Script" uid="uid://d3d6uhgu1c4wj" path="res://assets/game/room_manager/player/states/duck_state.gd" id="6_l7p8j"]
 [ext_resource type="Script" uid="uid://iju4o5bqabn3" path="res://assets/game/room_manager/player/states/jump_state.gd" id="7_a0gya"]
+[ext_resource type="Resource" uid="uid://daama3v1v04qs" path="res://assets/audio/sfx/character/jump.tres" id="8_vusm5"]
 [ext_resource type="Script" uid="uid://b40cqiifg6b6b" path="res://assets/game/room_manager/player/states/fall_state.gd" id="8_y5rae"]
-[ext_resource type="Script" path="res://assets/game/room_manager/player/states/coyote_state.gd" id="9_coy01"]
+[ext_resource type="Script" uid="uid://dphxw5srqv6ba" path="res://assets/game/room_manager/player/states/coyote_state.gd" id="9_coy01"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_buion"]
 size = Vector2(15, 23)
@@ -106,6 +107,7 @@ script = ExtResource("6_l7p8j")
 
 [node name="Jump" type="Node" parent="State Machine" unique_id=1456028193]
 script = ExtResource("7_a0gya")
+sfx = ExtResource("8_vusm5")
 
 [node name="Fall" type="Node" parent="State Machine" unique_id=935172648]
 script = ExtResource("8_y5rae")

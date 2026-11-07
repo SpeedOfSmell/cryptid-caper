@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SfxEvent" format=3 uid="uid://daama3v1v04qs"]
+
+[ext_resource type="Script" uid="uid://bs2frmocmdsle" path="res://assets/global/sfx_event.gd" id="1_r1m4v"]
+[ext_resource type="AudioStream" uid="uid://dlicftnxndgi2" path="res://assets/audio/sfx/character/test_character.wav" id="2_1ux0d"]
+
+[resource]
+script = ExtResource("1_r1m4v")
+streams = Array[AudioStream]([ExtResource("2_1ux0d")])
+metadata/_custom_type_script = "uid://bs2frmocmdsle"
