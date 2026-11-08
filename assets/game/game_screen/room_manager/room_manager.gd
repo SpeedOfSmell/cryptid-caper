@@ -8,7 +8,7 @@ signal transition_requested(state: States.GameState)
 var _current_room: Room
 var _player: CharacterBody2D
 var _transition_pending := false
-var _next_room_id := 10
+var _next_room_id := 1
 
 @onready var _room_generator: RoomGenerator = $"Room Generator"
 
