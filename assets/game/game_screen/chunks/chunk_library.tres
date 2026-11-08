@@ -1,0 +1,50 @@
+[gd_resource type="Resource" script_class="ChunkLibrary" format=3 uid="uid://cckd2ggtqurop"]
+
+[ext_resource type="Script" uid="uid://cwu2yndm25v33" path="res://assets/game/game_screen/chunks/chunk_library.gd" id="1_2gg4v"]
+[ext_resource type="Script" uid="uid://5h2bvhg641l4" path="res://assets/game/game_screen/chunks/chunk_types/chunk_type.gd" id="2_nv6s5"]
+[ext_resource type="PackedScene" uid="uid://b2v6tvw8i7ils" path="res://assets/game/game_screen/chunks/chunk_types/through_chunk/test_chunk.tscn" id="3_wklqk"]
+[ext_resource type="PackedScene" uid="uid://c08yv0304wgdq" path="res://assets/game/game_screen/chunks/chunk_types/up_chunk/up_chunk.tscn" id="4_wklqk"]
+[ext_resource type="PackedScene" uid="uid://om1xssckftv3" path="res://assets/game/game_screen/chunks/chunk_types/down_chunk/down_chunk.tscn" id="5_0ggge"]
+[ext_resource type="PackedScene" uid="uid://b1hbwugcl2pit" path="res://assets/game/game_screen/chunks/chunk_types/left_chunk/left_chunk.tscn" id="6_j0exi"]
+[ext_resource type="PackedScene" uid="uid://bprngumgnh8mf" path="res://assets/game/game_screen/chunks/chunk_types/right_chunk/right_chunk.tscn" id="7_gyktc"]
+[ext_resource type="PackedScene" uid="uid://p88rwvice6r8" path="res://assets/game/game_screen/chunks/chunk_types/blank_chunk/blank_chunk.tscn" id="8_gyktc"]
+
+[sub_resource type="Resource" id="Resource_rl0yw"]
+script = ExtResource("2_nv6s5")
+type_name = &"Through Chunk"
+templates = Array[PackedScene]([ExtResource("3_wklqk")])
+metadata/_custom_type_script = "uid://5h2bvhg641l4"
+
+[sub_resource type="Resource" id="Resource_a18a0"]
+script = ExtResource("2_nv6s5")
+type_name = &"Up Chunk"
+templates = Array[PackedScene]([ExtResource("4_wklqk")])
+metadata/_custom_type_script = "uid://5h2bvhg641l4"
+
+[sub_resource type="Resource" id="Resource_ve32x"]
+script = ExtResource("2_nv6s5")
+type_name = &"Down Chunk"
+templates = Array[PackedScene]([ExtResource("5_0ggge")])
+metadata/_custom_type_script = "uid://5h2bvhg641l4"
+
+[sub_resource type="Resource" id="Resource_r5fn1"]
+script = ExtResource("2_nv6s5")
+type_name = &"Left Chunk"
+templates = Array[PackedScene]([ExtResource("6_j0exi")])
+metadata/_custom_type_script = "uid://5h2bvhg641l4"
+
+[sub_resource type="Resource" id="Resource_h3utt"]
+script = ExtResource("2_nv6s5")
+type_name = &"Right Chunk"
+templates = Array[PackedScene]([ExtResource("7_gyktc")])
+metadata/_custom_type_script = "uid://5h2bvhg641l4"
+
+[sub_resource type="Resource" id="Resource_udg3m"]
+script = ExtResource("2_nv6s5")
+type_name = &"Blank Chunk"
+templates = Array[PackedScene]([ExtResource("8_gyktc")])
+metadata/_custom_type_script = "uid://5h2bvhg641l4"
+
+[resource]
+script = ExtResource("1_2gg4v")
+types = Array[ExtResource("2_nv6s5")]([SubResource("Resource_rl0yw"), SubResource("Resource_a18a0"), SubResource("Resource_ve32x"), SubResource("Resource_r5fn1"), SubResource("Resource_h3utt"), SubResource("Resource_udg3m")])

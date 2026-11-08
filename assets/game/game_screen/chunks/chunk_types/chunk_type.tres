@@ -1,0 +1,6 @@
+[gd_resource type="Resource" format=3 uid="uid://bh750jum6cgdr"]
+
+[ext_resource type="Script" uid="uid://5h2bvhg641l4" path="res://assets/game/game_screen/chunks/chunk_types/chunk_type.gd" id="1_b1ltv"]
+
+[resource]
+script = ExtResource("1_b1ltv")
