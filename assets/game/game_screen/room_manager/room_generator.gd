@@ -1,8 +1,11 @@
 class_name RoomGenerator
 extends Node
 
+enum RelicType { NONE, DOUBLE_JUMP, DASH }
+
 @export var _room_scene: PackedScene
 @export var _chunk_library: ChunkLibrary
+@export var _relic_library: Dictionary[RelicType, PackedScene]
 
 const DOUBLE_JUMP_UNLOCK_LEVEL = 3
 const DASH_UNLOCK_LEVEL = 5
@@ -26,7 +29,7 @@ func generate_room(room_id: int) -> Room:
 	var require_double_jump = room_id >= DOUBLE_JUMP_UNLOCK_LEVEL
 	var require_dash = room_id >= DASH_UNLOCK_LEVEL
 	
-	var room_size := Vector2i(3 + floori(room_id / ROOM_HORIZONTAL_SIZE_INCREASE_FREQUENCY), 1 + floori((room_id - 1) / ROOM_VERTICAL_SIZE_INCREASE_FREQUENCY))
+	var room_size := Vector2i(3 + floori(room_id / ROOM_HORIZONTAL_SIZE_INCREASE_FREQUENCY), 1 + floori((room_id - 2) / ROOM_VERTICAL_SIZE_INCREASE_FREQUENCY))
 	var chunk_type_map: Array[Array] = _initialize_chunk_map(room_size.x, room_size.y)
 	
 	var starting_coords := Vector2i(0, chunk_type_map.size() / 2)
@@ -44,7 +47,10 @@ func generate_room(room_id: int) -> Room:
 	room.tile_size = room.tilemap.tile_set.tile_size
 	room.room_id = room_id
 	
-	_spawn_chunks(chunk_map, room, starting_coords, ending_coords)
+	var relic_to_spawn: RelicType = RelicType.NONE
+	if require_double_jump and PlayerManager.get_upgrade_level(Upgrade.UpgradeType.JUMP_LEVEL) == 0:
+		relic_to_spawn = RelicType.DOUBLE_JUMP
+	_spawn_chunks(chunk_map, room, starting_coords, ending_coords, relic_to_spawn)
 	_fill_walls(room.tilemap, room_size)
 	_create_room_exits(room, starting_coords, ending_coords)
 	
@@ -64,9 +70,7 @@ func _generate_solution_path(chunk_map: Array[Array]) -> Vector2i:
 	var x: int = 0
 	var y: int = chunk_map.size() / 2
 	
-	var current_chunk_type #:= &"Through Chunk"
-	#chunk_map[y][x] = current_chunk_type
-	#x += 1
+	var current_chunk_type 
 	
 	var through_is_fine: bool = false
 	while x < chunk_map[y].size():
@@ -319,7 +323,7 @@ func _populate_chunk_map(chunk_type_map: Array[Array], chunk_map: Array[Array], 
 			if chunk_type_map[y][x] != null:
 				chunk_map[y][x] = _chunk_library.pick_chunk(chunk_type_map[y][x], require_double_jump, require_dash)
 
-func _spawn_chunks(chunk_map: Array[Array], target_room: Room, starting_coords: Vector2i, ending_coords: Vector2i):
+func _spawn_chunks(chunk_map: Array[Array], target_room: Room, starting_coords: Vector2i, ending_coords: Vector2i, spawn_relic: RelicType):
 	for y in range(chunk_map.size()):
 		for x in range(chunk_map[y].size()):
 			if chunk_map[y][x] != null:
@@ -328,9 +332,14 @@ func _spawn_chunks(chunk_map: Array[Array], target_room: Room, starting_coords: 
 					edge = "Left"
 				elif Vector2i(x,y) != ending_coords and x == chunk_map[y].size() - 1:
 					edge = "Right"
-				_stamp_chunk(chunk_map[y][x], target_room, Vector2i(CHUNK_SIZE.x * x, CHUNK_SIZE.y * y), edge)
+				
+				# if we need to spawn a relic, spawn it only in the first chunk of the critical path
+				var relic_to_spawn_for_this_chunk = RelicType.NONE
+				if Vector2i(x,y) == starting_coords:
+					relic_to_spawn_for_this_chunk = spawn_relic
+				_stamp_chunk(chunk_map[y][x], target_room, Vector2i(CHUNK_SIZE.x * x, CHUNK_SIZE.y * y), edge, relic_to_spawn_for_this_chunk)
 
-func _stamp_chunk(chunk_scene: PackedScene, target_room: Room, origin: Vector2i, edge: String = ""):
+func _stamp_chunk(chunk_scene: PackedScene, target_room: Room, origin: Vector2i, edge: String, spawn_relic: RelicType):
 	var chunk: ChunkTemplate = chunk_scene.instantiate()
 	var target_layer = target_room.tilemap
 	_copy_layer(chunk.get_node("BaseLayer"), target_layer, origin)
@@ -340,9 +349,15 @@ func _stamp_chunk(chunk_scene: PackedScene, target_room: Room, origin: Vector2i,
 		if edge_layer != null:
 			_copy_layer(edge_layer, target_layer, origin)
 	
-	# TODO: this is temporary, move this out and rework the logic
-	for relic: Node2D in chunk.find_children("*", "Artifact", true, false):
-		var room_relic = relic.duplicate()
+	## TODO: this is temporary, move this out and rework the logic
+	#for relic: Node2D in chunk.find_children("*", "Artifact", true, false):
+		#var room_relic = relic.duplicate()
+		#room_relic.position = relic.position + Vector2(origin * target_room.tile_size)
+		#target_room.add_child(room_relic)
+		
+	if spawn_relic != RelicType.NONE:
+		var relic: Node2D = chunk.find_children("*", "Relic", true, false)[0]
+		var room_relic = _relic_library[spawn_relic].instantiate()
 		room_relic.position = relic.position + Vector2(origin * target_room.tile_size)
 		target_room.add_child(room_relic)
 	

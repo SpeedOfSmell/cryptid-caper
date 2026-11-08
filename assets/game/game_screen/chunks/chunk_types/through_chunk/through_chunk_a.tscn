@@ -4,6 +4,7 @@
 [ext_resource type="TileSet" uid="uid://dywhdftlbg8wv" path="res://assets/game/game_screen/chunks/room_tileset.tres" id="2_tbpo8"]
 [ext_resource type="PackedScene" uid="uid://b1jbsp8xj45we" path="res://assets/game/game_screen/player/player.tscn" id="3_47a16"]
 [ext_resource type="PackedScene" uid="uid://bgb2sv8mxh6fd" path="res://assets/game/game_screen/interactables/obstacle/spike.tscn" id="4_tbpo8"]
+[ext_resource type="PackedScene" uid="uid://d0mhcb0l0g6sy" path="res://assets/game/game_screen/interactables/relic/relic.tscn" id="5_kbw0v"]
 
 [node name="Node2D" type="Node2D" unique_id=605449353]
 script = ExtResource("1_47a16")
@@ -13,10 +14,13 @@ tile_map_data = PackedByteArray("AAAoABQAAAAHAAIAAAAoABMAAAACAAEAAAAoABIAAAACAAE
 tile_set = ExtResource("2_tbpo8")
 
 [node name="Player" parent="." unique_id=182611236 instance=ExtResource("3_47a16")]
-position = Vector2(88, 195)
+position = Vector2(21, 173)
 
 [node name="Spike" parent="." unique_id=254378944 instance=ExtResource("4_tbpo8")]
 position = Vector2(327, 151)
 
 [node name="Spike2" parent="." unique_id=1764935489 instance=ExtResource("4_tbpo8")]
 position = Vector2(342, 151)
+
+[node name="Relic" parent="." unique_id=1616424487 instance=ExtResource("5_kbw0v")]
+position = Vector2(83, 197)

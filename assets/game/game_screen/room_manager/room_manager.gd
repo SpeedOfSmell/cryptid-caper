@@ -5,8 +5,6 @@ signal transition_requested(state: States.GameState)
 @export var music: Resource
 @export var _player_scene: PackedScene
 
-
-
 var _current_room: Room
 var _player: CharacterBody2D
 var _transition_pending := false
