@@ -1,5 +1,7 @@
 extends Node
 
+signal transition_requested(state: States.GameState)
+
 @export var music: Resource
 @export var _player_scene: PackedScene
 
