@@ -36,7 +36,7 @@ func generate_room(room_id: int) -> Room:
 	room.tile_size = room.tilemap.tile_set.tile_size
 	room.room_id = room_id
 	
-	_spawn_chunks(chunk_map, room.tilemap, starting_coords, ending_coords)
+	_spawn_chunks(chunk_map, room, starting_coords, ending_coords)
 	_fill_walls(room.tilemap, room_size)
 	_create_room_exits(room, starting_coords, ending_coords)
 	
@@ -311,7 +311,7 @@ func _populate_chunk_map(chunk_type_map: Array[Array], chunk_map: Array[Array]):
 			if chunk_type_map[y][x] != null:
 				chunk_map[y][x] = _chunk_library.pick_chunk(chunk_type_map[y][x])
 
-func _spawn_chunks(chunk_map: Array[Array], target_layer: TileMapLayer, starting_coords: Vector2i, ending_coords: Vector2i):
+func _spawn_chunks(chunk_map: Array[Array], target_room: Room, starting_coords: Vector2i, ending_coords: Vector2i):
 	for y in range(chunk_map.size()):
 		for x in range(chunk_map[y].size()):
 			if chunk_map[y][x] != null:
@@ -320,16 +320,23 @@ func _spawn_chunks(chunk_map: Array[Array], target_layer: TileMapLayer, starting
 					edge = "Left"
 				elif Vector2i(x,y) != ending_coords and x == chunk_map[y].size() - 1:
 					edge = "Right"
-				_stamp_chunk(chunk_map[y][x], target_layer, Vector2i(CHUNK_SIZE.x * x, CHUNK_SIZE.y * y), edge)
+				_stamp_chunk(chunk_map[y][x], target_room, Vector2i(CHUNK_SIZE.x * x, CHUNK_SIZE.y * y), edge)
 
-func _stamp_chunk(chunk_scene: PackedScene, target_layer: TileMapLayer, origin: Vector2i, edge: String = ""):
+func _stamp_chunk(chunk_scene: PackedScene, target_room: Room, origin: Vector2i, edge: String = ""):
 	var chunk: ChunkTemplate = chunk_scene.instantiate()
+	var target_layer = target_room.tilemap
 	_copy_layer(chunk.get_node("BaseLayer"), target_layer, origin)
 	
 	if edge != "":
 		var edge_layer := chunk.get_node("%sLayer" % edge)
 		if edge_layer != null:
 			_copy_layer(edge_layer, target_layer, origin)
+	
+	# TODO: this is temporary, move this out and rework the logic
+	for relic: Node2D in chunk.find_children("*", "Artifact", true, false):
+		var room_relic = relic.duplicate()
+		room_relic.position = relic.position + Vector2(origin * target_room.tile_size)
+		target_room.add_child(room_relic)
 	
 	chunk.free()
 	

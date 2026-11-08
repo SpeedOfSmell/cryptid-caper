@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://bravhbok4cvo4"]
 
 [ext_resource type="PackedScene" uid="uid://bmi3t0kx1gnbo" path="res://assets/game/room_manager/interactables/interactable.tscn" id="1_7fjoe"]
-[ext_resource type="Script" uid="uid://dmtvxtcobo7cl" path="res://assets/game/room_manager/interactables/relic/relic.gd" id="2_iesbg"]
+[ext_resource type="Script" uid="uid://ldnh5hti4t5j" path="res://assets/game/room_manager/interactables/artifact/artifact.gd" id="2_6qvpo"]
 [ext_resource type="Texture2D" uid="uid://bqw1cdlob2j02" path="res://icon.svg" id="3_resyi"]
 
 [node name="Artifact" unique_id=1616424487 instance=ExtResource("1_7fjoe")]
-script = ExtResource("2_iesbg")
-upgrade_type = 0
+script = ExtResource("2_6qvpo")
+score_value = 200
 one_shot = true
 
 [node name="Sprite2D" parent="." index="1" unique_id=271139163]
