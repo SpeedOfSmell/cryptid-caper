@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bgb2sv8mxh6fd"]
 
 [ext_resource type="PackedScene" uid="uid://bmi3t0kx1gnbo" path="res://assets/game/room_manager/interactables/interactable.tscn" id="1_base"]
-[ext_resource type="Script" uid="uid://eqqm2i7ryv71" path="res://assets/game/room_manager/interactables/spike/spike.gd" id="2_spike"]
+[ext_resource type="Script" uid="uid://eqqm2i7ryv71" path="res://assets/game/room_manager/interactables/obstacle/spike.gd" id="2_spike"]
 [ext_resource type="Texture2D" uid="uid://bqw1cdlob2j02" path="res://icon.svg" id="3_l274g"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_spike"]
