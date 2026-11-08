@@ -3,11 +3,30 @@ extends CharacterBody2D
 
 @export var speed : float = 200
 @export var gravity : float = 1200
+# px/s per second that air speed above walk speed (from a dash) fades back down
+@export var air_momentum_decay : float = 600
 
 @export var sprite_node: AnimatedSprite2D
 @export var standing_shape: CollisionShape2D
 @export var ducking_shape: CollisionShape2D
 var air_jumps_left := 0
+var air_dashes_left := 0
+var ground_dash_cooldown_left := 0.0
+# 1 when facing right, -1 when facing left
+var facing := 1.0
+
+# the jump upgrade's value is the total number of jumps, including the one off the ground
+func max_air_jumps() -> int:
+	return maxi(int(UpgradeDatabase.get_value(Upgrade.UpgradeType.JUMP_LEVEL)) - 1, 0)
+
+# the dash upgrade's value is the number of dashes the player can make before landing again
+func max_air_dashes() -> int:
+	return maxi(int(UpgradeDatabase.get_value(Upgrade.UpgradeType.DASH)), 0)
+
+func _physics_process(delta):
+	if velocity.x != 0:
+		facing = signf(velocity.x)
+	ground_dash_cooldown_left = maxf(ground_dash_cooldown_left - delta, 0.0)
 
 # the jump upgrade's value is the total number of jumps, including the one off the ground
 func max_air_jumps() -> int:
@@ -15,8 +34,7 @@ func max_air_jumps() -> int:
 
 func _process(_delta):
 	# TODO: play walk, jump and duck animations once the art exists.
-	if velocity.x != 0:
-		sprite_node.flip_h = velocity.x < 0
+	sprite_node.flip_h = facing < 0
 
 func walk_input() -> float:
 	return Input.get_axis("walk_left", "walk_right")

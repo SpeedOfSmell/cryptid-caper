@@ -12,5 +12,6 @@ enum GameEvent {
 	Upgrade.UpgradeType.JUMP_LEVEL: 0,
 	Upgrade.UpgradeType.SPEED: 0,
 	Upgrade.UpgradeType.TELEPORT: 0,
+	Upgrade.UpgradeType.DASH: 0,
 }
 @export var events_triggered: Dictionary = {}
