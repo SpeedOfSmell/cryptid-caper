@@ -4,6 +4,11 @@ extends Node
 @export var _room_scene: PackedScene
 @export var _chunk_library: ChunkLibrary
 
+const DOUBLE_JUMP_UNLOCK_LEVEL = 3
+const DASH_UNLOCK_LEVEL = 5
+const ROOM_HORIZONTAL_SIZE_INCREASE_FREQUENCY = 8
+const ROOM_VERTICAL_SIZE_INCREASE_FREQUENCY = 2
+
 const CHUNK_SIZE := Vector2i(20, 12)
 const EXIT_LEFT := 1
 const EXIT_RIGHT := 2
@@ -18,7 +23,10 @@ func _init():
 	_rng.seed = hash(Time.get_datetime_string_from_system())
 
 func generate_room(room_id: int) -> Room:
-	var room_size := Vector2i(3 + floori(room_id / 8), 1 + floori((room_id - 1) / 2))
+	var require_double_jump = room_id >= DOUBLE_JUMP_UNLOCK_LEVEL
+	var require_dash = room_id >= DASH_UNLOCK_LEVEL
+	
+	var room_size := Vector2i(3 + floori(room_id / ROOM_HORIZONTAL_SIZE_INCREASE_FREQUENCY), 1 + floori((room_id - 1) / ROOM_VERTICAL_SIZE_INCREASE_FREQUENCY))
 	var chunk_type_map: Array[Array] = _initialize_chunk_map(room_size.x, room_size.y)
 	
 	var starting_coords := Vector2i(0, chunk_type_map.size() / 2)
@@ -29,7 +37,7 @@ func generate_room(room_id: int) -> Room:
 	_ensure_all_chunks_accessible(chunk_type_map, solution_path)
 	
 	var chunk_map: Array[Array] = _initialize_chunk_map(room_size.x, room_size.y)
-	_populate_chunk_map(chunk_type_map, chunk_map)
+	_populate_chunk_map(chunk_type_map, chunk_map, require_double_jump, require_dash)
 	
 	var room: Room = _room_scene.instantiate()
 	room.tilemap = room.get_node("TileMapLayer")
@@ -303,13 +311,13 @@ func _exit_bit(direction: Vector2i) -> int:
 func _is_in_bounds(chunk_map: Array[Array], position: Vector2i) -> bool:
 	return position.y >= 0 and position.y < chunk_map.size() and position.x >= 0 and position.x < chunk_map[position.y].size()
 
-func _populate_chunk_map(chunk_type_map: Array[Array], chunk_map: Array[Array]):
+func _populate_chunk_map(chunk_type_map: Array[Array], chunk_map: Array[Array], require_double_jump: bool, require_dash: bool):
 	assert(chunk_type_map.size() == chunk_map.size(), "Chunk map does not have same dimensions as chunk type map")
 	
 	for y in range(chunk_type_map.size()):
 		for x in range(chunk_type_map[y].size()):
 			if chunk_type_map[y][x] != null:
-				chunk_map[y][x] = _chunk_library.pick_chunk(chunk_type_map[y][x])
+				chunk_map[y][x] = _chunk_library.pick_chunk(chunk_type_map[y][x], require_double_jump, require_dash)
 
 func _spawn_chunks(chunk_map: Array[Array], target_room: Room, starting_coords: Vector2i, ending_coords: Vector2i):
 	for y in range(chunk_map.size()):
@@ -432,7 +440,6 @@ func _create_room_exits(room: Room, starting_coords: Vector2i, ending_coords: Ve
 	room.exit_rect = exit_rect
 	_create_door_area(room, entrance_rect, -1)
 	_create_door_area(room, exit_rect, 0)
-
 
 func _create_door_area(room: Room, door_rect: Rect2i, door_index: int) -> void:
 	var door_area := Area2D.new()
