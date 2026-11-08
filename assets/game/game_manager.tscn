@@ -1,20 +1,10 @@
 [gd_scene format=3 uid="uid://cxwdpb4m6ahak"]
 
-[ext_resource type="Script" uid="uid://dnkdnq7pum2mv" path="res://assets/game/room_manager/room_manager.gd" id="1_66d57"]
-[ext_resource type="AudioStream" uid="uid://dim3bd5t0xqr6" path="res://assets/audio/music/test_music.wav" id="2_me7jj"]
-[ext_resource type="PackedScene" uid="uid://b1jbsp8xj45we" path="res://assets/game/room_manager/player/player.tscn" id="3_nm2dn"]
-[ext_resource type="Script" uid="uid://bnatdry6yu4yv" path="res://assets/game/room_manager/room_generator.gd" id="3_seigl"]
-[ext_resource type="PackedScene" uid="uid://c3l28xjwi58ex" path="res://assets/game/room_manager/room.tscn" id="4_nm2dn"]
-[ext_resource type="Resource" uid="uid://cckd2ggtqurop" path="res://assets/game/room_manager/chunks/chunk_library.tres" id="5_bedwy"]
+[ext_resource type="Script" uid="uid://b6ygmhsjsbbk0" path="res://assets/game/game_manager.gd" id="1_ne7se"]
+[ext_resource type="PackedScene" uid="uid://p8j6gwwm7x8d" path="res://assets/game/room_manager/room_manager.tscn" id="2_684gi"]
+[ext_resource type="PackedScene" uid="uid://dkabx8v2yxqy1" path="res://assets/game/main_menu/main_menu.tscn" id="2_seigl"]
 
 [node name="Game Manager" type="Node" unique_id=175650822]
-
-[node name="Room Manager" type="Node" parent="." unique_id=2010213947]
-script = ExtResource("1_66d57")
-music = ExtResource("2_me7jj")
-_player_scene = ExtResource("3_nm2dn")
-
-[node name="Room Generator" type="Node" parent="Room Manager" unique_id=1678689634]
-script = ExtResource("3_seigl")
-_room_scene = ExtResource("4_nm2dn")
-_chunk_library = ExtResource("5_bedwy")
+script = ExtResource("1_ne7se")
+_main_menu_scene = ExtResource("2_seigl")
+_game_scene = ExtResource("2_684gi")
