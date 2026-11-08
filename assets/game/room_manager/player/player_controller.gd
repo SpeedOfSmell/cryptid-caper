@@ -28,6 +28,10 @@ func _physics_process(delta):
 		facing = signf(velocity.x)
 	ground_dash_cooldown_left = maxf(ground_dash_cooldown_left - delta, 0.0)
 
+# the jump upgrade's value is the total number of jumps, including the one off the ground
+func max_air_jumps() -> int:
+	return maxi(int(UpgradeDatabase.get_value(Upgrade.UpgradeType.JUMP_LEVEL)) - 1, 0)
+
 func _process(_delta):
 	# TODO: play walk, jump and duck animations once the art exists.
 	sprite_node.flip_h = facing < 0

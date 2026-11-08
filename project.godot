@@ -68,6 +68,12 @@ dash={
 2d_physics/layer_2="player"
 2d_physics/layer_3="interactable"
 
+[layer_names]
+
+2d_physics/layer_1="world"
+2d_physics/layer_2="player"
+2d_physics/layer_3="interactable"
+
 [physics]
 
 3d/physics_engine="Jolt Physics"
