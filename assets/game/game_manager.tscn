@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cxwdpb4m6ahak"]
 
 [ext_resource type="Script" uid="uid://b6ygmhsjsbbk0" path="res://assets/game/game_manager.gd" id="1_ne7se"]
-[ext_resource type="PackedScene" uid="uid://p8j6gwwm7x8d" path="res://assets/game/room_manager/room_manager.tscn" id="2_684gi"]
+[ext_resource type="PackedScene" uid="uid://p8j6gwwm7x8d" path="res://assets/game/game_screen/room_manager/room_manager.tscn" id="2_684gi"]
 [ext_resource type="PackedScene" uid="uid://dkabx8v2yxqy1" path="res://assets/game/main_menu/main_menu.tscn" id="2_seigl"]
 
 [node name="Game Manager" type="Node" unique_id=175650822]

@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://p8j6gwwm7x8d"]
+
+[ext_resource type="Script" uid="uid://dnkdnq7pum2mv" path="res://assets/game/game_screen/room_manager/room_manager.gd" id="1_xylws"]
+[ext_resource type="AudioStream" uid="uid://dim3bd5t0xqr6" path="res://assets/audio/music/test_music.wav" id="2_dxo7i"]
+[ext_resource type="PackedScene" uid="uid://b1jbsp8xj45we" path="res://assets/game/game_screen/player/player.tscn" id="3_u21wa"]
+[ext_resource type="Script" uid="uid://bnatdry6yu4yv" path="res://assets/game/game_screen/room_manager/room_generator.gd" id="4_wgytc"]
+[ext_resource type="PackedScene" uid="uid://c3l28xjwi58ex" path="res://assets/game/game_screen/room_manager/room.tscn" id="5_gfrpa"]
+[ext_resource type="Resource" uid="uid://cckd2ggtqurop" path="res://assets/game/game_screen/chunks/chunk_library.tres" id="6_bqyrq"]
+[ext_resource type="LabelSettings" uid="uid://b3m4nbdxi31eb" path="res://assets/global/label_settings.tres" id="7_tfgok"]
+
+[node name="Room Manager" type="Node" unique_id=1475098114]
+script = ExtResource("1_xylws")
+music = ExtResource("2_dxo7i")
+_player_scene = ExtResource("3_u21wa")
+
+[node name="Room Generator" type="Node" parent="." unique_id=1339619944]
+script = ExtResource("4_wgytc")
+_room_scene = ExtResource("5_gfrpa")
+_chunk_library = ExtResource("6_bqyrq")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1099281372]
+
+[node name="Panel" type="Panel" parent="CanvasLayer" unique_id=1758416649]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -79.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 31.0
+grow_horizontal = 0
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Panel" unique_id=919452516]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Panel" unique_id=631360124]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 38.0
+offset_top = 11.0
+offset_right = -37.0
+offset_bottom = -11.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="CanvasLayer/Panel/HBoxContainer" unique_id=1254653608]
+layout_mode = 2
+text = "Score:"
+label_settings = ExtResource("7_tfgok")
+
+[node name="ScoreValueLabel" type="Label" parent="CanvasLayer/Panel/HBoxContainer" unique_id=1154238249]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
+label_settings = ExtResource("7_tfgok")
