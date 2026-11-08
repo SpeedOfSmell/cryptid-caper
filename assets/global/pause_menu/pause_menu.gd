@@ -1,6 +1,10 @@
 extends CanvasLayer
 
+signal request_quit()
+
 @onready var _score_label: Label = %ScoreValueLabel
+@onready var _menu_panel: Panel = %MenuPanel
+@onready var _confirmation_panel: Panel = %ConfirmationPanel
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -38,6 +42,16 @@ func _close():
 	visible = false
 	#popup_window.hide()
 	get_tree().paused = false
+	
+	
+func _show_confirmation_screen():
+	_menu_panel.visible = false
+	_confirmation_panel.visible = true
+	
+
+func _close_confirmation_screen():
+	_menu_panel.visible = true
+	_confirmation_panel.visible = false
 
 
 func _refresh():
@@ -46,3 +60,19 @@ func _refresh():
 
 func _update_score(score: int):
 	_score_label.text = str(score)
+
+
+func _on_resume_button_pressed():
+	_close()
+
+
+func _on_quit_button_pressed():
+	_show_confirmation_screen()
+
+
+func _on_confirm_button_pressed():
+	request_quit.emit()
+
+
+func _on_cancel_button_pressed():
+	_close_confirmation_screen()
