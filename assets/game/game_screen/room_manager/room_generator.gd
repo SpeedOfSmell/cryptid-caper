@@ -1,16 +1,26 @@
 class_name RoomGenerator
 extends Node
 
+enum RelicType { NONE, DOUBLE_JUMP, DASH }
+
 @export var _room_scene: PackedScene
 @export var _chunk_library: ChunkLibrary
+@export var _relic_library: Dictionary[RelicType, PackedScene]
+@export var _artifact_library: ArtifactLibrary
 
-const CHUNK_SIZE := Vector2i(20, 12)
+const DOUBLE_JUMP_UNLOCK_LEVEL = 3
+const DASH_UNLOCK_LEVEL = 5
+const ROOM_HORIZONTAL_SIZE_INCREASE_FREQUENCY = 8
+const ROOM_VERTICAL_SIZE_INCREASE_FREQUENCY = 2
+
+const CHUNK_SIZE := Vector2i(40, 20)
 const EXIT_LEFT := 1
 const EXIT_RIGHT := 2
 const EXIT_UP := 4
 const EXIT_DOWN := 8
 const CHUNK_DIRECTIONS := [Vector2i.LEFT, Vector2i.RIGHT, Vector2i.UP, Vector2i.DOWN]
 
+# This was supposed to be used to seed random generation so playthroughs can be reproducable but I didn't end up using it everywhere so it's kinda pointless now
 var _rng: RandomNumberGenerator
 
 func _init():
@@ -18,7 +28,11 @@ func _init():
 	_rng.seed = hash(Time.get_datetime_string_from_system())
 
 func generate_room(room_id: int) -> Room:
-	var room_size := Vector2i(3 + floori(room_id / 8), 1 + floori((room_id - 1) / 2))
+	var require_double_jump = room_id >= DOUBLE_JUMP_UNLOCK_LEVEL
+	var require_dash = room_id >= DASH_UNLOCK_LEVEL
+	var artifact_budget = 200
+	
+	var room_size := Vector2i(3 + floori(room_id / ROOM_HORIZONTAL_SIZE_INCREASE_FREQUENCY), 1 + floori((room_id - 2) / ROOM_VERTICAL_SIZE_INCREASE_FREQUENCY))
 	var chunk_type_map: Array[Array] = _initialize_chunk_map(room_size.x, room_size.y)
 	
 	var starting_coords := Vector2i(0, chunk_type_map.size() / 2)
@@ -28,15 +42,20 @@ func generate_room(room_id: int) -> Room:
 	_generate_filler_rooms(chunk_type_map, solution_path)
 	_ensure_all_chunks_accessible(chunk_type_map, solution_path)
 	
+	var artifact_map = _generate_artifact_map(chunk_type_map, artifact_budget)
+	
 	var chunk_map: Array[Array] = _initialize_chunk_map(room_size.x, room_size.y)
-	_populate_chunk_map(chunk_type_map, chunk_map)
+	_populate_chunk_map(chunk_type_map, chunk_map, require_double_jump, require_dash)
 	
 	var room: Room = _room_scene.instantiate()
 	room.tilemap = room.get_node("TileMapLayer")
 	room.tile_size = room.tilemap.tile_set.tile_size
 	room.room_id = room_id
 	
-	_spawn_chunks(chunk_map, room, starting_coords, ending_coords)
+	var relic_to_spawn: RelicType = RelicType.NONE
+	if require_double_jump and PlayerManager.get_upgrade_level(Upgrade.UpgradeType.JUMP_LEVEL) == 0:
+		relic_to_spawn = RelicType.DOUBLE_JUMP
+	_spawn_chunks(chunk_map, artifact_map, room, starting_coords, ending_coords, relic_to_spawn)
 	_fill_walls(room.tilemap, room_size)
 	_create_room_exits(room, starting_coords, ending_coords)
 	
@@ -56,9 +75,7 @@ func _generate_solution_path(chunk_map: Array[Array]) -> Vector2i:
 	var x: int = 0
 	var y: int = chunk_map.size() / 2
 	
-	var current_chunk_type #:= &"Through Chunk"
-	#chunk_map[y][x] = current_chunk_type
-	#x += 1
+	var current_chunk_type 
 	
 	var through_is_fine: bool = false
 	while x < chunk_map[y].size():
@@ -303,15 +320,34 @@ func _exit_bit(direction: Vector2i) -> int:
 func _is_in_bounds(chunk_map: Array[Array], position: Vector2i) -> bool:
 	return position.y >= 0 and position.y < chunk_map.size() and position.x >= 0 and position.x < chunk_map[position.y].size()
 
-func _populate_chunk_map(chunk_type_map: Array[Array], chunk_map: Array[Array]):
+func _generate_artifact_map(chunk_type_map: Array[Array], budget: int) -> Array[Array]:
+	var artifact_map = _initialize_chunk_map(chunk_type_map[0].size(), chunk_type_map.size())
+	
+	while budget >= _artifact_library.get_minimal_score():
+		var artifact := _artifact_library.get_random_artifact(budget)
+		var artifact_location := Vector2i(-1, -1)
+		
+		# TODO: add a check in here to make sure it doesnt loop forever if theres no spots left
+		while artifact_location == Vector2i(-1, -1):
+			var random_coords = Vector2i(_rng.randi_range(0, chunk_type_map[0].size() - 1), _rng.randi_range(0, chunk_type_map.size() - 1))
+			var random_chunk = chunk_type_map[random_coords.y][random_coords.x]
+			if random_chunk != &"Blank Chunk" and artifact_map[random_coords.y][random_coords.x] == null:
+				artifact_location = random_coords
+		
+		artifact_map[artifact_location.y][artifact_location.x] = artifact
+		budget -= artifact.score_value
+	
+	return artifact_map
+
+func _populate_chunk_map(chunk_type_map: Array[Array], chunk_map: Array[Array], require_double_jump: bool, require_dash: bool):
 	assert(chunk_type_map.size() == chunk_map.size(), "Chunk map does not have same dimensions as chunk type map")
 	
 	for y in range(chunk_type_map.size()):
 		for x in range(chunk_type_map[y].size()):
 			if chunk_type_map[y][x] != null:
-				chunk_map[y][x] = _chunk_library.pick_chunk(chunk_type_map[y][x])
+				chunk_map[y][x] = _chunk_library.pick_chunk(chunk_type_map[y][x], require_double_jump, require_dash)
 
-func _spawn_chunks(chunk_map: Array[Array], target_room: Room, starting_coords: Vector2i, ending_coords: Vector2i):
+func _spawn_chunks(chunk_map: Array[Array], artifact_map: Array[Array], target_room: Room, starting_coords: Vector2i, ending_coords: Vector2i, spawn_relic: RelicType):
 	for y in range(chunk_map.size()):
 		for x in range(chunk_map[y].size()):
 			if chunk_map[y][x] != null:
@@ -320,10 +356,18 @@ func _spawn_chunks(chunk_map: Array[Array], target_room: Room, starting_coords: 
 					edge = "Left"
 				elif Vector2i(x,y) != ending_coords and x == chunk_map[y].size() - 1:
 					edge = "Right"
-				_stamp_chunk(chunk_map[y][x], target_room, Vector2i(CHUNK_SIZE.x * x, CHUNK_SIZE.y * y), edge)
+				
+				# if we need to spawn a relic, spawn it only in the first chunk of the critical path
+				var relic_to_spawn_for_this_chunk = RelicType.NONE
+				if Vector2i(x,y) == starting_coords:
+					relic_to_spawn_for_this_chunk = spawn_relic
+				
+				var artifact_to_spawn_for_this_chunk: ArtifactInfo = artifact_map[y][x]
+				 
+				_stamp_chunk(chunk_map[y][x], target_room, Vector2i(CHUNK_SIZE.x * x, CHUNK_SIZE.y * y), edge, relic_to_spawn_for_this_chunk, artifact_to_spawn_for_this_chunk)
 
-func _stamp_chunk(chunk_scene: PackedScene, target_room: Room, origin: Vector2i, edge: String = ""):
-	var chunk: ChunkTemplate = chunk_scene.instantiate()
+func _stamp_chunk(chunk_scene: PackedScene, target_room: Room, origin: Vector2i, edge: String, spawn_relic: RelicType, spawn_artifact: ArtifactInfo):
+	var chunk: Node2D = chunk_scene.instantiate()
 	var target_layer = target_room.tilemap
 	_copy_layer(chunk.get_node("BaseLayer"), target_layer, origin)
 	
@@ -331,12 +375,20 @@ func _stamp_chunk(chunk_scene: PackedScene, target_room: Room, origin: Vector2i,
 		var edge_layer := chunk.get_node("%sLayer" % edge)
 		if edge_layer != null:
 			_copy_layer(edge_layer, target_layer, origin)
-	
-	# TODO: this is temporary, move this out and rework the logic
-	for relic: Node2D in chunk.find_children("*", "Artifact", true, false):
-		var room_relic = relic.duplicate()
-		room_relic.position = relic.position + Vector2(origin * target_room.tile_size)
-		target_room.add_child(room_relic)
+		
+	if spawn_relic != RelicType.NONE:
+		var relic: Node2D = chunk.find_children("*", "Relic", true, false).front()
+		if relic != null:
+			var room_relic = _relic_library[spawn_relic].instantiate()
+			room_relic.position = relic.position + Vector2(origin * target_room.tile_size)
+			target_room.add_child(room_relic)
+		
+	if spawn_artifact != null:
+		var artifact: Node2D = chunk.find_children("*", "Artifact", true, false).front()
+		if artifact != null:
+			var room_artifact = spawn_artifact.artifact_scene.instantiate()
+			room_artifact.position = artifact.position + Vector2(origin * target_room.tile_size)
+			target_room.add_child(room_artifact)
 	
 	chunk.free()
 	
@@ -348,59 +400,6 @@ func _copy_layer(src: TileMapLayer, dst: TileMapLayer, origin: Vector2i):
 			src.get_cell_atlas_coords(cell),
 			src.get_cell_alternative_tile(cell)
 		)
-
-#
-#func _generate_doors() -> void:
-	## Bottom tile of the entry door will be in the center of the height of the _room +/- 10% of the total _room height
-	#_room.entry_door_y = _room.room_height / 2 + randi_range(-int(_room.room_height * 0.10), int(_room.room_height * 0.10))
-	#_room.tilemap.set_cell(Vector2i(0, _room.entry_door_y), TILEMAP_SOURCE_ID, DOOR_TILE)
-	#_room.tilemap.set_cell(Vector2i(0, _room.entry_door_y - 1), TILEMAP_SOURCE_ID, DOOR_TILE)
-#
-	#var entry_door_area := _generate_door_collisionbox(Vector2i(0, _room.entry_door_y))
-	#entry_door_area.body_entered.connect(_room.door_entered.bind(-1))
-	#_room.add_child(entry_door_area)
-#
-	## Entry platform
-	#_room.tilemap.set_cell(Vector2i(1, _room.entry_door_y + 1), TILEMAP_SOURCE_ID, FLOOR_TILES.pick_random())
-	#_room.tilemap.set_cell(Vector2i(2, _room.entry_door_y + 1), TILEMAP_SOURCE_ID, FLOOR_TILES.pick_random())
-#
-	#var exit_doors_num := randi_range(1, 2)
-	#for i in range(exit_doors_num):
-		## Divide the full _room into equal portions for each door
-		#var exit_door_range := _room.room_height / exit_doors_num
-		## Bottom tile of each exit door will be in the center of its relative allocated y space +/- 10% of the allocated height
-		#var exit_door_relative_y := exit_door_range / 2 + randi_range(-int(exit_door_range * 0.10), int(exit_door_range * 0.10))
-		## Move the exit door down the appropriate number of relative heights
-		#var exit_door_y: int = exit_door_relative_y + (exit_door_range * i)
-		#
-		#_room.exit_door_positions.append(Vector2i(_room.room_width - 1, exit_door_y))
-#
-		#_room.tilemap.set_cell(Vector2i(_room.room_width - 1, exit_door_y), TILEMAP_SOURCE_ID, DOOR_TILE)
-		#_room.tilemap.set_cell(Vector2i(_room.room_width - 1, exit_door_y - 1), TILEMAP_SOURCE_ID, DOOR_TILE)
-#
-		#var exit_door_area := _generate_door_collisionbox(Vector2i(_room.room_width - 1, exit_door_y))
-		#exit_door_area.body_entered.connect(_room.door_entered.bind(i))
-		#_room.add_child(exit_door_area)
-#
-		## Exit platform
-		#_room.tilemap.set_cell(Vector2i(_room.room_width - 2, exit_door_y + 1), TILEMAP_SOURCE_ID, FLOOR_TILES.pick_random())
-		#_room.tilemap.set_cell(Vector2i(_room.room_width - 3, exit_door_y + 1), TILEMAP_SOURCE_ID, FLOOR_TILES.pick_random())
-#
-		## Create the corresponding _room only when the player first uses this exit
-		#_room.next_rooms.append(null)
-#
-#
-## door_pos is the bottom door tile in tile coordinates
-#func _generate_door_collisionbox(door_pos: Vector2i) -> Area2D:
-	## Create collision area exact shape and position of the door
-	#var door_area := Area2D.new()
-	#var door_col_shape := CollisionShape2D.new()
-	#var rect_shape := RectangleShape2D.new()
-	#rect_shape.size = Vector2i(_room.tile_size.x, _room.tile_size.y * 2)
-	#door_col_shape.shape = rect_shape
-	#door_area.add_child(door_col_shape)
-	#door_area.position = Vector2i(door_pos.x * _room.tile_size.x + (_room.tile_size.x / 2), door_pos.y * _room.tile_size.y)
-	#return door_area
 
 func _fill_walls(tilemap: TileMapLayer, room_size: Vector2i):
 	# The playable area covered by chunks, in tiles
@@ -432,7 +431,6 @@ func _create_room_exits(room: Room, starting_coords: Vector2i, ending_coords: Ve
 	room.exit_rect = exit_rect
 	_create_door_area(room, entrance_rect, -1)
 	_create_door_area(room, exit_rect, 0)
-
 
 func _create_door_area(room: Room, door_rect: Rect2i, door_index: int) -> void:
 	var door_area := Area2D.new()

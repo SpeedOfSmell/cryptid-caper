@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://mplt1omjcq"]
+
+[ext_resource type="PackedScene" uid="uid://bmi3t0kx1gnbo" path="res://assets/game/game_screen/interactables/interactable.tscn" id="1_3p6gc"]
+[ext_resource type="Script" uid="uid://dmtvxtcobo7cl" path="res://assets/game/game_screen/interactables/relic/relic.gd" id="2_odgwo"]
+[ext_resource type="Texture2D" uid="uid://bqw1cdlob2j02" path="res://icon.svg" id="3_ua0d5"]
+
+[node name="Relic" unique_id=1616424487 instance=ExtResource("1_3p6gc")]
+script = ExtResource("2_odgwo")
+upgrade_type = 0
+one_shot = true
+
+[node name="Sprite2D" parent="." index="1" unique_id=271139163]
+position = Vector2(-3.8146973e-06, -0.9999962)
+scale = Vector2(0.0859375, 0.0859375)
+texture = ExtResource("3_ua0d5")

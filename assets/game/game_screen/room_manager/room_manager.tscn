@@ -6,7 +6,16 @@
 [ext_resource type="Script" uid="uid://bnatdry6yu4yv" path="res://assets/game/game_screen/room_manager/room_generator.gd" id="4_wgytc"]
 [ext_resource type="PackedScene" uid="uid://c3l28xjwi58ex" path="res://assets/game/game_screen/room_manager/room.tscn" id="5_gfrpa"]
 [ext_resource type="Resource" uid="uid://cckd2ggtqurop" path="res://assets/game/game_screen/chunks/chunk_library.tres" id="6_bqyrq"]
+[ext_resource type="PackedScene" uid="uid://mplt1omjcq" path="res://assets/game/game_screen/interactables/relic/double_jump_relic/double_jump_relic.tscn" id="7_fjksm"]
 [ext_resource type="LabelSettings" uid="uid://b3m4nbdxi31eb" path="res://assets/global/label_settings.tres" id="7_tfgok"]
+[ext_resource type="Script" uid="uid://bbyfvnwmopiua" path="res://assets/game/game_screen/interactables/artifact/artifact_info.gd" id="8_ojc38"]
+[ext_resource type="Resource" uid="uid://d3hkcd6jnf0go" path="res://assets/game/game_screen/interactables/artifact/artifact_a/artifact_a.tres" id="9_e307x"]
+[ext_resource type="Script" uid="uid://dc3stds6x18aq" path="res://assets/game/game_screen/interactables/artifact/artifact_library.gd" id="9_vtgo2"]
+
+[sub_resource type="Resource" id="Resource_fjksm"]
+script = ExtResource("9_vtgo2")
+artifacts = Array[ExtResource("8_ojc38")]([ExtResource("9_e307x")])
+metadata/_custom_type_script = "uid://dc3stds6x18aq"
 
 [node name="Room Manager" type="Node" unique_id=1475098114]
 script = ExtResource("1_xylws")
@@ -17,6 +26,10 @@ _player_scene = ExtResource("3_u21wa")
 script = ExtResource("4_wgytc")
 _room_scene = ExtResource("5_gfrpa")
 _chunk_library = ExtResource("6_bqyrq")
+_relic_library = Dictionary[int, PackedScene]({
+1: ExtResource("7_fjksm")
+})
+_artifact_library = SubResource("Resource_fjksm")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1099281372]
 
