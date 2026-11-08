@@ -32,6 +32,9 @@ func add_score(amount: int) -> void:
 	data.score += amount
 	score_changed.emit(data.score)
 	
+func get_score() -> int:
+	return data.score
+	
 func get_upgrade_level(type: Upgrade.UpgradeType) -> int:
 	return data.upgrades.get(type, 0) #i mean, do we need this? or can we just do data.upgrades.get from the consumer. maybe we keep this just in case for calcs later, safest option
 

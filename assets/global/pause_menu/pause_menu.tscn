@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://mjnwtqq0fvx0"]
+
+[ext_resource type="LabelSettings" uid="uid://b3m4nbdxi31eb" path="res://assets/global/label_settings.tres" id="1_4jdrg"]
+[ext_resource type="Script" uid="uid://cvq7w15jctxe1" path="res://assets/global/pause_menu/pause_menu.gd" id="1_script"]
+
+[node name="PauseMenu" type="CanvasLayer" unique_id=1184906971]
+visible = false
+script = ExtResource("1_script")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=785679856]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MenuPanel" type="Panel" parent="." unique_id=207055466]
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="MenuPanel" unique_id=169138894]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MenuPanel/MarginContainer" unique_id=1146218313]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="MenuPanel/MarginContainer/VBoxContainer" unique_id=212797571]
+layout_mode = 2
+text = "Paused"
+label_settings = ExtResource("1_4jdrg")
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MenuPanel/MarginContainer/VBoxContainer" unique_id=1129213417]
+layout_mode = 2
+
+[node name="ScoreLabel" type="Label" parent="MenuPanel/MarginContainer/VBoxContainer/HBoxContainer" unique_id=238028931]
+layout_mode = 2
+text = "Score:"
+label_settings = ExtResource("1_4jdrg")
+
+[node name="ScoreValueLabel" type="Label" parent="MenuPanel/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1486386068]
+unique_name_in_owner = true
+layout_mode = 2
+label_settings = ExtResource("1_4jdrg")
+
+[node name="ResumeButton" type="Button" parent="MenuPanel/MarginContainer/VBoxContainer" unique_id=617632810]
+layout_mode = 2
+text = "Resume"
+
+[node name="QuitButton" type="Button" parent="MenuPanel/MarginContainer/VBoxContainer" unique_id=399878621]
+layout_mode = 2
+text = "Quit"
