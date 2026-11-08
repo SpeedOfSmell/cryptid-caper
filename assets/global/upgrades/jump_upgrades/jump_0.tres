@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource("1_bso0q")
-value = 2.0
+value = 1.0
 name = "Jump"
 description = "Increases the number of jumps"
