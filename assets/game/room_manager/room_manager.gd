@@ -13,6 +13,8 @@ var _next_room_id := 1
 
 
 func _ready() -> void:
+	PlayerManager.score_changed.connect(_update_score)
+	
 	#TODO: move this music starting to somewhere else once its more organized, state machine?
 	AudioManager.play_music(music)
 	_current_room = _generate_new_room(null)
@@ -72,3 +74,6 @@ func _change_room(source_room: Room, destination_room: Room, spawn_position: Vec
 func _place_player(spawn_position: Vector2) -> void:
 	_player.position = spawn_position
 	_player.velocity = Vector2.ZERO
+	
+func _update_score(score: int):
+	%ScoreValueLabel.text = str(score)
