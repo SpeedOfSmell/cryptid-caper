@@ -1,6 +1,10 @@
 [gd_scene format=3 uid="uid://de3hvi1hq1dkq"]
 
 [ext_resource type="Script" uid="uid://bcbebn7p3tjms" path="res://assets/global/upgrades/upgrade_database.gd" id="1_s6vli"]
+[ext_resource type="Script" uid="uid://n0qanvi11kb1" path="res://assets/global/upgrades/upgrade.gd" id="2_upg"]
+[ext_resource type="Resource" uid="uid://xgk88umhihjg" path="res://assets/global/upgrades/jump_upgrades/jump_0.tres" id="3_j0"]
+[ext_resource type="Resource" uid="uid://52gf81aokntf" path="res://assets/global/upgrades/jump_upgrades/jump_1.tres" id="4_j1"]
 
 [node name="UpgradeDatabase" type="Node2D" unique_id=1333451300]
 script = ExtResource("1_s6vli")
+jump_upgrades = Array[ExtResource("2_upg")]([ExtResource("3_j0"), ExtResource("4_j1")])

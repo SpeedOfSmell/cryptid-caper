@@ -24,6 +24,9 @@ func lose_health(amount: int = 1) -> void:
 	if data.health == 0:
 		player_died.emit()
 
+func kill() -> void:
+	lose_health(data.health)
+
 func gain_health(amount: int = 1) -> void:
 	data.health = mini(data.health + amount, data.max_health)
 	health_changed.emit(data.health)
