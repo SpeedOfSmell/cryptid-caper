@@ -1,7 +1,7 @@
 extends Resource
 class_name Upgrade
 
-enum UpgradeType { JUMP_LEVEL, SPEED, TELEPORT }
+enum UpgradeType { JUMP_LEVEL, SPEED, TELEPORT, DASH }
 
 @export var type: UpgradeType
 @export_range(0, 10) var level: int

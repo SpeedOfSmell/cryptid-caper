@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Upgrade" format=3 uid="uid://bovim61tl40f0"]
+
+[ext_resource type="Script" uid="uid://n0qanvi11kb1" path="res://assets/global/upgrades/upgrade.gd" id="1_upg"]
+
+[resource]
+script = ExtResource("1_upg")
+type = 3
+level = 1
+value = 2.0
+name = "Dash"
+description = "Increases the number of dashes in the air"

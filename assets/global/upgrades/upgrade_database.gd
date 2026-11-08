@@ -6,12 +6,14 @@ var upgrades_dictionary
 @export var jump_upgrades: Array[Upgrade]
 @export var speed_upgrades: Array[Upgrade]
 @export var teleport_upgrades: Array[Upgrade]
+@export var dash_upgrades: Array[Upgrade]
 
 func _ready():
 	upgrades_dictionary = {
 		Upgrade.UpgradeType.JUMP_LEVEL: jump_upgrades,
 		Upgrade.UpgradeType.SPEED: speed_upgrades,
 		Upgrade.UpgradeType.TELEPORT: teleport_upgrades,
+		Upgrade.UpgradeType.DASH: dash_upgrades,
 	}
 
 # the effect magnitude for the player's current level of upgrade
