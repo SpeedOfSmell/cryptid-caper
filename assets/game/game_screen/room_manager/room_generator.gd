@@ -12,7 +12,7 @@ const DASH_UNLOCK_LEVEL = 5
 const ROOM_HORIZONTAL_SIZE_INCREASE_FREQUENCY = 8
 const ROOM_VERTICAL_SIZE_INCREASE_FREQUENCY = 2
 
-const CHUNK_SIZE := Vector2i(20, 12)
+const CHUNK_SIZE := Vector2i(40, 20)
 const EXIT_LEFT := 1
 const EXIT_RIGHT := 2
 const EXIT_UP := 4
@@ -340,7 +340,7 @@ func _spawn_chunks(chunk_map: Array[Array], target_room: Room, starting_coords: 
 				_stamp_chunk(chunk_map[y][x], target_room, Vector2i(CHUNK_SIZE.x * x, CHUNK_SIZE.y * y), edge, relic_to_spawn_for_this_chunk)
 
 func _stamp_chunk(chunk_scene: PackedScene, target_room: Room, origin: Vector2i, edge: String, spawn_relic: RelicType):
-	var chunk: ChunkTemplate = chunk_scene.instantiate()
+	var chunk: Node2D = chunk_scene.instantiate()
 	var target_layer = target_room.tilemap
 	_copy_layer(chunk.get_node("BaseLayer"), target_layer, origin)
 	
