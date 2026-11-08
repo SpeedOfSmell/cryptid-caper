@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="SfxEvent" format=3 uid="uid://bu6hvdg3ymq0l"]
+
+[ext_resource type="Script" uid="uid://bs2frmocmdsle" path="res://assets/global/sfx_event.gd" id="1_as8j3"]
+[ext_resource type="AudioStream" uid="uid://cbllf6i4ps0p8" path="res://assets/audio/sfx/Obstacles/SFX_Obstacle_Dart_1.wav" id="2_dwhha"]
+[ext_resource type="AudioStream" uid="uid://d34k2myteq7wj" path="res://assets/audio/sfx/Obstacles/SFX_Obstacle_Dart_2.wav" id="3_5xg6f"]
+[ext_resource type="AudioStream" uid="uid://ca615vek6rb6v" path="res://assets/audio/sfx/Obstacles/SFX_Obstacle_Dart_3.wav" id="4_sv11o"]
+[ext_resource type="AudioStream" uid="uid://d28bogfi2gf6g" path="res://assets/audio/sfx/Obstacles/SFX_Obstacle_Dart_4.wav" id="5_sctoa"]
+
+[resource]
+script = ExtResource("1_as8j3")
+streams = Array[AudioStream]([ExtResource("2_dwhha"), ExtResource("3_5xg6f"), ExtResource("4_sv11o"), ExtResource("5_sctoa")])
+metadata/_custom_type_script = "uid://bs2frmocmdsle"

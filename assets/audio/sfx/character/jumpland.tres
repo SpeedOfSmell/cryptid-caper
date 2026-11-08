@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="SfxEvent" format=3 uid="uid://e1opoylhbwea"]
+
+[ext_resource type="Script" uid="uid://bs2frmocmdsle" path="res://assets/global/sfx_event.gd" id="1_h5vl5"]
+[ext_resource type="AudioStream" uid="uid://ddsiws13wnoac" path="res://assets/audio/sfx/character/SFX_JumpLand_1.wav" id="2_t0pcn"]
+[ext_resource type="AudioStream" uid="uid://b2rbcogr888a4" path="res://assets/audio/sfx/character/SFX_JumpLand_2.wav" id="3_hc2t7"]
+
+[resource]
+script = ExtResource("1_h5vl5")
+streams = Array[AudioStream]([ExtResource("2_t0pcn"), ExtResource("3_hc2t7")])
+metadata/_custom_type_script = "uid://bs2frmocmdsle"
