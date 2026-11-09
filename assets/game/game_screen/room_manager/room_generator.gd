@@ -325,22 +325,26 @@ func _is_in_bounds(chunk_map: Array[Array], position: Vector2i) -> bool:
 
 func _generate_artifact_map(chunk_type_map: Array[Array], budget: int) -> Array[Array]:
 	var artifact_map = _initialize_chunk_map(chunk_type_map[0].size(), chunk_type_map.size())
+	var available_chunks = _get_available_artifact_chunks(chunk_type_map)
 	
-	while budget >= _artifact_library.get_minimal_score():
-		var artifact := _artifact_library.get_random_artifact(budget)
-		var artifact_location := Vector2i(-1, -1)
+	while budget >= _artifact_library.get_minimal_score() and available_chunks.size() > 0:
+		var artifact := _artifact_library.get_random_artifact(budget)	
+		var random_chunk: Vector2i =  available_chunks.pop_at(_rng.randi_range(0, available_chunks.size() - 1))
 		
-		# TODO: add a check in here to make sure it doesnt loop forever if theres no spots left
-		while artifact_location == Vector2i(-1, -1):
-			var random_coords = Vector2i(_rng.randi_range(0, chunk_type_map[0].size() - 1), _rng.randi_range(0, chunk_type_map.size() - 1))
-			var random_chunk = chunk_type_map[random_coords.y][random_coords.x]
-			if random_chunk != &"Blank Chunk" and artifact_map[random_coords.y][random_coords.x] == null:
-				artifact_location = random_coords
-		
-		artifact_map[artifact_location.y][artifact_location.x] = artifact
+		artifact_map[random_chunk.y][random_chunk.x] = artifact
 		budget -= artifact.score_value
 	
 	return artifact_map
+
+func _get_available_artifact_chunks(chunk_type_map) -> Array[Vector2i]:
+	var available_chunks: Array[Vector2i]
+	
+	for y in range(chunk_type_map.size()):
+		for x in range(chunk_type_map[y].size()):
+			if chunk_type_map[y][x] != &"Blank Chunk":
+				available_chunks.append(Vector2i(x, y))
+	
+	return available_chunks
 
 func _populate_chunk_map(chunk_type_map: Array[Array], chunk_map: Array[Array], require_double_jump: bool, require_dash: bool):
 	assert(chunk_type_map.size() == chunk_map.size(), "Chunk map does not have same dimensions as chunk type map")
