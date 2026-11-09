@@ -5,6 +5,11 @@ signal transition_requested(state: States.GameState)
 @export var music: Resource
 @export var _player_scene: PackedScene
 
+# Time player has at start in seconds
+const START_TIME:float = 5 * 60
+
+var time_left: float
+
 var _current_room: Room
 var _player: CharacterBody2D
 var _transition_pending := false
@@ -14,6 +19,7 @@ var _next_room_id := 1
 
 func _ready() -> void:
 	PlayerManager.score_changed.connect(_update_score)
+	$PauseMenu.request_quit.connect(_quit_game)
 	
 	#TODO: move this music starting to somewhere else once its more organized, state machine?
 	AudioManager.play_music(music)
@@ -26,7 +32,16 @@ func _ready() -> void:
 	add_child(_current_room)
 	add_child(_player)
 	print("Current room: %d" % _current_room.room_id)
+	
+	time_left = START_TIME
 
+func _process(delta: float):
+	time_left -= delta
+	_update_time(ceili(time_left))
+	
+	if time_left <= 0.0:
+		time_left = 0.0
+		_on_timer_expired()
 
 func _generate_new_room(source_room: Room) -> Room:
 	var room = _room_generator.generate_room(_next_room_id)
@@ -80,7 +95,18 @@ func _place_player(spawn_position: Vector2) -> void:
 func _update_score(score: int):
 	%ScoreValueLabel.text = str(score)
 	
+func _update_time(seconds: int):
+	var m := seconds / 60
+	var s := seconds % 60
+	%TimeLabel.text = "%02d:%02d" % [m, s]
+	
 func _respawn_player(spawn_position: Vector2):
 	_place_player(spawn_position)
 	PlayerManager.gain_health(1)
 	# subtract time?
+	
+func _quit_game():
+	transition_requested.emit(States.GameState.MAIN_MENU)
+	
+func _on_timer_expired():
+	transition_requested.emit(States.GameState.MAIN_MENU)

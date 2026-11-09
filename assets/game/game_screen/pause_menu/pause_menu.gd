@@ -71,6 +71,7 @@ func _on_quit_button_pressed():
 
 
 func _on_confirm_button_pressed():
+	_close()
 	request_quit.emit()
 
 
