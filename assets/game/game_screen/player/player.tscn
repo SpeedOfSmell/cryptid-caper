@@ -117,8 +117,8 @@ script = ExtResource("8_y5rae")
 [node name="Coyote" type="Node" parent="State Machine" unique_id=1266094371]
 script = ExtResource("9_coy01")
 
-[node name="Drop" type="Node" parent="State Machine"]
+[node name="Drop" type="Node" parent="State Machine" unique_id=882156059]
 script = ExtResource("10_drop")
 
-[node name="Dash" type="Node" parent="State Machine"]
+[node name="Dash" type="Node" parent="State Machine" unique_id=547373932]
 script = ExtResource("11_dash")

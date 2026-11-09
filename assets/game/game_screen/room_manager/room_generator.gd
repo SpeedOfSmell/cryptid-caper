@@ -392,7 +392,12 @@ func _stamp_chunk(chunk_scene: PackedScene, target_room: Room, origin: Vector2i,
 			var room_artifact = spawn_artifact.artifact_scene.instantiate()
 			room_artifact.position = artifact.position + Vector2(origin * target_room.tile_size)
 			target_room.add_child(room_artifact)
-	
+			
+	for obstacle: Node2D in chunk.find_children("*", "Obstacle", true, false):
+		var room_obstacle = obstacle.duplicate()
+		room_obstacle.position = obstacle.position + Vector2(origin * target_room.tile_size)
+		target_room.add_child(room_obstacle)
+			
 	chunk.free()
 	
 func _copy_layer(src: TileMapLayer, dst: TileMapLayer, origin: Vector2i):
