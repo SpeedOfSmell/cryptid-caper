@@ -1,108 +1,181 @@
 [gd_scene format=3 uid="uid://mjnwtqq0fvx0"]
 
-[ext_resource type="LabelSettings" uid="uid://b3m4nbdxi31eb" path="res://assets/global/label_settings_black.tres" id="1_4jdrg"]
 [ext_resource type="Script" uid="uid://cvq7w15jctxe1" path="res://assets/game/game_screen/pause_menu/pause_menu.gd" id="1_script"]
+[ext_resource type="LabelSettings" uid="uid://b3m4nbdxi31eb" path="res://assets/global/label_settings_black.tres" id="2_ej2ti"]
+[ext_resource type="LabelSettings" uid="uid://ck6ardbqhy8n1" path="res://assets/global/label_settings_white.tres" id="3_qrutk"]
+[ext_resource type="Shader" uid="uid://mqdvfso6cnh2" path="res://assets/game/game_screen/room_manager/dither_fade.gdshader" id="4_5yvon"]
+[ext_resource type="FontFile" uid="uid://bf12joacxh8gs" path="res://assets/global/ui/monogram.ttf" id="5_fft60"]
+[ext_resource type="Texture2D" uid="uid://b7x2nakyw726r" path="res://assets/global/ui/Ui_1.png" id="6_c6nhl"]
+[ext_resource type="Texture2D" uid="uid://cv7346qrc8j7i" path="res://assets/global/ui/Ui_2.png" id="7_akq67"]
 
-[node name="PauseMenu" type="CanvasLayer" unique_id=1184906971]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yk6y2"]
+shader = ExtResource("4_5yvon")
+shader_parameter/progress = 0.0
+shader_parameter/fade_color = Color(0.13333334, 0.13725491, 0.13725491, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1lvrn"]
+bg_color = Color(0.13333334, 0.13725491, 0.13725491, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_o16cr"]
+font = ExtResource("5_fft60")
+font_size = 41
+font_color = Color(0.9411765, 0.9647059, 0.9411765, 1)
+shadow_size = 0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nimas"]
+bg_color = Color(0.13333334, 0.13725491, 0.13725491, 1)
+
+[node name="PauseMenu" type="CanvasLayer" unique_id=1680195528]
 process_mode = 3
 visible = false
 script = ExtResource("1_script")
+unfocusedLabel = ExtResource("2_ej2ti")
+focusedLabel = ExtResource("3_qrutk")
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=785679856]
+[node name="PauseFade" type="ColorRect" parent="." unique_id=372953409]
+unique_name_in_owner = true
+process_mode = 3
+material = SubResource("ShaderMaterial_yk6y2")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+color = Color(0.9411765, 0.9647059, 0.9411765, 1)
 
-[node name="MenuPanel" type="Panel" parent="." unique_id=207055466]
-unique_name_in_owner = true
-anchors_preset = 13
-anchor_left = 0.5
-anchor_right = 0.5
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-
-[node name="MarginContainer" type="MarginContainer" parent="MenuPanel" unique_id=169138894]
-layout_mode = 1
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1875945060]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 80
+theme_override_constants/margin_top = 35
+theme_override_constants/margin_right = 80
+theme_override_constants/margin_bottom = 35
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MenuPanel/MarginContainer" unique_id=1146218313]
-layout_mode = 2
-
-[node name="TitleLabel" type="Label" parent="MenuPanel/MarginContainer/VBoxContainer" unique_id=212797571]
-layout_mode = 2
-text = "Paused"
-label_settings = ExtResource("1_4jdrg")
-horizontal_alignment = 1
-
-[node name="HBoxContainer" type="HBoxContainer" parent="MenuPanel/MarginContainer/VBoxContainer" unique_id=1129213417]
-layout_mode = 2
-
-[node name="ScoreLabel" type="Label" parent="MenuPanel/MarginContainer/VBoxContainer/HBoxContainer" unique_id=238028931]
-layout_mode = 2
-text = "Score:"
-label_settings = ExtResource("1_4jdrg")
-
-[node name="ScoreValueLabel" type="Label" parent="MenuPanel/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1486386068]
+[node name="MenuPanel" type="PanelContainer" parent="MarginContainer" unique_id=2075941696]
 unique_name_in_owner = true
 layout_mode = 2
-label_settings = ExtResource("1_4jdrg")
+theme_override_styles/panel = SubResource("StyleBoxFlat_1lvrn")
 
-[node name="ResumeButton" type="Button" parent="MenuPanel/MarginContainer/VBoxContainer" unique_id=617632810]
-layout_mode = 2
-text = "Resume"
-
-[node name="QuitButton" type="Button" parent="MenuPanel/MarginContainer/VBoxContainer" unique_id=399878621]
-layout_mode = 2
-text = "Quit"
-
-[node name="ConfirmationPanel" type="Panel" parent="." unique_id=576373266]
-unique_name_in_owner = true
-visible = false
-anchors_preset = 13
-anchor_left = 0.5
-anchor_right = 0.5
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="ConfirmationPanel" unique_id=1621779400]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="ConfirmationPanel/MarginContainer" unique_id=852461917]
-layout_mode = 2
-
-[node name="ConfirmationLabel" type="Label" parent="ConfirmationPanel/MarginContainer/VBoxContainer" unique_id=933260738]
-layout_mode = 2
-text = "Are you sure you want to quit?"
-label_settings = ExtResource("1_4jdrg")
-horizontal_alignment = 1
-
-[node name="HBoxContainer" type="HBoxContainer" parent="ConfirmationPanel/MarginContainer/VBoxContainer" unique_id=481265317]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MenuPanel" unique_id=1603616021]
 layout_mode = 2
 alignment = 1
 
-[node name="ConfirmButton" type="Button" parent="ConfirmationPanel/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1806850661]
+[node name="TitleLabel" type="Label" parent="MarginContainer/MenuPanel/VBoxContainer" unique_id=1012163844]
 layout_mode = 2
+text = "Paused"
+label_settings = SubResource("LabelSettings_o16cr")
+horizontal_alignment = 1
+
+[node name="ResumeButton" type="TextureButton" parent="MarginContainer/MenuPanel/VBoxContainer" unique_id=1009090881]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+texture_normal = ExtResource("6_c6nhl")
+texture_hover = ExtResource("7_akq67")
+texture_focused = ExtResource("7_akq67")
+
+[node name="Label" type="Label" parent="MarginContainer/MenuPanel/VBoxContainer/ResumeButton" unique_id=1057693855]
+layout_mode = 0
+offset_left = 3.0
+offset_top = -1.0
+offset_right = 70.0
+offset_bottom = 35.0
+text = "Resume"
+label_settings = ExtResource("2_ej2ti")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="QuitButton" type="TextureButton" parent="MarginContainer/MenuPanel/VBoxContainer" unique_id=1708759566]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+texture_normal = ExtResource("6_c6nhl")
+texture_hover = ExtResource("7_akq67")
+texture_focused = ExtResource("7_akq67")
+
+[node name="Label" type="Label" parent="MarginContainer/MenuPanel/VBoxContainer/QuitButton" unique_id=2051836473]
+layout_mode = 0
+offset_left = 1.0
+offset_top = -1.0
+offset_right = 68.0
+offset_bottom = 34.0
+text = "Quit"
+label_settings = ExtResource("2_ej2ti")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ConfirmationPanel" type="PanelContainer" parent="MarginContainer" unique_id=230031828]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_nimas")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/ConfirmationPanel" unique_id=1259650004]
+layout_mode = 2
+
+[node name="ConfirmationLabel" type="Label" parent="MarginContainer/ConfirmationPanel/VBoxContainer" unique_id=1485671350]
+layout_mode = 2
+text = "Are you sure you want to quit?"
+label_settings = ExtResource("3_qrutk")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="ConfirmButton" type="TextureButton" parent="MarginContainer/ConfirmationPanel/VBoxContainer" unique_id=1110494917]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+texture_normal = ExtResource("6_c6nhl")
+texture_hover = ExtResource("7_akq67")
+texture_focused = ExtResource("7_akq67")
+
+[node name="Label" type="Label" parent="MarginContainer/ConfirmationPanel/VBoxContainer/ConfirmButton" unique_id=2104622679]
+layout_mode = 0
+offset_left = 1.0
+offset_right = 68.0
+offset_bottom = 36.0
 text = "Confirm"
+label_settings = ExtResource("2_ej2ti")
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="CancelButton" type="Button" parent="ConfirmationPanel/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1922386974]
+[node name="CancelButton" type="TextureButton" parent="MarginContainer/ConfirmationPanel/VBoxContainer" unique_id=470043228]
+unique_name_in_owner = true
 layout_mode = 2
-text = "Cancel"
+size_flags_horizontal = 4
+texture_normal = ExtResource("6_c6nhl")
+texture_hover = ExtResource("7_akq67")
+texture_focused = ExtResource("7_akq67")
 
-[connection signal="pressed" from="MenuPanel/MarginContainer/VBoxContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
-[connection signal="pressed" from="MenuPanel/MarginContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
-[connection signal="pressed" from="ConfirmationPanel/MarginContainer/VBoxContainer/HBoxContainer/ConfirmButton" to="." method="_on_confirm_button_pressed"]
-[connection signal="pressed" from="ConfirmationPanel/MarginContainer/VBoxContainer/HBoxContainer/CancelButton" to="." method="_on_cancel_button_pressed"]
+[node name="Label" type="Label" parent="MarginContainer/ConfirmationPanel/VBoxContainer/CancelButton" unique_id=1717561804]
+layout_mode = 0
+offset_left = 2.0
+offset_right = 69.0
+offset_bottom = 35.0
+text = "Cancel"
+label_settings = ExtResource("2_ej2ti")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="focus_entered" from="MarginContainer/MenuPanel/VBoxContainer/ResumeButton" to="." method="_on_resume_button_focus_entered"]
+[connection signal="focus_exited" from="MarginContainer/MenuPanel/VBoxContainer/ResumeButton" to="." method="_on_resume_button_focus_exited"]
+[connection signal="mouse_entered" from="MarginContainer/MenuPanel/VBoxContainer/ResumeButton" to="." method="_on_resume_button_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer/MenuPanel/VBoxContainer/ResumeButton" to="." method="_on_resume_button_mouse_exited"]
+[connection signal="pressed" from="MarginContainer/MenuPanel/VBoxContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="focus_entered" from="MarginContainer/MenuPanel/VBoxContainer/QuitButton" to="." method="_on_quit_button_focus_entered"]
+[connection signal="focus_exited" from="MarginContainer/MenuPanel/VBoxContainer/QuitButton" to="." method="_on_quit_button_focus_exited"]
+[connection signal="mouse_entered" from="MarginContainer/MenuPanel/VBoxContainer/QuitButton" to="." method="_on_quit_button_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer/MenuPanel/VBoxContainer/QuitButton" to="." method="_on_quit_button_mouse_exited"]
+[connection signal="pressed" from="MarginContainer/MenuPanel/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="focus_entered" from="MarginContainer/ConfirmationPanel/VBoxContainer/ConfirmButton" to="." method="_on_confirm_button_focus_entered"]
+[connection signal="focus_exited" from="MarginContainer/ConfirmationPanel/VBoxContainer/ConfirmButton" to="." method="_on_confirm_button_focus_exited"]
+[connection signal="mouse_entered" from="MarginContainer/ConfirmationPanel/VBoxContainer/ConfirmButton" to="." method="_on_confirm_button_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer/ConfirmationPanel/VBoxContainer/ConfirmButton" to="." method="_on_confirm_button_mouse_exited"]
+[connection signal="pressed" from="MarginContainer/ConfirmationPanel/VBoxContainer/ConfirmButton" to="." method="_on_confirm_button_pressed"]
+[connection signal="focus_entered" from="MarginContainer/ConfirmationPanel/VBoxContainer/CancelButton" to="." method="_on_cancel_button_focus_entered"]
+[connection signal="focus_exited" from="MarginContainer/ConfirmationPanel/VBoxContainer/CancelButton" to="." method="_on_cancel_button_focus_exited"]
+[connection signal="mouse_entered" from="MarginContainer/ConfirmationPanel/VBoxContainer/CancelButton" to="." method="_on_cancel_button_mouse_entered"]
+[connection signal="mouse_exited" from="MarginContainer/ConfirmationPanel/VBoxContainer/CancelButton" to="." method="_on_cancel_button_mouse_exited"]
+[connection signal="pressed" from="MarginContainer/ConfirmationPanel/VBoxContainer/CancelButton" to="." method="_on_cancel_button_pressed"]
