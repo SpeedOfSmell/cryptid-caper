@@ -57,3 +57,4 @@ sprite_frames = SubResource("SpriteFrames_hatch")
 animation = &"open"
 
 [node name="SpawnPoint" type="Marker2D" parent="." unique_id=1314804770]
+position = Vector2(0, 16)
