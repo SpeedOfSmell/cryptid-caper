@@ -51,6 +51,7 @@ func _generate_new_room(source_room: Room) -> Room:
 	if source_room != null:
 		source_room.next_room = room
 	
+	room.player_exited_dungeon.connect(_on_player_exited)
 	room.request_room_change.connect(_change_room)
 	room.request_room_change_new_room.connect(_change_to_new_room)
 	
@@ -109,4 +110,7 @@ func _quit_game():
 	transition_requested.emit(States.GameState.MAIN_MENU)
 	
 func _on_timer_expired():
-	transition_requested.emit(States.GameState.MAIN_MENU)
+	transition_requested.emit(States.GameState.GAME_OVER)
+	
+func _on_player_exited():
+	transition_requested.emit(States.GameState.GAME_OVER)
