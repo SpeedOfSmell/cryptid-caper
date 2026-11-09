@@ -38,9 +38,19 @@ func _fire() -> void:
 	_stroke.tween_callback(hurtbox.set_deferred.bind(&"monitoring", false))
 	_stroke.tween_interval(hold_time)
 	_stroke.tween_method(_set_extension, reach, 0.0, retract_time) \
-		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+
+func _process(_delta: float) -> void:
+	_fit_middle()
 
 func _set_extension(extension: float) -> void:
 	head.position = _head_rest + Vector2(0, extension)
-	if middle:
-		middle.offset_top = middle.offset_bottom - (roundf(extension) + 1.0)
+
+# head is an AnimatableBody2D synced to physics, so a position set by the tween only
+# shows up after the next physics step. size the middle from where the head actually
+# is, not the tween value, or while retracting it ends a row short of the base and
+# leaves a see-through line under it
+func _fit_middle() -> void:
+	if head == null or middle == null:
+		return
+	middle.offset_top = middle.offset_bottom - (roundf(head.position.y - _head_rest.y) + 1.0)
