@@ -4,6 +4,9 @@ extends Node
 @export var _game_scene: PackedScene
 @export var _game_over_scene: PackedScene
 
+@export var button_click_sfx: SfxEvent
+@export var button_focus_sfx: SfxEvent
+
 const VALID_TRANSITIONS := {
 	States.GameState.MAIN_MENU: [States.GameState.GAME],
 	States.GameState.GAME: [States.GameState.MAIN_MENU, States.GameState.GAME_OVER],
@@ -23,10 +26,19 @@ func _ready():
 		States.GameState.GAME_OVER: _game_over_scene
 	}
 	
+	child_entered_tree.connect(_connect_ui_elements_to_audio)
+	
 	_state_machine = StateMachine.new(VALID_TRANSITIONS)
 	_state_machine.state_changed.connect(_on_state_changed)
 	_state_machine.change_state(INITIAL_STATE)
 
+func _connect_ui_elements_to_audio(node: Node):
+	if node is Button or node is TextureButton:
+		node.pressed.connect(AudioManager.play_sfx.bind(button_click_sfx))
+		node.focus_entered.connect(AudioManager.play_sfx.bind(button_focus_sfx))
+	for child in node.get_children():
+		_connect_ui_elements_to_audio(child)
+		
 # The screens are responsible for emitting the signal connected to this method to specify when to
 # switch screens and to which screen to switch
 func _on_transition_requested(state: States.GameState):

@@ -1,3 +1,5 @@
+# this class is so janky and not best practice but im on a time crunch so yolo 🤪
+
 extends CanvasLayer
 
 @export var unfocusedLabel: LabelSettings
@@ -99,6 +101,13 @@ func _switch_button_label_settings(button: TextureButton, settings: LabelSetting
 	var label: Label = button.find_children("*", "Label", true, false)[0]
 	label.label_settings = settings
 
+func _unhandled_key_input(event):
+	if event.is_action_pressed("ui_down") or event.is_action_pressed("ui_up"):
+		if %MenuPanel.visible == true:
+			%ResumeButton.grab_focus()
+		elif %ConfirmationPanel.visible == true:
+			%ConfirmButton.grab_focus()
+
 func _on_resume_button_focus_entered():
 	_switch_button_label_settings(%ResumeButton, focusedLabel)
 	
@@ -108,6 +117,7 @@ func _on_resume_button_focus_exited():
 
 func _on_resume_button_mouse_entered():
 	_switch_button_label_settings(%ResumeButton, focusedLabel)
+	get_viewport().gui_release_focus()
 
 func _on_resume_button_mouse_exited():
 	if not %ResumeButton.has_focus():
@@ -125,6 +135,7 @@ func _on_quit_button_focus_exited():
 
 func _on_quit_button_mouse_entered():
 	_switch_button_label_settings(%QuitButton, focusedLabel)
+	get_viewport().gui_release_focus()
 
 
 func _on_quit_button_mouse_exited():
@@ -143,6 +154,7 @@ func _on_confirm_button_focus_exited():
 
 func _on_confirm_button_mouse_entered():
 	_switch_button_label_settings(%ConfirmButton, focusedLabel)
+	get_viewport().gui_release_focus()
 
 
 func _on_confirm_button_mouse_exited():
@@ -161,6 +173,7 @@ func _on_cancel_button_focus_exited():
 
 func _on_cancel_button_mouse_entered():
 	_switch_button_label_settings(%CancelButton, focusedLabel)
+	get_viewport().gui_release_focus()
 
 
 func _on_cancel_button_mouse_exited():
