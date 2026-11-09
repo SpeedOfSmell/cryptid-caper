@@ -73,15 +73,18 @@ region = Rect2(32, 32, 16, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jump0"]
 atlas = ExtResource("13_jump")
-region = Rect2(32, 0, 16, 32)
+region = Rect2(32, 0, 16, 28)
+margin = Rect2(0, 4, 0, 4)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jump1"]
 atlas = ExtResource("13_jump")
-region = Rect2(0, 32, 16, 32)
+region = Rect2(0, 28, 16, 28)
+margin = Rect2(0, 4, 0, 4)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jump2"]
 atlas = ExtResource("13_jump")
-region = Rect2(16, 32, 16, 32)
+region = Rect2(16, 28, 16, 28)
+margin = Rect2(0, 4, 0, 4)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_crouch0"]
 atlas = ExtResource("14_crouch")
