@@ -4,31 +4,24 @@
 [ext_resource type="TileSet" uid="uid://dywhdftlbg8wv" path="res://assets/game/game_screen/chunks/room_tileset.tres" id="2_tiles"]
 [ext_resource type="PackedScene" uid="uid://b1jbsp8xj45we" path="res://assets/game/game_screen/player/player.tscn" id="3_player"]
 [ext_resource type="PackedScene" uid="uid://d0mhcb0l0g6sy" path="res://assets/game/game_screen/interactables/relic/relic.tscn" id="4_relic"]
-[ext_resource type="PackedScene" uid="uid://bgb2sv8mxh6fd" path="res://assets/game/game_screen/interactables/obstacle/spike.tscn" id="5_spike"]
+[ext_resource type="PackedScene" uid="uid://e4vourxxnuy1" path="res://assets/game/game_screen/interactables/obstacle/spike/spike.tscn" id="5_spike"]
 [ext_resource type="PackedScene" uid="uid://dwjbiqvl2voqc" path="res://assets/game/game_screen/interactables/obstacle/traps/piston/piston_trap.tscn" id="6_piston"]
 [ext_resource type="PackedScene" uid="uid://dxui1ugt02bf7" path="res://assets/game/game_screen/interactables/obstacle/traps/boulder/boulder_dropper.tscn" id="7_boulder"]
 [ext_resource type="PackedScene" uid="uid://beedmp5n2y2sx" path="res://assets/game/game_screen/interactables/obstacle/traps/dart/dart_trap.tscn" id="8_dart"]
+[ext_resource type="PackedScene" uid="uid://dwwtyffyihcp" path="res://assets/game/game_screen/interactables/obstacle/lava/lava.tscn" id="9_30end"]
 
 [node name="InteractableSandbox" type="Node2D" unique_id=502746101]
 script = ExtResource("1_sandbox")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1543069032]
-tile_map_data = PackedByteArray("AAD8//j/AAAFAAEAAAD8//n/AAAFAAEAAAD8//r/AAAFAAEAAAD8//v/AAAFAAEAAAD8//z/AAAFAAEAAAD8//3/AAAFAAEAAAD8//7/AAAFAAEAAAD8////AAAFAAEAAAD8/wAAAAAFAAEAAAD8/wEAAAAFAAEAAAD9/wEAAAAFAAEAAAD+/wEAAAAFAAEAAAD//wEAAAAFAAEAAAAAAAEAAAAFAAEAAAABAAEAAAAFAAEAAAACAAEAAAAFAAEAAAADAAEAAAAFAAEAAAAEAAEAAAAFAAEAAAAFAAEAAAAFAAEAAAAGAAEAAAAFAAEAAAAHAAEAAAAFAAEAAAAIAAEAAAAFAAEAAAAJAAEAAAAFAAEAAAAKAAEAAAAFAAEAAAALAAEAAAAFAAEAAAAMAAEAAAAFAAEAAAANAAEAAAAFAAEAAAAOAAEAAAAFAAEAAAAPAAEAAAAFAAEAAAAQAAEAAAAFAAEAAAARAAEAAAAFAAEAAAASAAEAAAAFAAEAAAATAAEAAAAFAAEAAAAUAAEAAAAFAAEAAAAVAAEAAAAFAAEAAAAWAAEAAAAFAAEAAAAXAAEAAAAFAAEAAAAYAAEAAAAFAAEAAAAZAAEAAAAFAAEAAAAaAAEAAAAFAAEAAAAbAAEAAAAFAAEAAAAcAAEAAAAFAAEAAAAdAAEAAAAFAAEAAAAeAAEAAAAFAAEAAAAfAAEAAAAFAAEAAAAgAAEAAAAFAAEAAAAhAAEAAAAFAAEAAAAiAPj/AAAFAAEAAAAiAPn/AAAFAAEAAAAiAPr/AAAFAAEAAAAiAPv/AAAFAAEAAAAiAPz/AAAFAAEAAAAiAP3/AAAFAAEAAAAiAP7/AAAFAAEAAAAiAP//AAAFAAEAAAAiAAAAAAAFAAEAAAAiAAEAAAAFAAEAAAA=")
+tile_map_data = PackedByteArray("AAD8//j/AAAFAAEAAAD8//n/AAAFAAEAAAD8//r/AAAFAAEAAAD8//v/AAAFAAEAAAD8//z/AAAFAAEAAAD8//3/AAAFAAEAAAD8//7/AAAFAAEAAAD8////AAAFAAEAAAD8/wAAAAAFAAEAAAD8/wEAAAAFAAEAAAD9/wEAAAAFAAEAAAD+/wEAAAAFAAEAAAD//wEAAAAFAAEAAAAAAAEAAAAFAAEAAAABAAEAAAAFAAEAAAACAAEAAAAFAAEAAAADAAEAAAAFAAEAAAAEAAEAAAAFAAEAAAAFAAEAAAAFAAEAAAAGAAEAAAAFAAEAAAAHAAEAAAAFAAEAAAAIAAEAAAAFAAEAAAAJAAEAAAAFAAEAAAAKAAEAAAAFAAEAAAALAAEAAAAFAAEAAAAMAAEAAAAFAAEAAAANAAEAAAAFAAEAAAAOAAEAAAAFAAEAAAAPAAEAAAAFAAEAAAAQAAEAAAAFAAEAAAARAAEAAAAFAAEAAAASAAEAAAAFAAEAAAATAAEAAAAFAAEAAAAUAAEAAAAFAAEAAAAVAAEAAAAFAAEAAAAWAAEAAAAFAAEAAAAXAAEAAAAFAAEAAAAYAAEAAAAFAAEAAAAZAAEAAAAFAAEAAAAaAAEAAAAFAAEAAAAbAAEAAAAFAAEAAAAcAAEAAAAFAAEAAAAdAAEAAAAFAAEAAAAeAAEAAAAFAAEAAAAfAAEAAAAFAAEAAAAgAAEAAAAFAAEAAAAhAAEAAAAFAAEAAAAiAPj/AAAFAAEAAAAiAPn/AAAFAAEAAAAiAPr/AAAFAAEAAAAiAPv/AAAFAAEAAAAiAPz/AAAFAAEAAAAiAP3/AAAFAAEAAAAiAP7/AAAFAAEAAAAiAP//AAAFAAEAAAAiAAAAAAAFAAEAAAAiAAEAAAAFAAEAAAALAAAAAAAFAAEAAAAMAAAAAAAFAAEAAAANAAAAAAAFAAEAAAAOAAAAAAAFAAEAAAAOAP//AAAFAAEAAAALAP//AAAFAAEAAAA=")
 tile_set = ExtResource("2_tiles")
 
 [node name="Player" parent="." unique_id=405111128 instance=ExtResource("3_player")]
 position = Vector2(8, 16)
 
 [node name="JumpRelic" parent="." unique_id=1777570291 instance=ExtResource("4_relic")]
-position = Vector2(72, 8)
-
-[node name="SpeedRelic" parent="." unique_id=1155390747 instance=ExtResource("4_relic")]
-position = Vector2(104, 8)
-upgrade_type = 1
-
-[node name="TeleportRelic" parent="." unique_id=435805709 instance=ExtResource("4_relic")]
-position = Vector2(136, 8)
-upgrade_type = 2
+position = Vector2(139, 7)
 
 [node name="DashRelic" parent="." unique_id=871176782 instance=ExtResource("4_relic")]
 position = Vector2(168, 8)
@@ -71,3 +64,15 @@ phase = 0.149
 position = Vector2(-32, 6)
 rotation = 0.008344294
 interval = 0.5
+
+[node name="Spike3" parent="." unique_id=1858360133 instance=ExtResource("5_spike")]
+position = Vector2(39, 8)
+
+[node name="Spike5" parent="." unique_id=497340528 instance=ExtResource("5_spike")]
+position = Vector2(104, 8)
+
+[node name="Lava" parent="." unique_id=1417855237 instance=ExtResource("9_30end")]
+position = Vector2(200, -8)
+
+[node name="Lava2" parent="." unique_id=1117231409 instance=ExtResource("9_30end")]
+position = Vector2(216, -8)

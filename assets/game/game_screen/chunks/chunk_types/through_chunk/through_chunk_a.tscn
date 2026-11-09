@@ -2,7 +2,7 @@
 
 [ext_resource type="TileSet" uid="uid://dywhdftlbg8wv" path="res://assets/game/game_screen/chunks/room_tileset.tres" id="2_tbpo8"]
 [ext_resource type="PackedScene" uid="uid://b1jbsp8xj45we" path="res://assets/game/game_screen/player/player.tscn" id="3_47a16"]
-[ext_resource type="PackedScene" uid="uid://bgb2sv8mxh6fd" path="res://assets/game/game_screen/interactables/obstacle/spike.tscn" id="4_tbpo8"]
+[ext_resource type="PackedScene" uid="uid://bgb2sv8mxh6fd" path="res://assets/game/game_screen/interactables/obstacle/spike/spike.tscn" id="4_tbpo8"]
 [ext_resource type="PackedScene" uid="uid://bravhbok4cvo4" path="res://assets/game/game_screen/interactables/artifact/artifact.tscn" id="5_6aua3"]
 [ext_resource type="PackedScene" uid="uid://d0mhcb0l0g6sy" path="res://assets/game/game_screen/interactables/relic/relic.tscn" id="5_kbw0v"]
 
