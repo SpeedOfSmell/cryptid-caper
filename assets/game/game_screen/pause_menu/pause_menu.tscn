@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://mjnwtqq0fvx0"]
 
 [ext_resource type="LabelSettings" uid="uid://b3m4nbdxi31eb" path="res://assets/global/label_settings.tres" id="1_4jdrg"]
-[ext_resource type="Script" uid="uid://cvq7w15jctxe1" path="res://assets/global/pause_menu/pause_menu.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://cvq7w15jctxe1" path="res://assets/game/game_screen/pause_menu/pause_menu.gd" id="1_script"]
 
 [node name="PauseMenu" type="CanvasLayer" unique_id=1184906971]
 process_mode = 3

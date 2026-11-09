@@ -1,6 +1,7 @@
 class_name Room
 extends Node2D
 
+signal player_exited_dungeon
 signal request_room_change(source_room: Room, destination_room: Room, spawn_position: Vector2)
 signal request_room_change_new_room(source_room: Room)
 
@@ -52,6 +53,7 @@ func door_entered(body: Node2D, door: int) -> void:
 	# Player entered door to go back to previous room
 	if door == -1:
 		if previous_room == null:
+			player_exited_dungeon.emit()
 			return
 		transition_requested = true
 		request_room_change.emit(self, previous_room, previous_room.get_exit_spawn_position())

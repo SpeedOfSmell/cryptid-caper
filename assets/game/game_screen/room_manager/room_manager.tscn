@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://p8j6gwwm7x8d"]
 
 [ext_resource type="Script" uid="uid://dnkdnq7pum2mv" path="res://assets/game/game_screen/room_manager/room_manager.gd" id="1_xylws"]
-[ext_resource type="AudioStream" uid="uid://dim3bd5t0xqr6" path="res://assets/audio/music/test_music.wav" id="2_dxo7i"]
+[ext_resource type="AudioStream" uid="uid://2ex4o8yt15r2" path="res://assets/audio/music/Main Loop.wav" id="2_xtlk2"]
 [ext_resource type="PackedScene" uid="uid://b1jbsp8xj45we" path="res://assets/game/game_screen/player/player.tscn" id="3_u21wa"]
 [ext_resource type="Script" uid="uid://bnatdry6yu4yv" path="res://assets/game/game_screen/room_manager/room_generator.gd" id="4_wgytc"]
 [ext_resource type="PackedScene" uid="uid://c3l28xjwi58ex" path="res://assets/game/game_screen/room_manager/room.tscn" id="5_gfrpa"]
@@ -12,6 +12,8 @@
 [ext_resource type="Resource" uid="uid://d3hkcd6jnf0go" path="res://assets/game/game_screen/interactables/artifact/artifact_a/artifact_a.tres" id="9_e307x"]
 [ext_resource type="Script" uid="uid://dc3stds6x18aq" path="res://assets/game/game_screen/interactables/artifact/artifact_library.gd" id="9_vtgo2"]
 [ext_resource type="Texture2D" uid="uid://jj5ntj7dye0l" path="res://assets/global/ui/Artifacts_tracker.png" id="11_e307x"]
+[ext_resource type="PackedScene" uid="uid://mjnwtqq0fvx0" path="res://assets/game/game_screen/pause_menu/pause_menu.tscn" id="13_lrkxs"]
+[ext_resource type="Texture2D" uid="uid://btkh2gik2mrfv" path="res://assets/global/ui/Ui_3.png" id="13_xtlk2"]
 
 [sub_resource type="Resource" id="Resource_fjksm"]
 script = ExtResource("9_vtgo2")
@@ -20,7 +22,7 @@ metadata/_custom_type_script = "uid://dc3stds6x18aq"
 
 [node name="Room Manager" type="Node" unique_id=1475098114]
 script = ExtResource("1_xylws")
-music = ExtResource("2_dxo7i")
+music = ExtResource("2_xtlk2")
 _player_scene = ExtResource("3_u21wa")
 
 [node name="Room Generator" type="Node" parent="." unique_id=1339619944]
@@ -50,3 +52,29 @@ offset_bottom = 32.0
 text = "0"
 label_settings = ExtResource("7_tfgok")
 horizontal_alignment = 2
+
+[node name="TimerPanel" type="Control" parent="CanvasLayer" unique_id=1918048421]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 5.0
+offset_top = 8.0
+offset_right = 45.0
+offset_bottom = 48.0
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/TimerPanel" unique_id=1925726504]
+layout_mode = 0
+texture = ExtResource("13_xtlk2")
+
+[node name="TimeLabel" type="Label" parent="CanvasLayer/TimerPanel" unique_id=1851603118]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 2.0
+offset_top = 3.0
+offset_right = 69.0
+offset_bottom = 22.0
+text = "2:42"
+label_settings = ExtResource("7_tfgok")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PauseMenu" parent="." unique_id=1184906971 instance=ExtResource("13_lrkxs")]
