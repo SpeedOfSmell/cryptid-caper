@@ -18,6 +18,8 @@ const DASH := &"Dash"
 # 3) Add constant to this script
 # 4) Add rule that triggers it
 
+@export var animation: StringName
+
 # Set by the state machine.
 var player: PlayerController
 
