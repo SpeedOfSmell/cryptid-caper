@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://p8j6gwwm7x8d"]
 
 [ext_resource type="Script" uid="uid://dnkdnq7pum2mv" path="res://assets/game/game_screen/room_manager/room_manager.gd" id="1_xylws"]
-[ext_resource type="AudioStream" uid="uid://dim3bd5t0xqr6" path="res://assets/audio/music/test_music.wav" id="2_dxo7i"]
+[ext_resource type="AudioStream" uid="uid://2ex4o8yt15r2" path="res://assets/audio/music/Main Loop.wav" id="2_xtlk2"]
 [ext_resource type="PackedScene" uid="uid://b1jbsp8xj45we" path="res://assets/game/game_screen/player/player.tscn" id="3_u21wa"]
 [ext_resource type="Script" uid="uid://bnatdry6yu4yv" path="res://assets/game/game_screen/room_manager/room_generator.gd" id="4_wgytc"]
 [ext_resource type="PackedScene" uid="uid://c3l28xjwi58ex" path="res://assets/game/game_screen/room_manager/room.tscn" id="5_gfrpa"]
@@ -22,7 +22,7 @@ metadata/_custom_type_script = "uid://dc3stds6x18aq"
 
 [node name="Room Manager" type="Node" unique_id=1475098114]
 script = ExtResource("1_xylws")
-music = ExtResource("2_dxo7i")
+music = ExtResource("2_xtlk2")
 _player_scene = ExtResource("3_u21wa")
 
 [node name="Room Generator" type="Node" parent="." unique_id=1339619944]
