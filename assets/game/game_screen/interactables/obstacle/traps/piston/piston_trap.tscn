@@ -6,25 +6,25 @@
 [ext_resource type="Texture2D" uid="uid://b0i3ey143qqqt" path="res://assets/game/game_screen/interactables/obstacle/traps/piston/Piston middle.png" id="4_middle"]
 [ext_resource type="Texture2D" uid="uid://fg7vx40j3n1t" path="res://assets/game/game_screen/interactables/obstacle/traps/piston/Piston bottom.png" id="5_head"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_base"]
-size = Vector2(16, 16)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_head"]
 size = Vector2(16, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_face"]
 size = Vector2(14, 4)
 
-[node name="PistonTrap" type="Node2D" node_paths=PackedStringArray("head", "hurtbox", "middle")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_base"]
+size = Vector2(16, 16)
+
+[node name="PistonTrap" type="Node2D" unique_id=1099493609 node_paths=PackedStringArray("head", "hurtbox", "middle")]
 script = ExtResource("1_piston")
 head = NodePath("Head")
 hurtbox = NodePath("Head/Hurtbox")
 middle = NodePath("Head/Middle")
 
-[node name="Head" type="AnimatableBody2D" parent="."]
+[node name="Head" type="AnimatableBody2D" parent="." unique_id=309629143]
 position = Vector2(0, 16)
 
-[node name="Middle" type="NinePatchRect" parent="Head"]
+[node name="Middle" type="NinePatchRect" parent="Head" unique_id=1184130784]
 offset_left = -8.0
 offset_top = -19.0
 offset_right = 8.0
@@ -34,23 +34,23 @@ texture = ExtResource("4_middle")
 patch_margin_bottom = 11
 axis_stretch_vertical = 1
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Head"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Head" unique_id=1704039237]
 shape = SubResource("RectangleShape2D_head")
 
-[node name="Sprite2D" type="Sprite2D" parent="Head"]
+[node name="Sprite2D" type="Sprite2D" parent="Head" unique_id=8398919]
 texture = ExtResource("5_head")
 
-[node name="Hurtbox" type="Area2D" parent="Head"]
+[node name="Hurtbox" type="Area2D" parent="Head" unique_id=479187981]
 position = Vector2(0, 9)
 script = ExtResource("2_obstacle")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Head/Hurtbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Head/Hurtbox" unique_id=1402891517]
 shape = SubResource("RectangleShape2D_face")
 
-[node name="Base" type="StaticBody2D" parent="."]
+[node name="Base" type="StaticBody2D" parent="." unique_id=918864317]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Base"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Base" unique_id=1500376904]
 shape = SubResource("RectangleShape2D_base")
 
-[node name="Sprite2D" type="Sprite2D" parent="Base"]
+[node name="Sprite2D" type="Sprite2D" parent="Base" unique_id=271834301]
 texture = ExtResource("3_base")
