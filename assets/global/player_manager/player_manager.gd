@@ -5,6 +5,8 @@ signal health_changed(new_health: int)
 signal player_died
 signal score_changed(new_score: int)
 
+@export var death_sound: SfxEvent
+
 const SAVE_PATH := "user://player_data.tres" #i think this is right? we'll have to figure this out but seems simple enough
 
 var data: PlayerData
@@ -22,6 +24,7 @@ func lose_health(amount: int = 1) -> void:
 	data.health = maxi(data.health - amount, 0)
 	health_changed.emit(data.health)
 	if data.health == 0:
+		AudioManager.play_sfx(death_sound)
 		player_died.emit()
 
 func kill() -> void:

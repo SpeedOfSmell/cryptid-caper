@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://cxv7h5171rn3j" path="res://assets/game/main_menu/main_menu.gd" id="1_7bqh3"]
 [ext_resource type="Texture2D" uid="uid://b7x2nakyw726r" path="res://assets/global/ui/Ui_1.png" id="2_8emhj"]
 [ext_resource type="AudioStream" uid="uid://247iodwew15" path="res://assets/audio/music/Main Menu.wav" id="2_tdavu"]
-[ext_resource type="LabelSettings" uid="uid://b3m4nbdxi31eb" path="res://assets/global/label_settings.tres" id="3_tdavu"]
+[ext_resource type="LabelSettings" uid="uid://b3m4nbdxi31eb" path="res://assets/global/label_settings_black.tres" id="3_tdavu"]
 
 [node name="MainMenu" type="Control" unique_id=1141875741]
 layout_mode = 3

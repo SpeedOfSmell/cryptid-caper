@@ -1,14 +1,18 @@
 extends CanvasLayer
 
+@export var unfocusedLabel: LabelSettings
+@export var focusedLabel: LabelSettings
+
 signal request_quit()
 
 @onready var _score_label: Label = %ScoreValueLabel
-@onready var _menu_panel: Panel = %MenuPanel
-@onready var _confirmation_panel: Panel = %ConfirmationPanel
+@onready var _menu_panel: PanelContainer = %MenuPanel
+@onready var _confirmation_panel: PanelContainer = %ConfirmationPanel
+
+var _fade_tween: Tween
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	#PlayerManager.score_changed.connect(_update_score)
 	pass
 
 
@@ -32,6 +36,8 @@ func _toggle() -> void:
 
 func _open():
 	#AudioManager.play_sfx(pause_open_sfx)
+	_fade_to(0.5, 0.4, %PauseFade)
+	%ResumeButton.grab_focus()
 	_refresh()
 	visible = true
 	get_tree().paused = true
@@ -39,6 +45,7 @@ func _open():
 
 func _close():
 	#AudioManager.play_sfx(pause_closed_sfx)
+	_fade_to(0, 0.1, %PauseFade)
 	visible = false
 	#popup_window.hide()
 	get_tree().paused = false
@@ -68,6 +75,7 @@ func _on_resume_button_pressed():
 
 func _on_quit_button_pressed():
 	_show_confirmation_screen()
+	%ConfirmButton.grab_focus()
 
 
 func _on_confirm_button_pressed():
@@ -77,3 +85,84 @@ func _on_confirm_button_pressed():
 
 func _on_cancel_button_pressed():
 	_close_confirmation_screen()
+	%ResumeButton.grab_focus()
+
+func _fade_to(target: float, duration: float, effect: ColorRect) -> void:
+	if _fade_tween:
+		_fade_tween.kill()
+	_fade_tween = create_tween()
+	_fade_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)  # keeps running while paused
+	_fade_tween.tween_property(effect.material, "shader_parameter/progress", target, duration)
+	await _fade_tween.finished
+
+func _switch_button_label_settings(button: TextureButton, settings: LabelSettings):
+	var label: Label = button.find_children("*", "Label", true, false)[0]
+	label.label_settings = settings
+
+func _on_resume_button_focus_entered():
+	_switch_button_label_settings(%ResumeButton, focusedLabel)
+	
+func _on_resume_button_focus_exited():
+	if not %ResumeButton.is_hovered():
+		_switch_button_label_settings(%ResumeButton, unfocusedLabel)
+
+func _on_resume_button_mouse_entered():
+	_switch_button_label_settings(%ResumeButton, focusedLabel)
+
+func _on_resume_button_mouse_exited():
+	if not %ResumeButton.has_focus():
+		_switch_button_label_settings(%ResumeButton, unfocusedLabel)
+
+
+func _on_quit_button_focus_entered():
+	_switch_button_label_settings(%QuitButton, focusedLabel)
+
+
+func _on_quit_button_focus_exited():
+	if not %QuitButton.is_hovered():
+		_switch_button_label_settings(%QuitButton, unfocusedLabel)
+
+
+func _on_quit_button_mouse_entered():
+	_switch_button_label_settings(%QuitButton, focusedLabel)
+
+
+func _on_quit_button_mouse_exited():
+	if not %QuitButton.has_focus():
+		_switch_button_label_settings(%QuitButton, unfocusedLabel)
+
+
+func _on_confirm_button_focus_entered():
+	_switch_button_label_settings(%ConfirmButton, focusedLabel)
+
+
+func _on_confirm_button_focus_exited():
+	if not %ConfirmButton.is_hovered():
+		_switch_button_label_settings(%ConfirmButton, unfocusedLabel)
+
+
+func _on_confirm_button_mouse_entered():
+	_switch_button_label_settings(%ConfirmButton, focusedLabel)
+
+
+func _on_confirm_button_mouse_exited():
+	if not %ConfirmButton.has_focus():
+		_switch_button_label_settings(%ConfirmButton, unfocusedLabel)
+
+
+func _on_cancel_button_focus_entered():
+	_switch_button_label_settings(%CancelButton, focusedLabel)
+
+
+func _on_cancel_button_focus_exited():
+	if not %CancelButton.is_hovered():
+		_switch_button_label_settings(%CancelButton, unfocusedLabel)
+
+
+func _on_cancel_button_mouse_entered():
+	_switch_button_label_settings(%CancelButton, focusedLabel)
+
+
+func _on_cancel_button_mouse_exited():
+	if not %CancelButton.has_focus():
+		_switch_button_label_settings(%CancelButton, unfocusedLabel)

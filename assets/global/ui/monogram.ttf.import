@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://bpa7qfacyrqvh"
-path="res://.godot/imported/Minecraft.ttf-354e569ca79bfb005f4570a583caaad2.fontdata"
+uid="uid://bf12joacxh8gs"
+path="res://.godot/imported/monogram.ttf-da5bd5bf22cffe9ddae35e94e8654727.fontdata"
 
 [deps]
 
-source_file="res://assets/global/ui/Minecraft.ttf"
-dest_files=["res://.godot/imported/Minecraft.ttf-354e569ca79bfb005f4570a583caaad2.fontdata"]
+source_file="res://assets/global/ui/monogram.ttf"
+dest_files=["res://.godot/imported/monogram.ttf-da5bd5bf22cffe9ddae35e94e8654727.fontdata"]
 
 [params]
 

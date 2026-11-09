@@ -1,15 +1,73 @@
-[gd_scene format=3 uid="uid://mplt1omjcq"]
+[gd_scene format=3 uid="uid://ocx3e2tqxikw"]
 
-[ext_resource type="PackedScene" uid="uid://bmi3t0kx1gnbo" path="res://assets/game/game_screen/interactables/interactable.tscn" id="1_3p6gc"]
+[ext_resource type="Texture2D" uid="uid://ux54440epwjt" path="res://assets/game/game_screen/interactables/relic/double_jump_relic/Double Jump relic.png" id="1_xh2uc"]
+[ext_resource type="Resource" uid="uid://bwku2lmhrrx50" path="res://assets/audio/sfx/character/collect.tres" id="2_jb041"]
 [ext_resource type="Script" uid="uid://dmtvxtcobo7cl" path="res://assets/game/game_screen/interactables/relic/relic.gd" id="2_odgwo"]
-[ext_resource type="Texture2D" uid="uid://bqw1cdlob2j02" path="res://icon.svg" id="3_ua0d5"]
 
-[node name="Relic" unique_id=1616424487 instance=ExtResource("1_3p6gc")]
+[sub_resource type="AtlasTexture" id="AtlasTexture_x7c37"]
+atlas = ExtResource("1_xh2uc")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jb041"]
+atlas = ExtResource("1_xh2uc")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8la6b"]
+atlas = ExtResource("1_xh2uc")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v43rp"]
+atlas = ExtResource("1_xh2uc")
+region = Rect2(0, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aaeca"]
+atlas = ExtResource("1_xh2uc")
+region = Rect2(24, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kgew8"]
+atlas = ExtResource("1_xh2uc")
+region = Rect2(48, 24, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1lvrn"]
+animations = [{
+"frames": [{
+"duration": 5.0,
+"texture": SubResource("AtlasTexture_x7c37")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jb041")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8la6b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v43rp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aaeca")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kgew8")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 7.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_60f1r"]
+radius = 5.6568174
+height = 24.046577
+
+[node name="DoubleJumpRelic" type="Area2D" unique_id=1038560294]
 script = ExtResource("2_odgwo")
-upgrade_type = 0
 one_shot = true
+sfx = ExtResource("2_jb041")
 
-[node name="Sprite2D" parent="." index="1" unique_id=271139163]
-position = Vector2(-3.8146973e-06, -0.9999962)
-scale = Vector2(0.0859375, 0.0859375)
-texture = ExtResource("3_ua0d5")
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1240309610]
+sprite_frames = SubResource("SpriteFrames_1lvrn")
+autoplay = "default"
+frame_progress = 0.4421685
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=807553855]
+rotation = 0.78178924
+shape = SubResource("CapsuleShape2D_60f1r")

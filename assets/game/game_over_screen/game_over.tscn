@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://coqd0yh3w5y37" path="res://assets/game/game_over_screen/game_over.gd" id="1_rsmii"]
 [ext_resource type="Texture2D" uid="uid://b7x2nakyw726r" path="res://assets/global/ui/Ui_1.png" id="3_osydw"]
-[ext_resource type="LabelSettings" uid="uid://b3m4nbdxi31eb" path="res://assets/global/label_settings.tres" id="4_20jlh"]
+[ext_resource type="LabelSettings" uid="uid://b3m4nbdxi31eb" path="res://assets/global/label_settings_black.tres" id="4_20jlh"]
 
 [node name="GameOverScreen" type="Control" unique_id=1141875741]
 layout_mode = 3
