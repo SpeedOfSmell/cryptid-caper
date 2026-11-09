@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://dkabx8v2yxqy1"]
 
 [ext_resource type="Script" uid="uid://cxv7h5171rn3j" path="res://assets/game/main_menu/main_menu.gd" id="1_7bqh3"]
+[ext_resource type="Texture2D" uid="uid://b7x2nakyw726r" path="res://assets/global/ui/Ui_1.png" id="2_8emhj"]
+[ext_resource type="LabelSettings" uid="uid://b3m4nbdxi31eb" path="res://assets/global/label_settings.tres" id="3_tdavu"]
 
 [node name="MainMenu" type="Control" unique_id=1141875741]
 layout_mode = 3
@@ -11,6 +13,12 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_7bqh3")
 
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1980095310]
+layout_mode = 0
+offset_right = 385.0
+offset_bottom = 216.0
+color = Color(0.13333334, 0.13725491, 0.13725491, 1)
+
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1281614090]
 layout_mode = 0
 offset_left = 160.0
@@ -18,8 +26,18 @@ offset_top = 91.0
 offset_right = 206.0
 offset_bottom = 131.0
 
-[node name="PlayButton" type="Button" parent="VBoxContainer" unique_id=994696537]
+[node name="PlayButton" type="TextureButton" parent="VBoxContainer" unique_id=847308401]
 layout_mode = 2
-text = "Start"
+texture_normal = ExtResource("2_8emhj")
+
+[node name="Label" type="Label" parent="VBoxContainer/PlayButton" unique_id=1718136977]
+layout_mode = 0
+offset_left = 1.0
+offset_right = 67.0
+offset_bottom = 35.0
+text = "Play"
+label_settings = ExtResource("3_tdavu")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="pressed" from="VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]

@@ -1,9 +1,8 @@
 [gd_resource type="LabelSettings" format=3 uid="uid://b3m4nbdxi31eb"]
 
-[sub_resource type="SystemFont" id="SystemFont_ynj42"]
-font_names = PackedStringArray("Rubik")
+[ext_resource type="FontFile" uid="uid://bpa7qfacyrqvh" path="res://assets/global/ui/Minecraft.ttf" id="1_ynj42"]
 
 [resource]
-font = SubResource("SystemFont_ynj42")
+font = ExtResource("1_ynj42")
 font_color = Color(0.13333334, 0.13725491, 0.13725491, 1)
 shadow_size = 0

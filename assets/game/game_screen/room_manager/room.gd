@@ -4,6 +4,8 @@ extends Node2D
 signal request_room_change(source_room: Room, destination_room: Room, spawn_position: Vector2)
 signal request_room_change_new_room(source_room: Room)
 
+@export var backgrounds: Array[Resource]
+
 var tilemap: TileMapLayer
 
 # Width of the room in tiles

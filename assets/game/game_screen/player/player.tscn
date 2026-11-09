@@ -225,10 +225,10 @@ animation = &"fall"
 script = ExtResource("9_coy01")
 animation = &"fall"
 
-[node name="Drop" type="Node" parent="State Machine"]
+[node name="Drop" type="Node" parent="State Machine" unique_id=882156059]
 script = ExtResource("10_drop")
 animation = &"fall"
 
-[node name="Dash" type="Node" parent="State Machine"]
+[node name="Dash" type="Node" parent="State Machine" unique_id=547373932]
 script = ExtResource("11_dash")
 animation = &"run"

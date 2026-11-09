@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://bbyfvnwmopiua" path="res://assets/game/game_screen/interactables/artifact/artifact_info.gd" id="8_ojc38"]
 [ext_resource type="Resource" uid="uid://d3hkcd6jnf0go" path="res://assets/game/game_screen/interactables/artifact/artifact_a/artifact_a.tres" id="9_e307x"]
 [ext_resource type="Script" uid="uid://dc3stds6x18aq" path="res://assets/game/game_screen/interactables/artifact/artifact_library.gd" id="9_vtgo2"]
+[ext_resource type="Texture2D" uid="uid://jj5ntj7dye0l" path="res://assets/global/ui/Artifacts_tracker.png" id="11_e307x"]
 
 [sub_resource type="Resource" id="Resource_fjksm"]
 script = ExtResource("9_vtgo2")
@@ -33,44 +34,19 @@ _artifact_library = SubResource("Resource_fjksm")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1099281372]
 
-[node name="Panel" type="Panel" parent="CanvasLayer" unique_id=1758416649]
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -79.0
-offset_top = 10.0
-offset_right = -10.0
-offset_bottom = 31.0
-grow_horizontal = 0
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer" unique_id=1510419244]
+offset_left = 313.0
+offset_top = 2.0
+offset_right = 380.0
+offset_bottom = 42.0
+texture = ExtResource("11_e307x")
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Panel" unique_id=919452516]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Panel" unique_id=631360124]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 38.0
-offset_top = 11.0
-offset_right = -37.0
-offset_bottom = -11.0
-grow_horizontal = 2
-grow_vertical = 2
-alignment = 1
-
-[node name="ScoreLabel" type="Label" parent="CanvasLayer/Panel/HBoxContainer" unique_id=1254653608]
-layout_mode = 2
-text = "Score:"
-label_settings = ExtResource("7_tfgok")
-
-[node name="ScoreValueLabel" type="Label" parent="CanvasLayer/Panel/HBoxContainer" unique_id=1154238249]
+[node name="ScoreValueLabel" type="Label" parent="CanvasLayer" unique_id=1154238249]
 unique_name_in_owner = true
-layout_mode = 2
+offset_left = 345.0
+offset_top = 16.0
+offset_right = 372.0
+offset_bottom = 32.0
 text = "0"
 label_settings = ExtResource("7_tfgok")
+horizontal_alignment = 2

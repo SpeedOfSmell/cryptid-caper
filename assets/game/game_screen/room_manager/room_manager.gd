@@ -21,6 +21,7 @@ func _ready() -> void:
 
 	_player = _player_scene.instantiate()
 	_place_player(_current_room.get_entry_spawn_position())
+	PlayerManager.player_died.connect(_respawn_player.bind(_current_room.get_entry_spawn_position()))
 
 	add_child(_current_room)
 	add_child(_player)
@@ -58,8 +59,9 @@ func _change_room(source_room: Room, destination_room: Room, spawn_position: Vec
 	if _current_room != null and _current_room.get_parent() == self:
 		remove_child.call_deferred(_current_room)
 
-	#if not destination_room.request_room_change.is_connected(_change_room):
-		#destination_room.request_room_change.connect(_change_room)
+	if PlayerManager.player_died.is_connected(_respawn_player):
+		PlayerManager.player_died.disconnect(_respawn_player)
+	PlayerManager.player_died.connect(_respawn_player.bind(spawn_position))
 		
 	# Rooms share world coordinates, so move the player before the destination doors become active
 	_place_player.call_deferred(spawn_position)
@@ -77,3 +79,8 @@ func _place_player(spawn_position: Vector2) -> void:
 	
 func _update_score(score: int):
 	%ScoreValueLabel.text = str(score)
+	
+func _respawn_player(spawn_position: Vector2):
+	_place_player(spawn_position)
+	PlayerManager.gain_health(1)
+	# subtract time?
