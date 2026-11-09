@@ -56,6 +56,8 @@ func generate_room(room_id: int) -> Room:
 	var relic_to_spawn: RelicType = RelicType.NONE
 	if require_double_jump and PlayerManager.get_upgrade_level(Upgrade.UpgradeType.JUMP_LEVEL) == 0:
 		relic_to_spawn = RelicType.DOUBLE_JUMP
+	elif require_dash and PlayerManager.get_upgrade_level(Upgrade.UpgradeType.DASH) == 0:
+		relic_to_spawn = RelicType.DASH
 	_spawn_chunks(chunk_map, artifact_map, room, starting_coords, ending_coords, relic_to_spawn)
 	_fill_walls(room.tilemap, room_size)
 	_create_room_exits(room, starting_coords, ending_coords)
@@ -401,6 +403,11 @@ func _stamp_chunk(chunk_scene: PackedScene, target_room: Room, origin: Vector2i,
 		var room_obstacle = obstacle.duplicate()
 		room_obstacle.position = obstacle.position + Vector2(origin * target_room.tile_size)
 		target_room.add_child(room_obstacle)
+		
+	for trap: Node2D in chunk.find_children("*", "Trap", true, false):
+		var room_trap = trap.duplicate()
+		room_trap.position = trap.position + Vector2(origin * target_room.tile_size)
+		target_room.add_child(room_trap)
 			
 	chunk.free()
 	
