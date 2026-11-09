@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SfxEvent" format=3 uid="uid://dc31a6v8jswyc"]
+
+[ext_resource type="Script" uid="uid://bs2frmocmdsle" path="res://assets/global/sfx_event.gd" id="1_klqf5"]
+[ext_resource type="AudioStream" uid="uid://bt8ikb167xhct" path="res://assets/audio/sfx/Obstacles/SFX_Obstacle_Rock_RollingLoop.wav" id="2_klqf5"]
+
+[resource]
+script = ExtResource("1_klqf5")
+streams = Array[AudioStream]([ExtResource("2_klqf5")])
+metadata/_custom_type_script = "uid://bs2frmocmdsle"
