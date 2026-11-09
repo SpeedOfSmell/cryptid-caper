@@ -29,7 +29,6 @@ func _physics_process(delta):
 	ground_dash_cooldown_left = maxf(ground_dash_cooldown_left - delta, 0.0)
 
 func _process(_delta):
-	# TODO: play walk, jump and duck animations once the art exists.
 	sprite_node.flip_h = facing < 0
 
 func walk_input() -> float:

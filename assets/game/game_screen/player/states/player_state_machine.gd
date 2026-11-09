@@ -15,6 +15,7 @@ func _ready():
 
 	current_state = initial_state
 	current_state.enter()
+	_play_animation(current_state)
 
 func _physics_process(delta):
 	for i in MAX_TRANSITIONS_PER_FRAME:
@@ -33,3 +34,8 @@ func _change_state(next: StringName):
 	current_state.exit()
 	current_state = state
 	current_state.enter()
+	_play_animation(current_state)
+
+func _play_animation(state: PlayerState):
+	if state.animation != &"":
+		player.sprite_node.play(state.animation)
