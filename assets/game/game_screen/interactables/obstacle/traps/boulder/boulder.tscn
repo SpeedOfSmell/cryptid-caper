@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://bo47bp43w2nly"]
 
-[ext_resource type="Script" uid="uid://rxtgpq65ln4g" path="res://assets/game/game_screen/interactables/obstacle/traps/log/rolling_log.gd" id="1_log"]
+[ext_resource type="Script" uid="uid://rxtgpq65ln4g" path="res://assets/game/game_screen/interactables/obstacle/traps/boulder/boulder.gd" id="1_boulder"]
 [ext_resource type="Script" uid="uid://heoyfeygh4e8" path="res://assets/game/game_screen/interactables/obstacle/obstacle.gd" id="2_obstacle"]
 [ext_resource type="Resource" uid="uid://bet22tetpk8fq" path="res://assets/audio/sfx/Obstacles/RockImpact.tres" id="3_sfx"]
-[ext_resource type="Texture2D" uid="uid://bqw1cdlob2j02" path="res://icon.svg" id="4_icon"]
+[ext_resource type="Texture2D" uid="uid://vob6efjy24ty" path="res://assets/game/game_screen/interactables/obstacle/traps/boulder/Boulder turn.png" id="4_sheet"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_body"]
 radius = 6.0
@@ -11,9 +11,9 @@ radius = 6.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_hurt"]
 radius = 7.0
 
-[node name="RollingLog" type="CharacterBody2D" unique_id=1201488161 node_paths=PackedStringArray("sprite")]
+[node name="Boulder" type="CharacterBody2D" unique_id=1201488161 node_paths=PackedStringArray("sprite")]
 collision_layer = 0
-script = ExtResource("1_log")
+script = ExtResource("1_boulder")
 break_sfx = ExtResource("3_sfx")
 sprite = NodePath("Sprite2D")
 
@@ -21,9 +21,9 @@ sprite = NodePath("Sprite2D")
 shape = SubResource("CircleShape2D_body")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=539888349]
-modulate = Color(0.55, 0.35, 0.2, 1)
-scale = Vector2(0.09375, 0.09375)
-texture = ExtResource("4_icon")
+texture = ExtResource("4_sheet")
+hframes = 2
+vframes = 2
 
 [node name="Hurtbox" type="Area2D" parent="." unique_id=2039901439]
 script = ExtResource("2_obstacle")

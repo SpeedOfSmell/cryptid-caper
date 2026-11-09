@@ -2,21 +2,50 @@
 
 [ext_resource type="Script" uid="uid://d3ipu56i376st" path="res://assets/game/game_screen/interactables/obstacle/traps/piston/piston_trap.gd" id="1_piston"]
 [ext_resource type="Script" uid="uid://heoyfeygh4e8" path="res://assets/game/game_screen/interactables/obstacle/obstacle.gd" id="2_obstacle"]
-[ext_resource type="Texture2D" uid="uid://bqw1cdlob2j02" path="res://icon.svg" id="3_icon"]
+[ext_resource type="Texture2D" uid="uid://g7rxfi0ibg5s" path="res://assets/game/game_screen/interactables/obstacle/traps/piston/Piston base.png" id="3_base"]
+[ext_resource type="Texture2D" uid="uid://b0i3ey143qqqt" path="res://assets/game/game_screen/interactables/obstacle/traps/piston/Piston middle.png" id="4_middle"]
+[ext_resource type="Texture2D" uid="uid://fg7vx40j3n1t" path="res://assets/game/game_screen/interactables/obstacle/traps/piston/Piston bottom.png" id="5_head"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_base"]
 size = Vector2(16, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_head"]
-size = Vector2(16, 8)
+size = Vector2(16, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_face"]
 size = Vector2(14, 4)
 
-[node name="PistonTrap" type="Node2D" node_paths=PackedStringArray("head", "hurtbox")]
+[node name="PistonTrap" type="Node2D" node_paths=PackedStringArray("head", "hurtbox", "middle")]
 script = ExtResource("1_piston")
 head = NodePath("Head")
 hurtbox = NodePath("Head/Hurtbox")
+middle = NodePath("Head/Middle")
+
+[node name="Head" type="AnimatableBody2D" parent="."]
+position = Vector2(0, 16)
+
+[node name="Middle" type="NinePatchRect" parent="Head"]
+offset_left = -8.0
+offset_top = -19.0
+offset_right = 8.0
+offset_bottom = -8.0
+grow_vertical = 0
+texture = ExtResource("4_middle")
+patch_margin_bottom = 11
+axis_stretch_vertical = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Head"]
+shape = SubResource("RectangleShape2D_head")
+
+[node name="Sprite2D" type="Sprite2D" parent="Head"]
+texture = ExtResource("5_head")
+
+[node name="Hurtbox" type="Area2D" parent="Head"]
+position = Vector2(0, 9)
+script = ExtResource("2_obstacle")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Head/Hurtbox"]
+shape = SubResource("RectangleShape2D_face")
 
 [node name="Base" type="StaticBody2D" parent="."]
 
@@ -24,24 +53,4 @@ hurtbox = NodePath("Head/Hurtbox")
 shape = SubResource("RectangleShape2D_base")
 
 [node name="Sprite2D" type="Sprite2D" parent="Base"]
-modulate = Color(0.4, 0.4, 0.45, 1)
-scale = Vector2(0.125, 0.125)
-texture = ExtResource("3_icon")
-
-[node name="Head" type="AnimatableBody2D" parent="."]
-position = Vector2(0, 12)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Head"]
-shape = SubResource("RectangleShape2D_head")
-
-[node name="Sprite2D" type="Sprite2D" parent="Head"]
-modulate = Color(0.6, 0.6, 0.65, 1)
-scale = Vector2(0.125, 0.0625)
-texture = ExtResource("3_icon")
-
-[node name="Hurtbox" type="Area2D" parent="Head"]
-position = Vector2(0, 5)
-script = ExtResource("2_obstacle")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Head/Hurtbox"]
-shape = SubResource("RectangleShape2D_face")
+texture = ExtResource("3_base")
