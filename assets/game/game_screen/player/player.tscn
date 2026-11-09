@@ -2,10 +2,6 @@
 
 [ext_resource type="Script" uid="uid://d3xulsxarhdp8" path="res://assets/game/game_screen/player/player_controller.gd" id="1_6efgi"]
 [ext_resource type="Texture2D" uid="uid://bindynisp4dpp" path="res://assets/game/game_screen/player/Ch_idle_48x96.png" id="2_u3l8h"]
-[ext_resource type="Texture2D" uid="uid://d0bd1s1wrog8q" path="res://assets/game/game_screen/player/Ch_run_48x96.png" id="12_run"]
-[ext_resource type="Texture2D" uid="uid://fmfcgs0vglib" path="res://assets/game/game_screen/player/Ch_jump.png" id="13_jump"]
-[ext_resource type="Texture2D" uid="uid://y1kawkwbf76o" path="res://assets/game/game_screen/player/Ch_crouch.png" id="14_crouch"]
-[ext_resource type="Resource" uid="uid://dvfrt4w6xp2i7" path="res://assets/audio/sfx/character/footstep.tres" id="15_step"]
 [ext_resource type="Script" uid="uid://5y18mcpwtirr" path="res://assets/game/game_screen/player/states/player_state_machine.gd" id="3_vusm5"]
 [ext_resource type="Script" uid="uid://b3pstievwfyw2" path="res://assets/game/game_screen/player/states/idle_state.gd" id="4_o0waw"]
 [ext_resource type="Script" uid="uid://d2u24chmvgtcb" path="res://assets/game/game_screen/player/states/walk_state.gd" id="5_m3wu7"]
@@ -16,12 +12,23 @@
 [ext_resource type="Script" uid="uid://dphxw5srqv6ba" path="res://assets/game/game_screen/player/states/coyote_state.gd" id="9_coy01"]
 [ext_resource type="Script" uid="uid://d1e4h20cfyq4h" path="res://assets/game/game_screen/player/states/drop_state.gd" id="10_drop"]
 [ext_resource type="Script" uid="uid://c5sgqdhqb4bvf" path="res://assets/game/game_screen/player/states/dash_state.gd" id="11_dash"]
+[ext_resource type="Texture2D" uid="uid://d0bd1s1wrog8q" path="res://assets/game/game_screen/player/Ch_run_48x96.png" id="12_run"]
+[ext_resource type="Texture2D" uid="uid://fmfcgs0vglib" path="res://assets/game/game_screen/player/Ch_jump.png" id="13_jump"]
+[ext_resource type="Texture2D" uid="uid://y1kawkwbf76o" path="res://assets/game/game_screen/player/Ch_crouch.png" id="14_crouch"]
+[ext_resource type="Resource" uid="uid://dvfrt4w6xp2i7" path="res://assets/audio/sfx/character/footstep.tres" id="15_step"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_buion"]
-size = Vector2(15, 23)
+[sub_resource type="AtlasTexture" id="AtlasTexture_crouch0"]
+atlas = ExtResource("14_crouch")
+region = Rect2(0, 0, 16, 32)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_duck"]
-size = Vector2(15, 12)
+[sub_resource type="AtlasTexture" id="AtlasTexture_crouch1"]
+atlas = ExtResource("14_crouch")
+region = Rect2(16, 0, 16, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jump2"]
+atlas = ExtResource("13_jump")
+region = Rect2(16, 28, 16, 28)
+margin = Rect2(0, 4, 0, 4)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_43lnt"]
 atlas = ExtResource("2_u3l8h")
@@ -47,6 +54,16 @@ region = Rect2(16, 32, 16, 32)
 atlas = ExtResource("2_u3l8h")
 region = Rect2(32, 32, 16, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_jump0"]
+atlas = ExtResource("13_jump")
+region = Rect2(32, 0, 16, 28)
+margin = Rect2(0, 4, 0, 4)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jump1"]
+atlas = ExtResource("13_jump")
+region = Rect2(0, 28, 16, 28)
+margin = Rect2(0, 4, 0, 4)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_run0"]
 atlas = ExtResource("12_run")
 region = Rect2(0, 0, 16, 32)
@@ -71,31 +88,27 @@ region = Rect2(16, 32, 16, 32)
 atlas = ExtResource("12_run")
 region = Rect2(32, 32, 16, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_jump0"]
-atlas = ExtResource("13_jump")
-region = Rect2(32, 0, 16, 28)
-margin = Rect2(0, 4, 0, 4)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jump1"]
-atlas = ExtResource("13_jump")
-region = Rect2(0, 28, 16, 28)
-margin = Rect2(0, 4, 0, 4)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jump2"]
-atlas = ExtResource("13_jump")
-region = Rect2(16, 28, 16, 28)
-margin = Rect2(0, 4, 0, 4)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_crouch0"]
-atlas = ExtResource("14_crouch")
-region = Rect2(0, 0, 16, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_crouch1"]
-atlas = ExtResource("14_crouch")
-region = Rect2(16, 0, 16, 32)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_qe432"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_crouch0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_crouch1")
+}],
+"loop": 1,
+"name": &"crouch",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jump2")
+}],
+"loop": 0,
+"name": &"fall",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_43lnt")
@@ -121,6 +134,17 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_jump0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jump1")
+}],
+"loop": 0,
+"name": &"jump",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_run0")
 }, {
 "duration": 1.0,
@@ -138,40 +162,16 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_run5")
 }],
-"loop": true,
+"loop": 1,
 "name": &"run",
 "speed": 12.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jump0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jump1")
-}],
-"loop": false,
-"name": &"jump",
-"speed": 8.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jump2")
-}],
-"loop": false,
-"name": &"fall",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_crouch0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_crouch1")
-}],
-"loop": true,
-"name": &"crouch",
-"speed": 4.0
 }]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_buion"]
+size = Vector2(8, 22)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_duck"]
+size = Vector2(8, 12)
 
 [node name="Player" type="CharacterBody2D" unique_id=182611236 node_paths=PackedStringArray("sprite_node", "standing_shape", "ducking_shape")]
 script = ExtResource("1_6efgi")
@@ -179,21 +179,21 @@ sprite_node = NodePath("AnimatedSprite2D")
 standing_shape = NodePath("Standing Shape")
 ducking_shape = NodePath("Ducking Shape")
 
-[node name="Standing Shape" type="CollisionShape2D" parent="." unique_id=1864006372]
-position = Vector2(-0.5, -11.5)
-shape = SubResource("RectangleShape2D_buion")
-
-[node name="Ducking Shape" type="CollisionShape2D" parent="." unique_id=1537204896]
-position = Vector2(-0.5, -6)
-shape = SubResource("RectangleShape2D_duck")
-disabled = true
-
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=232347387]
 sprite_frames = SubResource("SpriteFrames_qe432")
 animation = &"idle"
 autoplay = "idle"
 frame_progress = 0.95405537
 offset = Vector2(0, -16)
+
+[node name="Standing Shape" type="CollisionShape2D" parent="." unique_id=1864006372]
+position = Vector2(-1, -11)
+shape = SubResource("RectangleShape2D_buion")
+
+[node name="Ducking Shape" type="CollisionShape2D" parent="." unique_id=1537204896]
+position = Vector2(-1, -6)
+shape = SubResource("RectangleShape2D_duck")
+disabled = true
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1086983367]
 position = Vector2(0, -16)
@@ -208,8 +208,8 @@ animation = &"idle"
 
 [node name="Walk" type="Node" parent="State Machine" unique_id=1778340265]
 script = ExtResource("5_m3wu7")
-animation = &"run"
 footstep_sfx = ExtResource("15_step")
+animation = &"run"
 
 [node name="Duck" type="Node" parent="State Machine" unique_id=304916782]
 script = ExtResource("6_l7p8j")
@@ -217,8 +217,8 @@ animation = &"crouch"
 
 [node name="Jump" type="Node" parent="State Machine" unique_id=1456028193]
 script = ExtResource("7_a0gya")
-animation = &"jump"
 sfx = ExtResource("8_vusm5")
+animation = &"jump"
 
 [node name="Fall" type="Node" parent="State Machine" unique_id=935172648]
 script = ExtResource("8_y5rae")

@@ -1,7 +1,7 @@
 class_name JumpState
 extends AirState
 
-@export var jump_speed : float = 290
+@export var jump_speed : float = 310
 @export var sfx: SfxEvent
 
 var _just_entered := false
