@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SfxEvent" format=3 uid="uid://5w03n8ehiev2"]
+
+[ext_resource type="Script" uid="uid://bs2frmocmdsle" path="res://assets/global/sfx_event.gd" id="1_62sj6"]
+[ext_resource type="AudioStream" uid="uid://c8fduykibx1aq" path="res://assets/audio/UI/UI_ScreenChange_1.wav" id="2_j52uw"]
+[ext_resource type="AudioStream" uid="uid://bnt2nn2mukp51" path="res://assets/audio/UI/UI_ScreenChange_2.wav" id="3_1omm0"]
+[ext_resource type="AudioStream" uid="uid://brqm4pidiw3yc" path="res://assets/audio/UI/UI_ScreenChange_3.wav" id="4_6x5no"]
+
+[resource]
+script = ExtResource("1_62sj6")
+streams = Array[AudioStream]([ExtResource("2_j52uw"), ExtResource("3_1omm0"), ExtResource("4_6x5no")])
+pitch_min = 0.98
+pitch_max = 1.02
+metadata/_custom_type_script = "uid://bs2frmocmdsle"
