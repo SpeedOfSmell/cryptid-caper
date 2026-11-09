@@ -14,6 +14,7 @@ var _current_room: Room
 var _player: CharacterBody2D
 var _transition_pending := false
 var _next_room_id := 1
+var _fade_tween: Tween
 
 @onready var _room_generator: RoomGenerator = $"Room Generator"
 
@@ -27,7 +28,7 @@ func _ready() -> void:
 
 	_player = _player_scene.instantiate()
 	_place_player(_current_room.get_entry_spawn_position())
-	PlayerManager.player_died.connect(_respawn_player.bind(_current_room.get_entry_spawn_position()))
+	PlayerManager.player_died.connect(_start_death_freezeframe.bind(_current_room.get_entry_spawn_position()))
 
 	add_child(_current_room)
 	add_child(_player)
@@ -75,9 +76,9 @@ func _change_room(source_room: Room, destination_room: Room, spawn_position: Vec
 	if _current_room != null and _current_room.get_parent() == self:
 		remove_child.call_deferred(_current_room)
 
-	if PlayerManager.player_died.is_connected(_respawn_player):
-		PlayerManager.player_died.disconnect(_respawn_player)
-	PlayerManager.player_died.connect(_respawn_player.bind(spawn_position))
+	if PlayerManager.player_died.is_connected(_start_death_freezeframe):
+		PlayerManager.player_died.disconnect(_start_death_freezeframe)
+	PlayerManager.player_died.connect(_start_death_freezeframe.bind(spawn_position))
 		
 	# Rooms share world coordinates, so move the player before the destination doors become active
 	_place_player.call_deferred(spawn_position)
@@ -100,12 +101,28 @@ func _update_time(seconds: int):
 	var m := seconds / 60
 	var s := seconds % 60
 	%TimeLabel.text = "%02d:%02d" % [m, s]
-	
-func _respawn_player(spawn_position: Vector2):
+
+func _fade_to(target: float, duration: float) -> void:
+	if _fade_tween:
+		_fade_tween.kill()
+	_fade_tween = create_tween()
+	_fade_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)  # keeps running while paused
+	_fade_tween.tween_property(%Fade.material, "shader_parameter/progress", target, duration)
+	await _fade_tween.finished
+
+func _start_death_freezeframe(spawn_position: Vector2) -> void:
+	get_tree().paused = true
+	# freeze frame; the 'true' makes this timer keep running while paused
+	await get_tree().create_timer(0.1, true).timeout
+	await _fade_to(1.0, 0.3)          # screen is fully covered after this
+	_respawn_player(spawn_position)   # happens while the screen is solid
+	await _fade_to(0.0, 0.3)
+	get_tree().paused = false
+
+func _respawn_player(spawn_position: Vector2) -> void:
 	_place_player(spawn_position)
 	PlayerManager.gain_health(1)
-	# subtract time?
-	
+
 func _quit_game():
 	transition_requested.emit(States.GameState.MAIN_MENU)
 	
