@@ -4,6 +4,7 @@ signal transition_requested(state: States.GameState)
 
 @export var music: Resource
 @export var _player_scene: PackedScene
+@export var _room_change_sfx: SfxEvent
 
 # Time player has at start in seconds
 const START_TIME:float = 5 * 60
@@ -71,6 +72,7 @@ func _change_room(source_room: Room, destination_room: Room, spawn_position: Vec
 
 	_transition_pending = true
 	
+	AudioManager.play_sfx(_room_change_sfx)
 	%Wipe.material.set_shader_parameter("reverse", false)
 	await _fade_to(1.0, 0.4, %Wipe)
 	
