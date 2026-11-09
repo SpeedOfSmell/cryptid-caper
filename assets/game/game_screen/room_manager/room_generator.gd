@@ -12,6 +12,7 @@ const DOUBLE_JUMP_UNLOCK_LEVEL = 3
 const DASH_UNLOCK_LEVEL = 5
 const ROOM_HORIZONTAL_SIZE_INCREASE_FREQUENCY = 8
 const ROOM_VERTICAL_SIZE_INCREASE_FREQUENCY = 2
+const BACKGROUND_CHANGE_FREQUENCY = 3
 
 const CHUNK_SIZE := Vector2i(40, 20)
 const EXIT_LEFT := 1
@@ -58,6 +59,8 @@ func generate_room(room_id: int) -> Room:
 	_spawn_chunks(chunk_map, artifact_map, room, starting_coords, ending_coords, relic_to_spawn)
 	_fill_walls(room.tilemap, room_size)
 	_create_room_exits(room, starting_coords, ending_coords)
+	
+	room.find_child("Background", true, false).texture = room.backgrounds[floor(room_id / 3)]
 	
 	return room
 
