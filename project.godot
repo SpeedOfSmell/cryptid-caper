@@ -22,6 +22,7 @@ AudioManager="*uid://ch2dbl64kt67y"
 States="*uid://dujlikvrn20l1"
 PauseMenu="*uid://mjnwtqq0fvx0"
 UpgradeDatabase="*uid://de3hvi1hq1dkq"
+Global="*uid://c10v035ni3ucl"
 
 [display]
 
