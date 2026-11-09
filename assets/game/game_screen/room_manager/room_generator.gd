@@ -424,13 +424,13 @@ func _fill_walls(tilemap: TileMapLayer, room_size: Vector2i):
 
 func _create_room_exits(room: Room, starting_coords: Vector2i, ending_coords: Vector2i):
 	var tilemap := room.tilemap
-	var start_entrance_top := (starting_coords.y * CHUNK_SIZE.y) + (CHUNK_SIZE.y / 2) - 2
-	var start_entrance_left := -10
-	var entrance_rect: Rect2i = Rect2i(Vector2i(start_entrance_left, start_entrance_top), Vector2i(10, 4))
+	var start_entrance_top := (starting_coords.y * CHUNK_SIZE.y) + (CHUNK_SIZE.y / 2) - 1
+	var start_entrance_left := -15
+	var entrance_rect: Rect2i = Rect2i(Vector2i(start_entrance_left, start_entrance_top), Vector2i(15, 2))
 	
-	var exit_entrance_top := (ending_coords.y * CHUNK_SIZE.y) + (CHUNK_SIZE.y / 2) - 2
+	var exit_entrance_top := (ending_coords.y * CHUNK_SIZE.y) + (CHUNK_SIZE.y / 2) - 1
 	var exit_entrance_left := (ending_coords.x + 1) * CHUNK_SIZE.x
-	var exit_rect: Rect2i = Rect2i(Vector2i(exit_entrance_left, exit_entrance_top), Vector2i(10, 4))
+	var exit_rect: Rect2i = Rect2i(Vector2i(exit_entrance_left, exit_entrance_top), Vector2i(15, 2))
 	
 	_erase_rect(tilemap, entrance_rect)
 	_erase_rect(tilemap, exit_rect)
