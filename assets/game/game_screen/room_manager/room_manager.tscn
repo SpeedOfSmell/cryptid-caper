@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://jj5ntj7dye0l" path="res://assets/global/ui/Artifacts_tracker.png" id="11_e307x"]
 [ext_resource type="PackedScene" uid="uid://mjnwtqq0fvx0" path="res://assets/game/game_screen/pause_menu/pause_menu.tscn" id="13_lrkxs"]
 [ext_resource type="Texture2D" uid="uid://btkh2gik2mrfv" path="res://assets/global/ui/Ui_3.png" id="13_xtlk2"]
+[ext_resource type="Shader" uid="uid://kqw2u5tniybr" path="res://assets/game/game_screen/room_manager/wipe.gdshader" id="14_khrly"]
 [ext_resource type="Shader" uid="uid://mqdvfso6cnh2" path="res://assets/game/game_screen/room_manager/dither_fade.gdshader" id="15_khrly"]
 
 [sub_resource type="Resource" id="Resource_fjksm"]
@@ -21,10 +22,16 @@ script = ExtResource("9_vtgo2")
 artifacts = Array[ExtResource("8_ojc38")]([ExtResource("9_e307x")])
 metadata/_custom_type_script = "uid://dc3stds6x18aq"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_xtlk2"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0ri6t"]
 shader = ExtResource("15_khrly")
 shader_parameter/progress = 0.0
 shader_parameter/fade_color = Color(0.13333334, 0.13725491, 0.13725491, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gn1bi"]
+shader = ExtResource("14_khrly")
+shader_parameter/progress = 0.0
+shader_parameter/fade_color = Color(0.13333334, 0.13725491, 0.13725491, 1)
+shader_parameter/reverse = false
 
 [node name="Room Manager" type="Node" unique_id=1475098114]
 script = ExtResource("1_xylws")
@@ -87,7 +94,19 @@ vertical_alignment = 1
 unique_name_in_owner = true
 process_mode = 3
 z_index = 10
-material = SubResource("ShaderMaterial_xtlk2")
+material = SubResource("ShaderMaterial_0ri6t")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.9411765, 0.9647059, 0.9411765, 1)
+
+[node name="Wipe" type="ColorRect" parent="CanvasLayer" unique_id=1764812639]
+unique_name_in_owner = true
+process_mode = 3
+z_index = 10
+material = SubResource("ShaderMaterial_gn1bi")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
