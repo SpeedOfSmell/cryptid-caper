@@ -70,7 +70,7 @@ func play_sfx_on(event: SfxEvent, emitter: Node2D) -> AudioStreamPlayer2D:
 	return player
 
 func set_bus_volume(bus: Bus, linear: float) -> void:
-	AudioServer.set_bus_volume_linear(AudioServer.get_bus_index(_BUS_NAMES[bus]), clampf(linear, 0.0, 1.0))
+	AudioServer.set_bus_volume_linear(AudioServer.get_bus_index(_BUS_NAMES[bus]), maxf(linear, 0.0))
 
 func get_bus_volume(bus: Bus) -> float:
 	return AudioServer.get_bus_volume_linear(AudioServer.get_bus_index(_BUS_NAMES[bus]))

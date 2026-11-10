@@ -6,10 +6,12 @@ const ROW_NAMES := ["Master", "Sfx", "Music"]
 
 var selected_index := 0
 var volumes: Array[int] = [10, 10, 10]
+var max_bus_levels: Array[float] = [1.0, 1.0, 1.0]
 
 func initialize() -> void:
 	for i in BUS_ORDER.size():
-		volumes[i] = roundi(AudioManager.get_bus_volume(BUS_ORDER[i]) * MAX_VOLUME)
+		max_bus_levels[i] = AudioManager.get_bus_volume(BUS_ORDER[i])
+		volumes[i] = MAX_VOLUME
 	_refresh_rows()
 
 func show_panel() -> void:
@@ -54,7 +56,7 @@ func _on_volume_row_gui_input(event: InputEvent, row_index: int) -> void:
 
 func _adjust_volume(index: int, amount: int) -> void:
 	volumes[index] = clampi(volumes[index] + amount, 0, MAX_VOLUME)
-	AudioManager.set_bus_volume(BUS_ORDER[index], float(volumes[index]) / MAX_VOLUME)
+	AudioManager.set_bus_volume(BUS_ORDER[index], max_bus_levels[index] * float(volumes[index]) / MAX_VOLUME)
 	_refresh_rows()
 
 func _refresh_rows() -> void:
