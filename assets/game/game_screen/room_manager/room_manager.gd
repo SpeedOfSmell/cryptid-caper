@@ -7,7 +7,7 @@ signal transition_requested(state: States.GameState)
 @export var _room_change_sfx: SfxEvent
 
 # Time player has at start in seconds
-const START_TIME:float = 5 #* 60
+const START_TIME:float = 5 * 60
 
 var time_left: float
 
@@ -137,6 +137,6 @@ func _on_timer_expired():
 	transition_requested.emit(States.GameState.GAME_OVER)
 	
 func _on_player_exited():
-	transition_requested.emit(States.GameState.GAME_OVER)
+	transition_requested.emit(States.GameState.WIN)
 	if PlayerManager.get_score() > PlayerManager.get_hiscore():
 		PlayerManager.set_hiscore(PlayerManager.get_score())

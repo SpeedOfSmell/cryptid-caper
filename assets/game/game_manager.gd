@@ -3,14 +3,16 @@ extends Node
 @export var _main_menu_scene: PackedScene
 @export var _game_scene: PackedScene
 @export var _game_over_scene: PackedScene
+@export var _win_scene: PackedScene
 
 @export var button_click_sfx: SfxEvent
 @export var button_focus_sfx: SfxEvent
 
 const VALID_TRANSITIONS := {
 	States.GameState.MAIN_MENU: [States.GameState.GAME],
-	States.GameState.GAME: [States.GameState.MAIN_MENU, States.GameState.GAME_OVER],
-	States.GameState.GAME_OVER: [States.GameState.MAIN_MENU, States.GameState.GAME]
+	States.GameState.GAME: [States.GameState.MAIN_MENU, States.GameState.GAME_OVER, States.GameState.WIN],
+	States.GameState.GAME_OVER: [States.GameState.MAIN_MENU, States.GameState.GAME],
+	States.GameState.WIN: [States.GameState.MAIN_MENU, States.GameState.GAME]
 }
 const INITIAL_STATE := States.GameState.MAIN_MENU
 
@@ -23,7 +25,8 @@ func _ready():
 	_state_scenes = {
 		States.GameState.MAIN_MENU: _main_menu_scene,
 		States.GameState.GAME: _game_scene,
-		States.GameState.GAME_OVER: _game_over_scene
+		States.GameState.GAME_OVER: _game_over_scene,
+		States.GameState.WIN: _win_scene
 	}
 	
 	child_entered_tree.connect(_connect_ui_elements_to_audio)

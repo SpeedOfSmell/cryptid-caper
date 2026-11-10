@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dkabx8v2yxqy1" path="res://assets/game/main_menu/main_menu.tscn" id="2_seigl"]
 [ext_resource type="PackedScene" uid="uid://bq8f0w75elmet" path="res://assets/game/game_over_screen/game_over.tscn" id="4_nm2dn"]
 [ext_resource type="Resource" uid="uid://5w03n8ehiev2" path="res://assets/audio/UI/UIScreenChange.tres" id="5_bedwy"]
+[ext_resource type="PackedScene" uid="uid://c2rmq0w5trwp8" path="res://assets/game/win_screen/win_screen.tscn" id="5_ne7se"]
 [ext_resource type="Resource" uid="uid://d247kkkhumfrb" path="res://assets/audio/UI/UISelect.tres" id="6_me7jj"]
 
 [node name="Game Manager" type="Node" unique_id=175650822]
@@ -12,5 +13,6 @@ script = ExtResource("1_ne7se")
 _main_menu_scene = ExtResource("2_seigl")
 _game_scene = ExtResource("2_684gi")
 _game_over_scene = ExtResource("4_nm2dn")
+_win_scene = ExtResource("5_ne7se")
 button_click_sfx = ExtResource("5_bedwy")
 button_focus_sfx = ExtResource("6_me7jj")
