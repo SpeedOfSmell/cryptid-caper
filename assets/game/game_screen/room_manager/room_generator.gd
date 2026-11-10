@@ -62,7 +62,7 @@ func generate_room(room_id: int) -> Room:
 	_fill_walls(room.tilemap, room_size)
 	_create_room_exits(room, starting_coords, ending_coords)
 	
-	room.find_child("Background", true, false).texture = room.backgrounds[floor(room_id / 3)]
+	room.find_child("Background", true, false).texture = room.backgrounds[min(floor(room_id / 3), 4)]
 	
 	return room
 
