@@ -14,7 +14,7 @@ var time_left: float
 var _current_room: Room
 var _player: CharacterBody2D
 var _transition_pending := false
-var _next_room_id := 20
+var _next_room_id := 1
 var _fade_tween: Tween
 
 @onready var _room_generator: RoomGenerator = $"Room Generator"
@@ -138,3 +138,5 @@ func _on_timer_expired():
 	
 func _on_player_exited():
 	transition_requested.emit(States.GameState.GAME_OVER)
+	if PlayerManager.get_score() > PlayerManager.get_hiscore():
+		PlayerManager.set_hiscore(PlayerManager.get_score())

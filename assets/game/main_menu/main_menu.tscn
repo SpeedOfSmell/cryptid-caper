@@ -5,6 +5,9 @@
 [ext_resource type="AudioStream" uid="uid://247iodwew15" path="res://assets/audio/music/Main Menu.wav" id="2_tdavu"]
 [ext_resource type="LabelSettings" uid="uid://b3m4nbdxi31eb" path="res://assets/global/label_settings_black.tres" id="3_tdavu"]
 [ext_resource type="Texture2D" uid="uid://627mwcxj1jd1" path="res://assets/game/main_menu/Title.png" id="3_x4jpy"]
+[ext_resource type="Texture2D" uid="uid://cd11amfs4cvrb" path="res://assets/global/ui/Ui_4.png" id="6_aj6wj"]
+[ext_resource type="Texture2D" uid="uid://jj5ntj7dye0l" path="res://assets/global/ui/Artifacts_tracker.png" id="7_japdx"]
+[ext_resource type="LabelSettings" uid="uid://ck6ardbqhy8n1" path="res://assets/global/label_settings_white.tres" id="8_xdoka"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_davy8"]
 atlas = ExtResource("3_x4jpy")
@@ -72,18 +75,15 @@ sprite_frames = SubResource("SpriteFrames_1lvrn")
 autoplay = "default"
 frame_progress = 0.38224497
 
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1281614090]
+[node name="PlayButton" type="TextureButton" parent="." unique_id=847308401]
 layout_mode = 0
-offset_left = 160.0
-offset_top = 91.0
-offset_right = 206.0
-offset_bottom = 131.0
-
-[node name="PlayButton" type="TextureButton" parent="VBoxContainer" unique_id=847308401]
-layout_mode = 2
+offset_left = 222.0
+offset_top = 100.0
+offset_right = 290.0
+offset_bottom = 136.0
 texture_normal = ExtResource("2_8emhj")
 
-[node name="Label" type="Label" parent="VBoxContainer/PlayButton" unique_id=1718136977]
+[node name="Label" type="Label" parent="PlayButton" unique_id=1718136977]
 layout_mode = 0
 offset_left = 1.0
 offset_right = 67.0
@@ -93,4 +93,54 @@ label_settings = ExtResource("3_tdavu")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="pressed" from="VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1281614090]
+layout_mode = 0
+offset_left = 160.0
+offset_top = 91.0
+offset_right = 206.0
+offset_bottom = 131.0
+
+[node name="Control" type="Control" parent="." unique_id=738038175]
+anchors_preset = 0
+offset_left = -13.0
+offset_right = 27.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="Control" unique_id=1580115318]
+layout_mode = 0
+offset_left = 221.0
+offset_top = 149.0
+offset_right = 317.0
+offset_bottom = 209.0
+texture = ExtResource("6_aj6wj")
+stretch_mode = 4
+
+[node name="TextureRect2" type="TextureRect" parent="Control" unique_id=1415858645]
+layout_mode = 0
+offset_left = 251.0
+offset_top = 167.0
+offset_right = 318.0
+offset_bottom = 207.0
+texture = ExtResource("7_japdx")
+
+[node name="Label" type="Label" parent="Control" unique_id=1840176575]
+layout_mode = 0
+offset_left = 241.0
+offset_top = 152.0
+offset_right = 301.0
+offset_bottom = 175.0
+text = "Hiscore"
+label_settings = ExtResource("8_xdoka")
+
+[node name="HiscoreLabel" type="Label" parent="Control" unique_id=379150416]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 271.0
+offset_top = 176.0
+offset_right = 311.0
+offset_bottom = 199.0
+text = "999"
+label_settings = ExtResource("3_tdavu")
+horizontal_alignment = 2
+
+[connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
