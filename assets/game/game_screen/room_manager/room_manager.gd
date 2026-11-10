@@ -8,7 +8,7 @@ signal transition_requested(state: States.GameState)
 
 # Time player has at start in seconds
 const START_TIME:float = 5 * 60
-const ARTIFACT_TIME_BONUS := 30.0
+const ARTIFACT_TIME_BONUS := 20.0
 
 var time_left: float
 

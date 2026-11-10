@@ -12,13 +12,16 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_head"]
 size = Vector2(16, 16)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_shaft"]
+size = Vector2(16, 1)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_face"]
 size = Vector2(14, 4)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_base"]
 size = Vector2(16, 16)
 
-[node name="PistonTrap" type="Node2D" unique_id=1099493609 node_paths=PackedStringArray("head", "hurtbox", "middle")]
+[node name="PistonTrap" type="Node2D" unique_id=1099493609 node_paths=PackedStringArray("head", "hurtbox", "middle", "shaft")]
 script = ExtResource("1_piston")
 hit_sfx = ExtResource("7_hit")
 retract_sfx = ExtResource("8_retract")
@@ -26,6 +29,7 @@ fire_sfx = ExtResource("6_extend")
 head = NodePath("Head")
 hurtbox = NodePath("Head/Hurtbox")
 middle = NodePath("Head/Middle")
+shaft = NodePath("Head/Shaft")
 
 [node name="Head" type="AnimatableBody2D" parent="." unique_id=309629143]
 position = Vector2(0, 16)
@@ -42,6 +46,11 @@ axis_stretch_vertical = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Head" unique_id=1704039237]
 shape = SubResource("RectangleShape2D_head")
+
+[node name="Shaft" type="CollisionShape2D" parent="Head" unique_id=1597305148]
+position = Vector2(0, -8.5)
+shape = SubResource("RectangleShape2D_shaft")
+disabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Head" unique_id=8398919]
 texture = ExtResource("5_head")
