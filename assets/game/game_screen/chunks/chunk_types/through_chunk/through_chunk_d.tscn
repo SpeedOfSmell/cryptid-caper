@@ -21,3 +21,6 @@ position = Vector2(232, 272)
 
 [node name="Artifact" parent="." unique_id=952004704 instance=ExtResource("4_20m47")]
 position = Vector2(383, 270)
+
+[node name="Artifact2" parent="." unique_id=1630857140 instance=ExtResource("4_20m47")]
+position = Vector2(557, 128)
