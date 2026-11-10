@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ChunkTemplate" format=3 uid="uid://bt6gwo0mod4o6"]
+
+[ext_resource type="PackedScene" uid="uid://fssj0wmtfspi" path="res://assets/game/game_screen/chunks/chunk_types/up_chunk/up_chunk_u.tscn" id="1_ovici"]
+[ext_resource type="Script" uid="uid://wpcxsk870y80" path="res://assets/game/game_screen/chunks/chunk_types/chunk_template.gd" id="2_avqit"]
+
+[resource]
+script = ExtResource("2_avqit")
+requires_double_jump = true
+requires_dash = true
+difficulty = 4
+chunk_scene = ExtResource("1_ovici")
+metadata/_custom_type_script = "uid://wpcxsk870y80"
