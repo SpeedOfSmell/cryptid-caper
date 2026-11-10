@@ -30,6 +30,12 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause"):
 		_toggle()
 		get_viewport().set_input_as_handled()
+	elif visible and (event.is_action_pressed("ui_down") or event.is_action_pressed("ui_up")) and get_viewport().gui_get_focus_owner() == null:
+		if %ConfirmationPanel.visible:
+			%ConfirmButton.grab_focus()
+		elif %MenuPanel.visible:
+			%ResumeButton.grab_focus()
+		get_viewport().set_input_as_handled()
 
 
 func _input(event: InputEvent) -> void:
@@ -112,13 +118,6 @@ func _fade_to(target: float, duration: float, effect: ColorRect) -> void:
 func _switch_button_label_settings(button: TextureButton, settings: LabelSettings):
 	var label: Label = button.find_children("*", "Label", true, false)[0]
 	label.label_settings = settings
-
-func _unhandled_key_input(event):
-	if event.is_action_pressed("ui_down") or event.is_action_pressed("ui_up"):
-		if %MenuPanel.visible == true:
-			%ResumeButton.grab_focus()
-		elif %ConfirmationPanel.visible == true:
-			%ConfirmButton.grab_focus()
 
 func _on_resume_button_focus_entered():
 	_switch_button_label_settings(%ResumeButton, pauseFocusedLabel)

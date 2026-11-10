@@ -30,10 +30,11 @@ func _input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 
 
-func _unhandled_key_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_down") or event.is_action_pressed("ui_up"):
+func _unhandled_input(event: InputEvent) -> void:
+	if (event.is_action_pressed("ui_down") or event.is_action_pressed("ui_up")) and get_viewport().gui_get_focus_owner() == null:
 		if is_instance_valid(_restart_button) and _restart_button.is_inside_tree():
 			_restart_button.grab_focus()
+			get_viewport().set_input_as_handled()
 
 
 func _on_restart_button_pressed():

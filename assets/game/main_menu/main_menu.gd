@@ -48,11 +48,12 @@ func _switch_button_label_settings(button: TextureButton, settings: LabelSetting
 	if not labels.is_empty():
 		labels[0].label_settings = settings
 
-func _unhandled_key_input(event: InputEvent) -> void:
+func _unhandled_input(event: InputEvent) -> void:
 	if %VolumePanel.visible or %AboutPanel.visible:
 		return
-	if event.is_action_pressed("ui_down") or event.is_action_pressed("ui_up"):
+	if (event.is_action_pressed("ui_down") or event.is_action_pressed("ui_up")) and get_viewport().gui_get_focus_owner() == null:
 		_play_button.grab_focus()
+		get_viewport().set_input_as_handled()
 
 func _on_play_button_focus_entered() -> void:
 	_switch_button_label_settings(_play_button, focusedLabel)

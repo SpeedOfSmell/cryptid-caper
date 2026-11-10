@@ -1,11 +1,13 @@
 extends Control
 
 const MAX_VOLUME := 10
+const JOYPAD_SELECTION_INTERVAL_MSEC := 250
 const BUS_ORDER: Array[int] = [AudioManager.Bus.MASTER, AudioManager.Bus.SFX, AudioManager.Bus.MUSIC]
 const ROW_NAMES := ["Master", "Sfx", "Music"]
 
 var selected_index := 0
 var volumes: Array[int] = [10, 10, 10]
+var _next_joypad_selection_msec := 0
 
 func initialize() -> void:
 	for i in BUS_ORDER.size():
@@ -15,11 +17,19 @@ func initialize() -> void:
 func show_panel() -> void:
 	show()
 	selected_index = 0
+	_next_joypad_selection_msec = 0
 	_refresh_rows()
 
 func _input(event: InputEvent) -> void:
 	if not visible:
 		return
+	var is_volume_input := event.is_action_pressed("ui_up") or event.is_action_pressed("ui_down") or event.is_action_pressed("ui_left") or event.is_action_pressed("ui_right")
+	if is_volume_input and (event is InputEventJoypadButton or event is InputEventJoypadMotion):
+		var now := Time.get_ticks_msec()
+		if now < _next_joypad_selection_msec:
+			get_viewport().set_input_as_handled()
+			return
+		_next_joypad_selection_msec = now + JOYPAD_SELECTION_INTERVAL_MSEC
 	if event.is_action_pressed("ui_up"):
 		selected_index = wrapi(selected_index - 1, 0, 4)
 		_refresh_rows()
