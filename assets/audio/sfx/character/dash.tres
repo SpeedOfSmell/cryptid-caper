@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SfxEvent" format=3 uid="uid://b8i6yibhw4334"]
+
+[ext_resource type="Script" uid="uid://bs2frmocmdsle" path="res://assets/global/sfx_event.gd" id="1_rhe0i"]
+[ext_resource type="AudioStream" uid="uid://jj2cl3w00u3c" path="res://assets/audio/sfx/character/SFX_Dash_1.wav" id="2_2x8wp"]
+[ext_resource type="AudioStream" uid="uid://d1tn2jags03rj" path="res://assets/audio/sfx/character/SFX_Dash_2.wav" id="3_oi87j"]
+[ext_resource type="AudioStream" uid="uid://dsyp57nq5x6pb" path="res://assets/audio/sfx/character/SFX_Dash_3.wav" id="4_0kxvn"]
+[ext_resource type="AudioStream" uid="uid://d2jcf7ws4af2e" path="res://assets/audio/sfx/character/SFX_Dash_4.wav" id="5_oels5"]
+
+[resource]
+script = ExtResource("1_rhe0i")
+streams = Array[AudioStream]([ExtResource("2_2x8wp"), ExtResource("3_oi87j"), ExtResource("4_0kxvn"), ExtResource("5_oels5")])
+pitch_min = 0.96
+pitch_max = 1.04
+metadata/_custom_type_script = "uid://bs2frmocmdsle"
