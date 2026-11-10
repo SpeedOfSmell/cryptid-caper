@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cvf07ffquhsgj"
-path="res://.godot/imported/Bg 6.png-3f4c3ac8833f31db8ad5f6b7c0c9c19d.ctex"
+uid="uid://ky5ouy82xmvg"
+path="res://.godot/imported/Arrow Animation.png-1a6a04e9c759976b25a9109c70e56905.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/game/game_screen/room_manager/backgrounds/Bg 6.png"
-dest_files=["res://.godot/imported/Bg 6.png-3f4c3ac8833f31db8ad5f6b7c0c9c19d.ctex"]
+source_file="res://assets/game/tutorial_screen/Arrow Animation.png"
+dest_files=["res://.godot/imported/Arrow Animation.png-1a6a04e9c759976b25a9109c70e56905.ctex"]
 
 [params]
 

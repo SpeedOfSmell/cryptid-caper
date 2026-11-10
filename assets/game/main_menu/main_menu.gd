@@ -9,4 +9,4 @@ func _ready():
 	%HiscoreLabel.text = str(PlayerManager.get_hiscore())
 
 func _on_play_button_pressed():
-	transition_requested.emit(States.GameState.GAME)
+	transition_requested.emit(States.GameState.TUTORIAL)

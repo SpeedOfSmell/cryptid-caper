@@ -1,8 +1,12 @@
 [gd_scene format=3 uid="uid://bq8f0w75elmet"]
 
 [ext_resource type="Script" uid="uid://coqd0yh3w5y37" path="res://assets/game/game_over_screen/game_over.gd" id="1_rsmii"]
+[ext_resource type="Texture2D" uid="uid://s27cj2l8n878" path="res://assets/game/game_over_screen/Game over.png" id="2_whw2m"]
 [ext_resource type="Texture2D" uid="uid://b7x2nakyw726r" path="res://assets/global/ui/Ui_1.png" id="3_osydw"]
+[ext_resource type="Texture2D" uid="uid://cv7346qrc8j7i" path="res://assets/global/ui/Ui_2.png" id="4_5und0"]
 [ext_resource type="LabelSettings" uid="uid://b3m4nbdxi31eb" path="res://assets/global/label_settings_black.tres" id="4_20jlh"]
+[ext_resource type="Texture2D" uid="uid://jj5ntj7dye0l" path="res://assets/global/ui/Artifacts_tracker.png" id="5_5und0"]
+[ext_resource type="LabelSettings" uid="uid://ck6ardbqhy8n1" path="res://assets/global/label_settings_white.tres" id="6_focused_label"]
 
 [node name="GameOverScreen" type="Control" unique_id=1141875741]
 layout_mode = 3
@@ -12,23 +16,28 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_rsmii")
+unfocusedLabel = ExtResource("4_20jlh")
+focusedLabel = ExtResource("6_focused_label")
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=1980095310]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1154559256]
 layout_mode = 0
-offset_right = 385.0
+offset_right = 384.0
 offset_bottom = 216.0
-color = Color(0.13333334, 0.13725491, 0.13725491, 1)
+texture = ExtResource("2_whw2m")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1281614090]
 layout_mode = 0
-offset_left = 160.0
-offset_top = 67.0
-offset_right = 228.0
-offset_bottom = 143.0
+offset_left = 223.0
+offset_top = 115.0
+offset_right = 363.0
+offset_bottom = 191.0
 
 [node name="RestartButton" type="TextureButton" parent="VBoxContainer" unique_id=847308401]
+unique_name_in_owner = true
 layout_mode = 2
 texture_normal = ExtResource("3_osydw")
+texture_hover = ExtResource("4_5und0")
+texture_focused = ExtResource("4_5und0")
 
 [node name="Label" type="Label" parent="VBoxContainer/RestartButton" unique_id=1718136977]
 layout_mode = 0
@@ -41,8 +50,11 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="QuitButton" type="TextureButton" parent="VBoxContainer" unique_id=480963458]
+unique_name_in_owner = true
 layout_mode = 2
 texture_normal = ExtResource("3_osydw")
+texture_hover = ExtResource("4_5und0")
+texture_focused = ExtResource("4_5und0")
 
 [node name="Label" type="Label" parent="VBoxContainer/QuitButton" unique_id=1334378048]
 layout_mode = 0
@@ -54,5 +66,31 @@ label_settings = ExtResource("4_20jlh")
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="TextureRect2" type="TextureRect" parent="." unique_id=2015009492]
+layout_mode = 0
+offset_left = 99.0
+offset_top = 130.0
+offset_right = 166.0
+offset_bottom = 170.0
+texture = ExtResource("5_5und0")
+
+[node name="Label" type="Label" parent="." unique_id=2037813217]
+layout_mode = 0
+offset_left = 117.0
+offset_top = 139.0
+offset_right = 157.0
+offset_bottom = 162.0
+text = "0"
+label_settings = ExtResource("4_20jlh")
+horizontal_alignment = 2
+
+[connection signal="focus_entered" from="VBoxContainer/RestartButton" to="." method="_on_restart_button_focus_entered"]
+[connection signal="focus_exited" from="VBoxContainer/RestartButton" to="." method="_on_restart_button_focus_exited"]
+[connection signal="mouse_entered" from="VBoxContainer/RestartButton" to="." method="_on_restart_button_mouse_entered"]
+[connection signal="mouse_exited" from="VBoxContainer/RestartButton" to="." method="_on_restart_button_mouse_exited"]
 [connection signal="pressed" from="VBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="focus_entered" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_focus_entered"]
+[connection signal="focus_exited" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_focus_exited"]
+[connection signal="mouse_entered" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_mouse_entered"]
+[connection signal="mouse_exited" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_mouse_exited"]
 [connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
