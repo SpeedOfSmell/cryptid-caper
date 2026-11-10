@@ -4,12 +4,18 @@ extends CanvasLayer
 
 @export var unfocusedLabel: LabelSettings
 @export var focusedLabel: LabelSettings
+@export var pauseUnfocusedLabel: LabelSettings
+@export var pauseFocusedLabel: LabelSettings
 
 signal request_quit()
 
 @onready var _score_label: Label = %ScoreValueLabel
-@onready var _menu_panel: PanelContainer = %MenuPanel
+@onready var _menu_panel: Control = %MenuPanel
 @onready var _confirmation_panel: PanelContainer = %ConfirmationPanel
+@onready var _options_button: TextureButton = %OptionsButton
+
+func _ready() -> void:
+	%VolumePanel.initialize()
 
 var _fade_tween: Tween
 
@@ -33,14 +39,16 @@ func _toggle() -> void:
 
 func _open():
 	#AudioManager.play_sfx(pause_open_sfx)
+	%VolumePanel.hide()
 	_fade_to(0.5, 0.4, %PauseFade)
-	%ResumeButton.grab_focus()
 	visible = true
 	get_tree().paused = true
+	%ResumeButton.grab_focus()
 
 
 func _close():
 	#AudioManager.play_sfx(pause_closed_sfx)
+	%VolumePanel.hide()
 	_fade_to(0, 0.1, %PauseFade)
 	visible = false
 	#popup_window.hide()
@@ -59,6 +67,9 @@ func _close_confirmation_screen():
 
 func _on_resume_button_pressed():
 	_close()
+
+func _on_options_button_pressed() -> void:
+	%VolumePanel.show_panel()
 
 
 func _on_quit_button_pressed():
@@ -95,38 +106,38 @@ func _unhandled_key_input(event):
 			%ConfirmButton.grab_focus()
 
 func _on_resume_button_focus_entered():
-	_switch_button_label_settings(%ResumeButton, focusedLabel)
+	_switch_button_label_settings(%ResumeButton, pauseFocusedLabel)
 	
 func _on_resume_button_focus_exited():
 	if not %ResumeButton.is_hovered():
-		_switch_button_label_settings(%ResumeButton, unfocusedLabel)
+		_switch_button_label_settings(%ResumeButton, pauseUnfocusedLabel)
 
 func _on_resume_button_mouse_entered():
-	_switch_button_label_settings(%ResumeButton, focusedLabel)
+	_switch_button_label_settings(%ResumeButton, pauseFocusedLabel)
 	get_viewport().gui_release_focus()
 
 func _on_resume_button_mouse_exited():
 	if not %ResumeButton.has_focus():
-		_switch_button_label_settings(%ResumeButton, unfocusedLabel)
+		_switch_button_label_settings(%ResumeButton, pauseUnfocusedLabel)
 
 
 func _on_quit_button_focus_entered():
-	_switch_button_label_settings(%QuitButton, focusedLabel)
+	_switch_button_label_settings(%QuitButton, pauseFocusedLabel)
 
 
 func _on_quit_button_focus_exited():
 	if not %QuitButton.is_hovered():
-		_switch_button_label_settings(%QuitButton, unfocusedLabel)
+		_switch_button_label_settings(%QuitButton, pauseUnfocusedLabel)
 
 
 func _on_quit_button_mouse_entered():
-	_switch_button_label_settings(%QuitButton, focusedLabel)
+	_switch_button_label_settings(%QuitButton, pauseFocusedLabel)
 	get_viewport().gui_release_focus()
 
 
 func _on_quit_button_mouse_exited():
 	if not %QuitButton.has_focus():
-		_switch_button_label_settings(%QuitButton, unfocusedLabel)
+		_switch_button_label_settings(%QuitButton, pauseUnfocusedLabel)
 
 
 func _on_confirm_button_focus_entered():
@@ -165,3 +176,18 @@ func _on_cancel_button_mouse_entered():
 func _on_cancel_button_mouse_exited():
 	if not %CancelButton.has_focus():
 		_switch_button_label_settings(%CancelButton, unfocusedLabel)
+
+func _on_options_button_focus_entered() -> void:
+	_switch_button_label_settings(_options_button, pauseFocusedLabel)
+
+func _on_options_button_focus_exited() -> void:
+	if not _options_button.is_hovered():
+		_switch_button_label_settings(_options_button, pauseUnfocusedLabel)
+
+func _on_options_button_mouse_entered() -> void:
+	_switch_button_label_settings(_options_button, pauseFocusedLabel)
+	get_viewport().gui_release_focus()
+
+func _on_options_button_mouse_exited() -> void:
+	if not _options_button.has_focus():
+		_switch_button_label_settings(_options_button, pauseUnfocusedLabel)

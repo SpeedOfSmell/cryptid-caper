@@ -9,9 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://cd11amfs4cvrb" path="res://assets/global/ui/Ui_4.png" id="6_aj6wj"]
 [ext_resource type="Texture2D" uid="uid://jj5ntj7dye0l" path="res://assets/global/ui/Artifacts_tracker.png" id="7_japdx"]
 [ext_resource type="LabelSettings" uid="uid://ck6ardbqhy8n1" path="res://assets/global/label_settings_white.tres" id="8_xdoka"]
-[ext_resource type="Texture2D" uid="uid://cmh1xyokbewqr" path="res://assets/global/ui/panel.png" id="9_xdoka"]
-[ext_resource type="FontFile" uid="uid://bf12joacxh8gs" path="res://assets/global/ui/monogram.ttf" id="10_ji54b"]
-[ext_resource type="Script" uid="uid://cuu8ji0ykjxc8" path="res://assets/game/main_menu/volume_panel.gd" id="11_volume"]
+[ext_resource type="PackedScene" path="res://assets/game/main_menu/volume_panel.tscn" id="11_volume_panel"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_davy8"]
 atlas = ExtResource("3_x4jpy")
@@ -62,12 +60,6 @@ animations = [{
 "name": &"default",
 "speed": 5.0
 }]
-
-[sub_resource type="LabelSettings" id="LabelSettings_ssdgi"]
-font = ExtResource("10_ji54b")
-font_size = 31
-font_color = Color(0.9411765, 0.9647059, 0.9411765, 1)
-shadow_size = 0
 
 [node name="MainMenu" type="Control" unique_id=1141875741]
 layout_mode = 3
@@ -179,68 +171,13 @@ text = "999"
 label_settings = ExtResource("3_tdavu")
 horizontal_alignment = 2
 
-[node name="VolumePanel" type="Control" parent="." unique_id=702049572]
+[node name="VolumePanel" parent="." instance=ExtResource("11_volume_panel")]
 unique_name_in_owner = true
 visible = false
-anchors_preset = 0
 offset_left = 82.0
 offset_top = 38.0
 offset_right = 302.0
 offset_bottom = 178.0
-script = ExtResource("11_volume")
-
-[node name="TextureRect" type="TextureRect" parent="VolumePanel" unique_id=1268449149]
-layout_mode = 0
-offset_right = 220.0
-offset_bottom = 140.0
-texture = ExtResource("9_xdoka")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="VolumePanel/TextureRect" unique_id=761870035]
-layout_mode = 0
-offset_left = 12.0
-offset_top = 5.0
-offset_right = 208.0
-offset_bottom = 135.0
-alignment = 1
-
-[node name="Label" type="Label" parent="VolumePanel/TextureRect/VBoxContainer" unique_id=951863049]
-layout_mode = 2
-text = "Volume"
-label_settings = SubResource("LabelSettings_ssdgi")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="MasterVolume" type="Label" parent="VolumePanel/TextureRect/VBoxContainer" unique_id=1364615160]
-unique_name_in_owner = true
-layout_mode = 2
-mouse_filter = 0
-text = "< Master: 10 >"
-label_settings = ExtResource("8_xdoka")
-horizontal_alignment = 1
-
-[node name="SfxVolume" type="Label" parent="VolumePanel/TextureRect/VBoxContainer" unique_id=1864162989]
-unique_name_in_owner = true
-layout_mode = 2
-mouse_filter = 0
-text = "< Sfx: 10 >"
-label_settings = ExtResource("8_xdoka")
-horizontal_alignment = 1
-
-[node name="MusicVolume" type="Label" parent="VolumePanel/TextureRect/VBoxContainer" unique_id=1745316955]
-unique_name_in_owner = true
-layout_mode = 2
-mouse_filter = 0
-text = "< Music: 10 >"
-label_settings = ExtResource("8_xdoka")
-horizontal_alignment = 1
-
-[node name="CloseButton" type="Label" parent="VolumePanel/TextureRect/VBoxContainer" unique_id=1745316956]
-unique_name_in_owner = true
-layout_mode = 2
-mouse_filter = 0
-text = "Close"
-label_settings = ExtResource("8_xdoka")
-horizontal_alignment = 1
 
 [connection signal="focus_entered" from="PlayButton" to="." method="_on_play_button_focus_entered"]
 [connection signal="focus_exited" from="PlayButton" to="." method="_on_play_button_focus_exited"]
@@ -252,7 +189,3 @@ horizontal_alignment = 1
 [connection signal="mouse_entered" from="OptionsButton" to="." method="_on_options_button_mouse_entered"]
 [connection signal="mouse_exited" from="OptionsButton" to="." method="_on_options_button_mouse_exited"]
 [connection signal="pressed" from="OptionsButton" to="." method="_on_options_button_pressed"]
-[connection signal="gui_input" from="VolumePanel/TextureRect/VBoxContainer/MasterVolume" to="VolumePanel" method="_on_volume_row_gui_input" binds= [0]]
-[connection signal="gui_input" from="VolumePanel/TextureRect/VBoxContainer/SfxVolume" to="VolumePanel" method="_on_volume_row_gui_input" binds= [1]]
-[connection signal="gui_input" from="VolumePanel/TextureRect/VBoxContainer/MusicVolume" to="VolumePanel" method="_on_volume_row_gui_input" binds= [2]]
-[connection signal="gui_input" from="VolumePanel/TextureRect/VBoxContainer/CloseButton" to="VolumePanel" method="_on_volume_row_gui_input" binds= [3]]
