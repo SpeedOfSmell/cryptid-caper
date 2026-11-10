@@ -9,6 +9,6 @@ func next_state() -> StringName:
 	player.air_dashes_left = player.max_air_dashes()
 	if Input.is_action_just_pressed("jump"):
 		return JUMP
-	if Input.is_action_just_pressed("dash") and player.ground_dash_cooldown_left <= 0:
+	if Input.is_action_just_pressed("dash") and player.has_dash() and player.ground_dash_cooldown_left <= 0:
 		return DASH
 	return super()

@@ -6,6 +6,6 @@
 script = ExtResource("1_upg")
 type = 3
 level = 1
-value = 2.0
+value = 1
 name = "Dash"
-description = "extra dash unlocked"
+description = "press Shift to dash"
