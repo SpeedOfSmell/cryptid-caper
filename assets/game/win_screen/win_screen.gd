@@ -25,6 +25,12 @@ func _switch_button_label_settings(button: TextureButton, settings: LabelSetting
 	label.label_settings = settings
 
 
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel"):
+		transition_requested.emit(States.GameState.MAIN_MENU)
+		get_viewport().set_input_as_handled()
+
+
 func _unhandled_key_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_down") or event.is_action_pressed("ui_up"):
 		if is_instance_valid(_restart_button) and _restart_button.is_inside_tree():

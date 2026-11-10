@@ -10,6 +10,8 @@
 [ext_resource type="Texture2D" uid="uid://jj5ntj7dye0l" path="res://assets/global/ui/Artifacts_tracker.png" id="7_japdx"]
 [ext_resource type="LabelSettings" uid="uid://ck6ardbqhy8n1" path="res://assets/global/label_settings_white.tres" id="8_xdoka"]
 [ext_resource type="PackedScene" path="res://assets/game/main_menu/volume_panel.tscn" id="11_volume_panel"]
+[ext_resource type="Texture2D" uid="uid://cmh1xyokbewqr" path="res://assets/global/ui/panel.png" id="12_panel"]
+[ext_resource type="FontFile" uid="uid://bf12joacxh8gs" path="res://assets/global/ui/monogram.ttf" id="13_font"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_davy8"]
 atlas = ExtResource("3_x4jpy")
@@ -83,9 +85,9 @@ frame_progress = 0.38224497
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 179.0
-offset_top = 102.0
+offset_top = 88.0
 offset_right = 247.0
-offset_bottom = 138.0
+offset_bottom = 124.0
 texture_normal = ExtResource("2_8emhj")
 texture_hover = ExtResource("5_ssdgi")
 texture_focused = ExtResource("5_ssdgi")
@@ -104,9 +106,9 @@ vertical_alignment = 1
 unique_name_in_owner = true
 layout_mode = 0
 offset_left = 179.0
-offset_top = 142.0
+offset_top = 130.0
 offset_right = 247.0
-offset_bottom = 178.0
+offset_bottom = 166.0
 texture_normal = ExtResource("2_8emhj")
 texture_hover = ExtResource("5_ssdgi")
 texture_focused = ExtResource("5_ssdgi")
@@ -117,6 +119,27 @@ offset_left = 1.0
 offset_right = 67.0
 offset_bottom = 35.0
 text = "Options"
+label_settings = ExtResource("3_tdavu")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AboutButton" type="TextureButton" parent="." unique_id=1896444034]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 179.0
+offset_top = 172.0
+offset_right = 247.0
+offset_bottom = 208.0
+texture_normal = ExtResource("2_8emhj")
+texture_hover = ExtResource("5_ssdgi")
+texture_focused = ExtResource("5_ssdgi")
+
+[node name="Label" type="Label" parent="AboutButton" unique_id=1615384156]
+layout_mode = 0
+offset_left = 1.0
+offset_right = 67.0
+offset_bottom = 35.0
+text = "About"
 label_settings = ExtResource("3_tdavu")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -171,13 +194,71 @@ text = "999"
 label_settings = ExtResource("3_tdavu")
 horizontal_alignment = 2
 
-[node name="VolumePanel" parent="." instance=ExtResource("11_volume_panel")]
-unique_name_in_owner = true
+[node name="VolumePanel" parent="." unique_id=695072187 instance=ExtResource("11_volume_panel")]
 visible = false
 offset_left = 82.0
 offset_top = 38.0
 offset_right = 302.0
 offset_bottom = 178.0
+
+[node name="AboutPanel" type="Control" parent="." unique_id=912842771]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 0
+offset_left = 39.2
+offset_top = 10.25
+offset_right = 344.8
+offset_bottom = 205.75
+
+[node name="Background" type="TextureRect" parent="AboutPanel" unique_id=912842772]
+layout_mode = 0
+offset_right = 305.6
+offset_bottom = 195.5
+texture = ExtResource("12_panel")
+stretch_mode = 6
+
+[node name="AboutText" type="RichTextLabel" parent="AboutPanel" unique_id=912842773]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 20.0
+offset_top = 17.0
+offset_right = 285.6
+offset_bottom = 149.75
+theme_override_colors/default_color = Color(0.9411765, 0.9647059, 0.9411765, 1)
+theme_override_fonts/normal_font = ExtResource("13_font")
+theme_override_font_sizes/normal_font_size = 14
+bbcode_enabled = true
+text = "Cryptid Crawler was made in a week for [url=https://itch.io/jam/b1t-jam-6]B1t Jam 6[/url]
+Theme: Shrine
+Limitation: Two colors only
+
+Collaborators:
+[url=https://speedofsmell.itch.io/]SpeedOfSmell[/url] - Programming and implementation
+[url=https://bowlofbap.itch.io]bowlofbap[/url] - Programming and implementation
+[url=https://peanutjoe.itch.io/]PeanutJoe[/url] - Art
+[url=https://nickleeaudio.itch.io/]NickLeeAudio[/url] - Sound Effects
+[url=https://gwyneprd.itch.io/]gwyne.prd[/url] - Music
+[url=https://bananarainb.itch.io/]bananarainb[/url] - Writing"
+
+[node name="AboutCloseButton" type="TextureButton" parent="AboutPanel" unique_id=912842774]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 118.8
+offset_top = 151.5
+offset_right = 186.8
+offset_bottom = 187.5
+texture_normal = ExtResource("2_8emhj")
+texture_hover = ExtResource("5_ssdgi")
+texture_focused = ExtResource("5_ssdgi")
+
+[node name="Label" type="Label" parent="AboutPanel/AboutCloseButton" unique_id=912842775]
+layout_mode = 0
+offset_right = 68.0
+offset_bottom = 36.0
+text = "Close"
+label_settings = ExtResource("3_tdavu")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="focus_entered" from="PlayButton" to="." method="_on_play_button_focus_entered"]
 [connection signal="focus_exited" from="PlayButton" to="." method="_on_play_button_focus_exited"]
@@ -189,3 +270,13 @@ offset_bottom = 178.0
 [connection signal="mouse_entered" from="OptionsButton" to="." method="_on_options_button_mouse_entered"]
 [connection signal="mouse_exited" from="OptionsButton" to="." method="_on_options_button_mouse_exited"]
 [connection signal="pressed" from="OptionsButton" to="." method="_on_options_button_pressed"]
+[connection signal="focus_entered" from="AboutButton" to="." method="_on_about_button_focus_entered"]
+[connection signal="focus_exited" from="AboutButton" to="." method="_on_about_button_focus_exited"]
+[connection signal="mouse_entered" from="AboutButton" to="." method="_on_about_button_mouse_entered"]
+[connection signal="mouse_exited" from="AboutButton" to="." method="_on_about_button_mouse_exited"]
+[connection signal="pressed" from="AboutButton" to="." method="_on_about_button_pressed"]
+[connection signal="focus_entered" from="AboutPanel/AboutCloseButton" to="." method="_on_about_close_button_focus_entered"]
+[connection signal="focus_exited" from="AboutPanel/AboutCloseButton" to="." method="_on_about_close_button_focus_exited"]
+[connection signal="mouse_entered" from="AboutPanel/AboutCloseButton" to="." method="_on_about_close_button_mouse_entered"]
+[connection signal="mouse_exited" from="AboutPanel/AboutCloseButton" to="." method="_on_about_close_button_mouse_exited"]
+[connection signal="pressed" from="AboutPanel/AboutCloseButton" to="." method="_on_about_close_button_pressed"]

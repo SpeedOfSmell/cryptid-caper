@@ -29,6 +29,18 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 
 
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel") and visible:
+		if %VolumePanel.visible:
+			return
+		if %ConfirmationPanel.visible:
+			_close_confirmation_screen()
+			%QuitButton.grab_focus()
+		else:
+			_close()
+		get_viewport().set_input_as_handled()
+
+
 func _toggle() -> void:
 	# always allow closing; only gate opening on can_pause
 	if visible:

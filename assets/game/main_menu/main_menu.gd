@@ -8,6 +8,8 @@ signal transition_requested(state: States.GameState)
 
 @onready var _play_button: TextureButton = %PlayButton
 @onready var _options_button: TextureButton = %OptionsButton
+@onready var _about_button: TextureButton = %AboutButton
+@onready var _about_close_button: TextureButton = %AboutCloseButton
 var _options_normal_texture: Texture2D
 
 func _ready():
@@ -17,12 +19,27 @@ func _ready():
 	%VolumePanel.hide()
 	%VolumePanel.initialize()
 	%VolumePanel.visibility_changed.connect(_on_volume_panel_visibility_changed)
+	%AboutPanel.hide()
 
 func _on_play_button_pressed():
 	transition_requested.emit(States.GameState.TUTORIAL)
 
 func _on_options_button_pressed():
 	%VolumePanel.show_panel()
+
+func _on_about_button_pressed() -> void:
+	%AboutPanel.show()
+	_about_close_button.grab_focus()
+
+func _on_about_close_button_pressed() -> void:
+	_close_about_panel()
+
+func _close_about_panel() -> void:
+	%AboutPanel.hide()
+	if _about_close_button.has_focus():
+		_about_button.grab_focus()
+	else:
+		get_viewport().gui_release_focus()
 
 func _switch_button_label_settings(button: TextureButton, settings: LabelSettings) -> void:
 	if not is_instance_valid(button) or not button.is_inside_tree():
@@ -32,7 +49,7 @@ func _switch_button_label_settings(button: TextureButton, settings: LabelSetting
 		labels[0].label_settings = settings
 
 func _unhandled_key_input(event: InputEvent) -> void:
-	if %VolumePanel.visible:
+	if %VolumePanel.visible or %AboutPanel.visible:
 		return
 	if event.is_action_pressed("ui_down") or event.is_action_pressed("ui_up"):
 		_play_button.grab_focus()
@@ -64,6 +81,47 @@ func _on_options_button_mouse_entered() -> void:
 
 func _on_options_button_mouse_exited() -> void:
 	_set_options_button_highlighted(_options_button.has_focus())
+
+func _on_about_button_focus_entered() -> void:
+	_switch_button_label_settings(_about_button, focusedLabel)
+
+func _on_about_button_focus_exited() -> void:
+	if not _about_button.is_hovered():
+		_switch_button_label_settings(_about_button, unfocusedLabel)
+
+func _on_about_button_mouse_entered() -> void:
+	_switch_button_label_settings(_about_button, focusedLabel)
+	get_viewport().gui_release_focus()
+
+func _on_about_button_mouse_exited() -> void:
+	if not _about_button.has_focus():
+		_switch_button_label_settings(_about_button, unfocusedLabel)
+
+func _on_about_close_button_focus_entered() -> void:
+	_switch_button_label_settings(_about_close_button, focusedLabel)
+
+func _on_about_close_button_focus_exited() -> void:
+	if not _about_close_button.is_hovered():
+		_switch_button_label_settings(_about_close_button, unfocusedLabel)
+
+func _on_about_close_button_mouse_entered() -> void:
+	_switch_button_label_settings(_about_close_button, focusedLabel)
+	get_viewport().gui_release_focus()
+
+func _on_about_close_button_mouse_exited() -> void:
+	if not _about_close_button.has_focus():
+		_switch_button_label_settings(_about_close_button, unfocusedLabel)
+
+func _input(event: InputEvent) -> void:
+	if not %AboutPanel.visible:
+		return
+	if event.is_action_pressed("ui_up") or event.is_action_pressed("ui_down"):
+		_about_close_button.grab_focus()
+		get_viewport().set_input_as_handled()
+	elif event.is_action_pressed("ui_accept") or event.is_action_pressed("ui_cancel"):
+		%AboutPanel.hide()
+		_about_button.grab_focus()
+		get_viewport().set_input_as_handled()
 
 func _on_volume_panel_visibility_changed() -> void:
 	if %VolumePanel.visible:
