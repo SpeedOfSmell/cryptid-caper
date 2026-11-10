@@ -71,6 +71,7 @@ shape = SubResource("RectangleShape2D_1lvrn")
 
 [node name="Bubbling" type="AudioStreamPlayer2D" parent="." unique_id=1039795405]
 stream = ExtResource("2_bubble")
+volume_db = -12.0
 autoplay = true
 max_distance = 480.0
 bus = &"SFX"

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="SfxEvent" format=3 uid="uid://clj3bwx5jyabv"]
+
+[ext_resource type="Script" uid="uid://bs2frmocmdsle" path="res://assets/global/sfx_event.gd" id="1_3s3lc"]
+[ext_resource type="AudioStream" uid="uid://0jfryp0fqm6y" path="res://assets/audio/sfx/SFX_BigfootYell_1.wav" id="2_rm2ed"]
+[ext_resource type="AudioStream" uid="uid://dmqiohv6x1paq" path="res://assets/audio/sfx/SFX_BigfootYell_2.wav" id="3_wwom4"]
+
+[resource]
+script = ExtResource("1_3s3lc")
+streams = Array[AudioStream]([ExtResource("2_rm2ed"), ExtResource("3_wwom4")])
+volume_db = -20.0
+pitch_min = 0.98
+pitch_max = 1.02
+metadata/_custom_type_script = "uid://bs2frmocmdsle"
