@@ -26,7 +26,11 @@ func _physics_process(delta: float) -> void:
 
 	_life += delta
 	if is_on_wall():
-		AudioManager.play_sfx(break_sfx)
+		var sound := AudioManager.play_sfx_on(break_sfx, self)
+		hide()
+		set_deferred(&"process_mode", Node.PROCESS_MODE_DISABLED)
+		if sound:
+			await sound.finished
 		queue_free()
 	elif _life >= max_lifetime:
 		queue_free()

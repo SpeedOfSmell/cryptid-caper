@@ -26,11 +26,18 @@ func _on_body_entered(body: Node2D) -> void:
 	if player == null or _used or Engine.get_physics_frames() < _armed_at_physics_frame:
 		return
 	_used = one_shot
-	AudioManager.play_sfx_at(sfx, global_position)
+	var sound := AudioManager.play_sfx_on(sfx, self)
 	_on_player_touched(player)
 	triggered.emit(player)
 	if one_shot:
-		queue_free()
+		_remove_sound(sound)
+
+func _remove_sound(sound: AudioStreamPlayer2D) -> void:
+	hide()
+	set_deferred(&"process_mode", Node.PROCESS_MODE_DISABLED)
+	if sound:
+		await sound.finished
+	queue_free()
 
 #overrideable method
 func _on_player_touched(_player: PlayerController) -> void:
