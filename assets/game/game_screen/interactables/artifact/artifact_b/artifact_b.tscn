@@ -1,8 +1,8 @@
-[gd_scene format=3 uid="uid://ckupsxf4j5jo1"]
+[gd_scene format=3 uid="uid://cq11068pnud71"]
 
-[ext_resource type="Script" uid="uid://ldnh5hti4t5j" path="res://assets/game/game_screen/interactables/artifact/artifact.gd" id="1_0nu5p"]
-[ext_resource type="Resource" uid="uid://bwku2lmhrrx50" path="res://assets/audio/sfx/character/collect.tres" id="2_51a01"]
-[ext_resource type="Texture2D" uid="uid://b5ksu5ovek27w" path="res://assets/game/game_screen/interactables/artifact/artifact_b/Gem.png" id="3_a63u5"]
+[ext_resource type="Script" uid="uid://ldnh5hti4t5j" path="res://assets/game/game_screen/interactables/artifact/artifact.gd" id="1_kwt4h"]
+[ext_resource type="Resource" uid="uid://bwku2lmhrrx50" path="res://assets/audio/sfx/character/collect.tres" id="2_hvwuv"]
+[ext_resource type="Texture2D" uid="uid://bbnitwqwh405o" path="res://assets/game/game_screen/interactables/artifact/artifact_b/Candle.png" id="3_a63u5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_pwing"]
 atlas = ExtResource("3_a63u5")
@@ -31,7 +31,7 @@ region = Rect2(32, 16, 16, 16)
 [sub_resource type="SpriteFrames" id="SpriteFrames_1lvrn"]
 animations = [{
 "frames": [{
-"duration": 10.0,
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_pwing")
 }, {
 "duration": 1.0,
@@ -54,19 +54,20 @@ animations = [{
 "speed": 8.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_7mara"]
-radius = 6.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2we2i"]
+size = Vector2(11.25, 12)
 
 [node name="ArtifactB" type="Area2D" unique_id=189728116]
-script = ExtResource("1_0nu5p")
-score_value = 5
+script = ExtResource("1_kwt4h")
+score_value = 10
 one_shot = true
-sfx = ExtResource("2_51a01")
+sfx = ExtResource("2_hvwuv")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=744400815]
 sprite_frames = SubResource("SpriteFrames_1lvrn")
 autoplay = "default"
-frame_progress = 0.6634081
+frame_progress = 0.14012294
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1121234202]
-shape = SubResource("CircleShape2D_7mara")
+position = Vector2(-1, 0)
+shape = SubResource("RectangleShape2D_2we2i")

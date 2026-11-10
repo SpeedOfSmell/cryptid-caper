@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dj1tecgvnda4f"
-path="res://.godot/imported/Necklace.png-87b5c7b8d8b3a94e83133ae7c3970a99.ctex"
+uid="uid://b5ksu5ovek27w"
+path="res://.godot/imported/Gem.png-2e0b364ec1c1be7c3d8e4fef6e1e367e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/game/game_screen/interactables/artifact/artifact_c/Necklace.png"
-dest_files=["res://.godot/imported/Necklace.png-87b5c7b8d8b3a94e83133ae7c3970a99.ctex"]
+source_file="res://assets/game/game_screen/interactables/artifact/artifact_c/Gem.png"
+dest_files=["res://.godot/imported/Gem.png-2e0b364ec1c1be7c3d8e4fef6e1e367e.ctex"]
 
 [params]
 
