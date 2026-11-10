@@ -21,6 +21,7 @@ var _fade_tween: Tween
 
 func _ready() -> void:
 	PlayerManager.score_changed.connect(_update_score)
+	_update_score(PlayerManager.get_score())
 	$PauseMenu.request_quit.connect(_quit_game)
 	
 	#TODO: move this music starting to somewhere else once its more organized, state machine?

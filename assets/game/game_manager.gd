@@ -56,6 +56,9 @@ func _change_screen(state: int):
 	if _current_screen:
 		_current_screen.queue_free()
 	
+	if state == States.GameState.GAME:
+		PlayerManager.new_game()
+	
 	_current_screen = _state_scenes[state].instantiate()
 	add_child(_current_screen)
 

@@ -8,10 +8,6 @@ signal transition_requested(state: States.GameState)
 @onready var _restart_button: TextureButton = %RestartButton
 @onready var _quit_button: TextureButton = %QuitButton
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
