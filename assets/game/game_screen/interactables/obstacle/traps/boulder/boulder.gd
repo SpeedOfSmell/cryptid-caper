@@ -25,7 +25,7 @@ func _physics_process(delta: float) -> void:
 		sprite.frame = posmod(floori(turns * frame_count), frame_count)
 
 	_life += delta
-	if is_on_wall():
+	if is_on_wall() and not _hit_player():
 		var sound := AudioManager.play_sfx_on(break_sfx, self)
 		hide()
 		set_deferred(&"process_mode", Node.PROCESS_MODE_DISABLED)
@@ -34,3 +34,11 @@ func _physics_process(delta: float) -> void:
 		queue_free()
 	elif _life >= max_lifetime:
 		queue_free()
+
+# the player is on the same physics layer as the world, so rolling into them counts as hitting a wall.
+# don't break on them: stay in contact so the hurtbox registers the touch on the next physics step and kills
+func _hit_player() -> bool:
+	for i in get_slide_collision_count():
+		if get_slide_collision(i).get_collider() is PlayerController:
+			return true
+	return false
