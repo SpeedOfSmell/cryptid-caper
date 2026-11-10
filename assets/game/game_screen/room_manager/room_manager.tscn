@@ -6,6 +6,7 @@
 [ext_resource type="Resource" uid="uid://cdfn0414ayric" path="res://assets/audio/sfx/RoomChange.tres" id="4_gn1bi"]
 [ext_resource type="Script" uid="uid://bnatdry6yu4yv" path="res://assets/game/game_screen/room_manager/room_generator.gd" id="4_wgytc"]
 [ext_resource type="PackedScene" uid="uid://c3l28xjwi58ex" path="res://assets/game/game_screen/room_manager/room.tscn" id="5_gfrpa"]
+[ext_resource type="Resource" uid="uid://me2gwnowj8t6" path="res://assets/audio/sfx/Ambience/ambience.tres" id="5_gldra"]
 [ext_resource type="Resource" uid="uid://cckd2ggtqurop" path="res://assets/game/game_screen/chunks/chunk_library.tres" id="6_bqyrq"]
 [ext_resource type="PackedScene" uid="uid://ocx3e2tqxikw" path="res://assets/game/game_screen/interactables/relic/double_jump_relic/double_jump_relic.tscn" id="7_fjksm"]
 [ext_resource type="LabelSettings" uid="uid://b3m4nbdxi31eb" path="res://assets/global/label_settings_black.tres" id="7_tfgok"]
@@ -51,6 +52,7 @@ script = ExtResource("1_xylws")
 music = ExtResource("2_xtlk2")
 _player_scene = ExtResource("3_u21wa")
 _room_change_sfx = ExtResource("4_gn1bi")
+_ambiance_sfx = ExtResource("5_gldra")
 
 [node name="Room Generator" type="Node" parent="." unique_id=1339619944]
 script = ExtResource("4_wgytc")
@@ -160,3 +162,9 @@ color = Color(0.9411765, 0.9647059, 0.9411765, 1)
 process_mode = 3
 wait_time = 0.2
 one_shot = true
+
+[node name="AmbianceTimer" type="Timer" parent="." unique_id=1996736816]
+unique_name_in_owner = true
+one_shot = true
+
+[connection signal="timeout" from="AmbianceTimer" to="." method="_on_ambiance_timer_timeout"]

@@ -5,6 +5,7 @@ signal transition_requested(state: States.GameState)
 @export var music: Resource
 @export var _player_scene: PackedScene
 @export var _room_change_sfx: SfxEvent
+@export var _ambiance_sfx: SfxEvent
 
 # Time player has at start in seconds
 const START_TIME:float = 5 * 60
@@ -18,12 +19,17 @@ var _transition_pending := false
 var _next_room_id := 1
 var _fade_tween: Tween
 
+
+var _min_ambiance_interval := 90
+var _max_ambiance_interval := 140
+
 @onready var _room_generator: RoomGenerator = $"Room Generator"
 
 func _ready() -> void:
 	PlayerManager.score_changed.connect(_update_score)
 	_update_score(PlayerManager.get_score())
 	$PauseMenu.request_quit.connect(_quit_game)
+	_on_ambiance_timer_timeout()
 	
 	#TODO: move this music starting to somewhere else once its more organized, state machine?
 	AudioManager.play_music(music)
@@ -151,3 +157,8 @@ func _on_player_exited():
 	transition_requested.emit(States.GameState.WIN)
 	if PlayerManager.get_score() > PlayerManager.get_hiscore():
 		PlayerManager.set_hiscore(PlayerManager.get_score())
+
+
+func _on_ambiance_timer_timeout():
+	AudioManager.play_sfx(_ambiance_sfx)
+	%AmbianceTimer.start(randf_range(_min_ambiance_interval, _max_ambiance_interval))
