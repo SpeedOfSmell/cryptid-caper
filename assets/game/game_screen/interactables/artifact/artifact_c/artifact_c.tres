@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ArtifactInfo" format=3 uid="uid://c7ltacixialla"]
 
-[ext_resource type="PackedScene" uid="uid://ckupsxf4j5jo1" path="res://assets/game/game_screen/interactables/artifact/artifact_c/artifact_c.tscn" id="1_g20tg"]
+[ext_resource type="PackedScene" uid="uid://djade63s3gcps" path="res://assets/game/game_screen/interactables/artifact/artifact_c/artifact_c.tscn" id="1_g20tg"]
 [ext_resource type="Script" uid="uid://bbyfvnwmopiua" path="res://assets/game/game_screen/interactables/artifact/artifact_info.gd" id="2_gw47j"]
 
 [resource]

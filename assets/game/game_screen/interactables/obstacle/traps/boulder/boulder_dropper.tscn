@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://djaiht5qlxhgc" path="res://assets/game/game_screen/interactables/obstacle/traps/boulder/boulder_dropper.gd" id="1_spawner"]
 [ext_resource type="PackedScene" uid="uid://bo47bp43w2nly" path="res://assets/game/game_screen/interactables/obstacle/traps/boulder/boulder.tscn" id="2_boulder"]
-[ext_resource type="Resource" uid="uid://chj8brwoq2t44" path="res://assets/audio/sfx/Obstacles/RockThrow.tres" id="3_sfx"]
+[ext_resource type="Resource" uid="uid://bet22tetpk8fq" path="res://assets/audio/sfx/Obstacles/RockImpact.tres" id="3_sfx"]
 [ext_resource type="Texture2D" uid="uid://b6br6hp0kkd0e" path="res://assets/game/game_screen/interactables/obstacle/traps/boulder/Boulder_open.png" id="4_hatch"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_block"]

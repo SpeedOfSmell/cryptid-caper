@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="ChunkTemplate" format=3 uid="uid://bwfngkm7vpsqe"]
+
+[ext_resource type="Script" uid="uid://wpcxsk870y80" path="res://assets/game/game_screen/chunks/chunk_types/chunk_template.gd" id="1_tmpl"]
+[ext_resource type="PackedScene" uid="uid://duwqnoslflis1" path="res://assets/game/game_screen/chunks/chunk_types/up_chunk/up_chunk_y.tscn" id="2_scene"]
+
+[resource]
+script = ExtResource("1_tmpl")
+chunk_scene = ExtResource("2_scene")
+metadata/_custom_type_script = "uid://wpcxsk870y80"
