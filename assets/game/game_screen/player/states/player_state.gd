@@ -11,6 +11,7 @@ const FALL := &"Fall"
 const COYOTE := &"Coyote"
 const DROP := &"Drop"
 const DASH := &"Dash"
+const DOUBLE_JUMP := &"DoubleJump"
 
 #ADDING NEW STATE:
 # 1) Add new state extending grounded, air or player state

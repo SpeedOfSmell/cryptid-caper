@@ -28,7 +28,7 @@ func next_state() -> StringName:
 			return JUMP
 		if player.air_jumps_left > 0:
 			player.air_jumps_left -= 1
-			return JUMP
+			return DOUBLE_JUMP
 	if _time_left > 0:
 		return STAY
 	if player.is_on_floor():
