@@ -31,19 +31,19 @@
 [sub_resource type="Resource" id="Resource_rl0yw"]
 script = ExtResource("2_nv6s5")
 type_name = &"Through Chunk"
-templates = Array[ExtResource("3_ulbcl")]([ExtResource("4_0pfep"), ExtResource("4_thz"), ExtResource("5_re7ud"), ExtResource("7_bocw6"), ExtResource("8_14768"), ExtResource("9_uv74b"), ExtResource("10_o4rtp"), ExtResource("4_thx"), ExtResource("4_thy"), ExtResource("5_re7ud"), ExtResource("7_bocw6")])
+templates = Array[ExtResource("3_ulbcl")]([ExtResource("4_0pfep"), ExtResource("5_re7ud"), ExtResource("7_bocw6"), ExtResource("8_14768"), ExtResource("9_uv74b"), ExtResource("10_o4rtp"), ExtResource("4_thx"), ExtResource("4_thy"), ExtResource("4_thz")])
 metadata/_custom_type_script = "uid://5h2bvhg641l4"
 
 [sub_resource type="Resource" id="Resource_a18a0"]
 script = ExtResource("2_nv6s5")
 type_name = &"Up Chunk"
-templates = Array[ExtResource("3_ulbcl")]([ExtResource("5_tb0yl"), ExtResource("5_upz"), ExtResource("7_jujpx"), ExtResource("12_m127g"), ExtResource("5_upy"), ExtResource("7_jujpx")])
+templates = Array[ExtResource("3_ulbcl")]([ExtResource("5_tb0yl"), ExtResource("7_jujpx"), ExtResource("12_m127g"), ExtResource("5_upy"), ExtResource("5_upz")])
 metadata/_custom_type_script = "uid://5h2bvhg641l4"
 
 [sub_resource type="Resource" id="Resource_ve32x"]
 script = ExtResource("2_nv6s5")
 type_name = &"Down Chunk"
-templates = Array[ExtResource("3_ulbcl")]([ExtResource("6_gtp5l"), ExtResource("6_dnz"), ExtResource("9_q3ydo"), ExtResource("16_it20n"), ExtResource("6_dny"), ExtResource("9_q3ydo")])
+templates = Array[ExtResource("3_ulbcl")]([ExtResource("6_gtp5l"), ExtResource("9_q3ydo"), ExtResource("16_it20n"), ExtResource("6_dny"), ExtResource("6_dnz")])
 metadata/_custom_type_script = "uid://5h2bvhg641l4"
 
 [sub_resource type="Resource" id="Resource_r5fn1"]
