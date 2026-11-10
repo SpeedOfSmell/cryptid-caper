@@ -13,11 +13,6 @@ signal request_quit()
 
 var _fade_tween: Tween
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass
-
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
@@ -40,7 +35,6 @@ func _open():
 	#AudioManager.play_sfx(pause_open_sfx)
 	_fade_to(0.5, 0.4, %PauseFade)
 	%ResumeButton.grab_focus()
-	_refresh()
 	visible = true
 	get_tree().paused = true
 
@@ -61,14 +55,6 @@ func _show_confirmation_screen():
 func _close_confirmation_screen():
 	_menu_panel.visible = true
 	_confirmation_panel.visible = false
-
-
-func _refresh():
-	_score_label.text = str(PlayerManager.get_score())
-
-
-func _update_score(score: int):
-	_score_label.text = str(score)
 
 
 func _on_resume_button_pressed():

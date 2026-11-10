@@ -3,14 +3,18 @@
 [ext_resource type="Script" uid="uid://b6ygmhsjsbbk0" path="res://assets/game/game_manager.gd" id="1_ne7se"]
 [ext_resource type="PackedScene" uid="uid://p8j6gwwm7x8d" path="res://assets/game/game_screen/room_manager/room_manager.tscn" id="2_684gi"]
 [ext_resource type="PackedScene" uid="uid://dkabx8v2yxqy1" path="res://assets/game/main_menu/main_menu.tscn" id="2_seigl"]
+[ext_resource type="PackedScene" uid="uid://do3nrld2r2dxu" path="res://assets/game/tutorial_screen/tutorial_screen.tscn" id="3_a6q7w"]
 [ext_resource type="PackedScene" uid="uid://bq8f0w75elmet" path="res://assets/game/game_over_screen/game_over.tscn" id="4_nm2dn"]
 [ext_resource type="Resource" uid="uid://5w03n8ehiev2" path="res://assets/audio/UI/UIScreenChange.tres" id="5_bedwy"]
+[ext_resource type="PackedScene" uid="uid://c2rmq0w5trwp8" path="res://assets/game/win_screen/win_screen.tscn" id="5_ne7se"]
 [ext_resource type="Resource" uid="uid://d247kkkhumfrb" path="res://assets/audio/UI/UISelect.tres" id="6_me7jj"]
 
 [node name="Game Manager" type="Node" unique_id=175650822]
 script = ExtResource("1_ne7se")
 _main_menu_scene = ExtResource("2_seigl")
+_tutorial_scene = ExtResource("3_a6q7w")
 _game_scene = ExtResource("2_684gi")
 _game_over_scene = ExtResource("4_nm2dn")
+_win_scene = ExtResource("5_ne7se")
 button_click_sfx = ExtResource("5_bedwy")
 button_focus_sfx = ExtResource("6_me7jj")

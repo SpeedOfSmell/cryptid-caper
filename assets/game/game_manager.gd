@@ -1,16 +1,20 @@
 extends Node
 
 @export var _main_menu_scene: PackedScene
+@export var _tutorial_scene: PackedScene
 @export var _game_scene: PackedScene
 @export var _game_over_scene: PackedScene
+@export var _win_scene: PackedScene
 
 @export var button_click_sfx: SfxEvent
 @export var button_focus_sfx: SfxEvent
 
 const VALID_TRANSITIONS := {
-	States.GameState.MAIN_MENU: [States.GameState.GAME],
-	States.GameState.GAME: [States.GameState.MAIN_MENU, States.GameState.GAME_OVER],
-	States.GameState.GAME_OVER: [States.GameState.MAIN_MENU, States.GameState.GAME]
+	States.GameState.MAIN_MENU: [States.GameState.TUTORIAL],
+	States.GameState.TUTORIAL: [States.GameState.GAME],
+	States.GameState.GAME: [States.GameState.MAIN_MENU, States.GameState.GAME_OVER, States.GameState.WIN],
+	States.GameState.GAME_OVER: [States.GameState.MAIN_MENU, States.GameState.GAME],
+	States.GameState.WIN: [States.GameState.MAIN_MENU, States.GameState.GAME]
 }
 const INITIAL_STATE := States.GameState.MAIN_MENU
 
@@ -22,8 +26,10 @@ var _current_screen: Node
 func _ready():
 	_state_scenes = {
 		States.GameState.MAIN_MENU: _main_menu_scene,
+		States.GameState.TUTORIAL: _tutorial_scene,
 		States.GameState.GAME: _game_scene,
-		States.GameState.GAME_OVER: _game_over_scene
+		States.GameState.GAME_OVER: _game_over_scene,
+		States.GameState.WIN: _win_scene
 	}
 	
 	child_entered_tree.connect(_connect_ui_elements_to_audio)
@@ -52,6 +58,9 @@ func _on_state_changed(from: int, to: int, context: Dictionary) -> void:
 func _change_screen(state: int):
 	if _current_screen:
 		_current_screen.queue_free()
+	
+	if state == States.GameState.GAME:
+		PlayerManager.new_game()
 	
 	_current_screen = _state_scenes[state].instantiate()
 	add_child(_current_screen)

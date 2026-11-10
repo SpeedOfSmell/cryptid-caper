@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://tepnmxp5jcpf"
-path="res://.godot/imported/Bg 3.png-6d92225bfbb8b1b21e821492c568813b.ctex"
+uid="uid://cmh1xyokbewqr"
+path="res://.godot/imported/panel.png-a9e7bf7ca0e6797ce3ea27b1500b1c03.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/game/game_screen/room_manager/backgrounds/Bg 3.png"
-dest_files=["res://.godot/imported/Bg 3.png-6d92225bfbb8b1b21e821492c568813b.ctex"]
+source_file="res://assets/global/ui/panel.png"
+dest_files=["res://.godot/imported/panel.png-a9e7bf7ca0e6797ce3ea27b1500b1c03.ctex"]
 
 [params]
 
