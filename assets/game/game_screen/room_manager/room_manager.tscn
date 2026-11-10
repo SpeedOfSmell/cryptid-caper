@@ -22,11 +22,18 @@
 [ext_resource type="Shader" uid="uid://kqw2u5tniybr" path="res://assets/game/game_screen/room_manager/wipe.gdshader" id="14_khrly"]
 [ext_resource type="Shader" uid="uid://mqdvfso6cnh2" path="res://assets/game/game_screen/room_manager/dither_fade.gdshader" id="15_khrly"]
 [ext_resource type="Resource" uid="uid://wsryjlak8itp" path="res://assets/game/game_screen/interactables/artifact/artifact_e/artifact_e.tres" id="15_qu22k"]
+[ext_resource type="FontFile" uid="uid://bf12joacxh8gs" path="res://assets/global/ui/monogram.ttf" id="21_a0js4"]
 
 [sub_resource type="Resource" id="Resource_fjksm"]
 script = ExtResource("9_vtgo2")
 artifacts = Array[ExtResource("8_ojc38")]([ExtResource("9_e307x"), ExtResource("12_ki0i3"), ExtResource("13_a0js4"), ExtResource("14_gldra"), ExtResource("15_qu22k")])
 metadata/_custom_type_script = "uid://dc3stds6x18aq"
+
+[sub_resource type="LabelSettings" id="LabelSettings_gldra"]
+font = ExtResource("21_a0js4")
+font_size = 17
+font_color = Color(0.13333334, 0.13725491, 0.13725491, 1)
+shadow_size = 0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gn1bi"]
 shader = ExtResource("14_khrly")
@@ -80,10 +87,10 @@ horizontal_alignment = 2
 [node name="TimerPanel" type="Control" parent="CanvasLayer" unique_id=1918048421]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 5.0
-offset_top = 8.0
-offset_right = 45.0
-offset_bottom = 48.0
+offset_left = 4.0
+offset_top = 3.0
+offset_right = 44.0
+offset_bottom = 43.0
 
 [node name="TextureRect2" type="TextureRect" parent="CanvasLayer/TimerPanel" unique_id=1925726504]
 layout_mode = 0
@@ -97,6 +104,29 @@ offset_right = 67.0
 offset_bottom = 18.0
 text = "2:42"
 label_settings = ExtResource("7_tfgok")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RoomPanel" type="Control" parent="CanvasLayer" unique_id=1263780362]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 4.0
+offset_top = 25.0
+offset_right = 44.0
+offset_bottom = 65.0
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/RoomPanel" unique_id=1848978941]
+layout_mode = 0
+texture = ExtResource("13_xtlk2")
+
+[node name="RoomLabel" type="Label" parent="CanvasLayer/RoomPanel" unique_id=1015411013]
+unique_name_in_owner = true
+layout_mode = 0
+offset_top = -1.0
+offset_right = 67.0
+offset_bottom = 18.0
+text = "Room 01"
+label_settings = SubResource("LabelSettings_gldra")
 horizontal_alignment = 1
 vertical_alignment = 1
 

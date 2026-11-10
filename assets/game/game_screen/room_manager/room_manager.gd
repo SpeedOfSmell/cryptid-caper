@@ -99,6 +99,8 @@ func _change_room(source_room: Room, destination_room: Room, spawn_position: Vec
 	print("Room %d -> Room %d" % [previous_room.room_id, _current_room.room_id])
 	_transition_pending = false
 	
+	%RoomLabel.text = "Room %02d" % destination_room.room_id
+	
 	%Wipe.material.set_shader_parameter("reverse", true)
 	await _fade_to(0.0, 0.4, %Wipe)
 
