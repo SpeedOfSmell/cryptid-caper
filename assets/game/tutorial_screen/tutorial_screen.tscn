@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://do3nrld2r2dxu"]
+
+[ext_resource type="Script" uid="uid://c76x1hn5gcaxm" path="res://assets/game/tutorial_screen/tutorial_screen.gd" id="1_6krws"]
+[ext_resource type="Texture2D" uid="uid://dh2uyxotomv57" path="res://assets/game/tutorial_screen/Tutorial screen 1.png" id="1_dsg1a"]
+[ext_resource type="Texture2D" uid="uid://bw6mk361h1wmp" path="res://assets/game/tutorial_screen/Tutorial screen 2.png" id="2_6krws"]
+
+[node name="TutorialScreen" type="Control" unique_id=1174295234]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_6krws")
+
+[node name="Screen1" type="TextureRect" parent="." unique_id=1517132580]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource("1_dsg1a")
+
+[node name="Screen2" type="TextureRect" parent="." unique_id=1974380858]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource("2_6krws")
