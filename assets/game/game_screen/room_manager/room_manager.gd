@@ -8,6 +8,7 @@ signal transition_requested(state: States.GameState)
 
 # Time player has at start in seconds
 const START_TIME:float = 5 * 60
+const ARTIFACT_TIME_BONUS := 30.0
 
 var time_left: float
 
@@ -48,6 +49,9 @@ func _process(delta: float):
 
 func _generate_new_room(source_room: Room) -> Room:
 	var room = _room_generator.generate_room(_next_room_id)
+	for artifact: Artifact in room.find_children("*", "Artifact", true, false):
+		artifact.triggered.connect(_on_artifact_collected)
+
 	room.previous_room = source_room
 	_next_room_id += 1
 	
@@ -109,6 +113,10 @@ func _update_time(seconds: int):
 	var m := seconds / 60
 	var s := seconds % 60
 	%TimeLabel.text = "%02d:%02d" % [m, s]
+
+func _on_artifact_collected(_player: PlayerController) -> void:
+	time_left += ARTIFACT_TIME_BONUS
+	_update_time(ceili(time_left))
 
 func _fade_to(target: float, duration: float, effect: ColorRect) -> void:
 	if _fade_tween:

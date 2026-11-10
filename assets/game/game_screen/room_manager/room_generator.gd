@@ -10,9 +10,20 @@ enum RelicType { NONE, DOUBLE_JUMP, DASH }
 
 const DOUBLE_JUMP_UNLOCK_LEVEL = 3
 const DASH_UNLOCK_LEVEL = 5
-const ROOM_HORIZONTAL_SIZE_INCREASE_FREQUENCY = 8
-const ROOM_VERTICAL_SIZE_INCREASE_FREQUENCY = 2
+const ROOM_HORIZONTAL_SIZE_INCREASE_FREQUENCY = 7
+const ROOM_VERTICAL_SIZE_INCREASE_FREQUENCY = 3
 const BACKGROUND_CHANGE_FREQUENCY = 3
+const ADVANCED_CONTENT_UNLOCK_ROOM := 7
+const MAX_BUDGET_ROOM := 10
+const ARTIFACT_CHUNK_SPAWN_CHANCE := 0.35
+const STARTING_ARTIFACT_BUDGET := 25
+const PRE_RARE_ARTIFACT_BUDGET := 49
+const RARE_ARTIFACT_BUDGET := 100
+const MAX_ARTIFACT_BUDGET := 200
+const STARTING_DIFFICULTY_BUDGET := 1
+const MIN_CHUNK_DIFFICULTY := 1
+const MAX_CHUNK_DIFFICULTY := 5
+const MAX_TARGET_AVERAGE_DIFFICULTY := 2.5
 
 const CHUNK_SIZE := Vector2i(40, 20)
 const EXIT_LEFT := 1
@@ -31,10 +42,9 @@ func _init():
 func generate_room(room_id: int) -> Room:
 	var require_double_jump = room_id >= DOUBLE_JUMP_UNLOCK_LEVEL
 	var require_dash = room_id >= DASH_UNLOCK_LEVEL
-	var artifact_budget = 200
-	var difficulty_budget = 20
+	var artifact_budget := _get_artifact_budget(room_id)
 	
-	var room_size := Vector2i(3 + floori(room_id / ROOM_HORIZONTAL_SIZE_INCREASE_FREQUENCY), 1 + floori((room_id - 2) / ROOM_VERTICAL_SIZE_INCREASE_FREQUENCY))
+	var room_size := Vector2i(3 + floori(room_id / ROOM_HORIZONTAL_SIZE_INCREASE_FREQUENCY), 1 + floori((room_id - 1) / ROOM_VERTICAL_SIZE_INCREASE_FREQUENCY))
 	var chunk_type_map: Array[Array] = _initialize_chunk_map(room_size.x, room_size.y)
 	
 	var starting_coords := Vector2i(0, chunk_type_map.size() / 2)
@@ -47,7 +57,9 @@ func generate_room(room_id: int) -> Room:
 	var artifact_map = _generate_artifact_map(chunk_type_map, artifact_budget)
 	
 	var chunk_map: Array[Array] = _initialize_chunk_map(room_size.x, room_size.y)
-	_populate_chunk_map(chunk_type_map, chunk_map, require_double_jump, require_dash, difficulty_budget)
+	var difficulty_budget := _get_difficulty_budget(room_id, room_size)
+	var max_unlocked_difficulty := clampi(room_id, MIN_CHUNK_DIFFICULTY, MAX_CHUNK_DIFFICULTY)
+	_populate_chunk_map(chunk_type_map, chunk_map, require_double_jump, require_dash, difficulty_budget, max_unlocked_difficulty)
 	
 	var room: Room = _room_scene.instantiate()
 	room.tilemap = room.get_node("TileMapLayer")
@@ -66,6 +78,37 @@ func generate_room(room_id: int) -> Room:
 	room.find_child("Background", true, false).texture = room.backgrounds[min(floor(room_id / 3), 4)]
 	
 	return room
+
+func _get_artifact_budget(room_id: int) -> int:
+	if room_id < ADVANCED_CONTENT_UNLOCK_ROOM:
+		var early_progress := clampf(
+			float(room_id - 1) / float(ADVANCED_CONTENT_UNLOCK_ROOM - 2),
+			0.0,
+			1.0
+		)
+		return roundi(lerpf(STARTING_ARTIFACT_BUDGET, PRE_RARE_ARTIFACT_BUDGET, early_progress))
+
+	var late_progress := clampf(
+		float(room_id - ADVANCED_CONTENT_UNLOCK_ROOM) / float(MAX_BUDGET_ROOM - ADVANCED_CONTENT_UNLOCK_ROOM),
+		0.0,
+		1.0
+	)
+	return roundi(lerpf(RARE_ARTIFACT_BUDGET, MAX_ARTIFACT_BUDGET, late_progress))
+
+func _get_difficulty_budget(room_id: int, room_size: Vector2i) -> int:
+	var chunk_count := room_size.x * room_size.y
+	# Scale total points with room size and gradually raise the target average per chunk.
+	var progress := clampf(
+		float(room_id - 1) / float(MAX_BUDGET_ROOM - 1),
+		0.0,
+		1.0
+	)
+	var target_average_difficulty := lerpf(
+		float(MIN_CHUNK_DIFFICULTY),
+		MAX_TARGET_AVERAGE_DIFFICULTY,
+		progress
+	)
+	return maxi(STARTING_DIFFICULTY_BUDGET, roundi(chunk_count * target_average_difficulty))
 
 func _initialize_chunk_map(width: int, height: int) -> Array[Array]:
 	var map: Array[Array] = []
@@ -331,8 +374,13 @@ func _generate_artifact_map(chunk_type_map: Array[Array], budget: int) -> Array[
 	var available_chunks = _get_available_artifact_chunks(chunk_type_map)
 	
 	while budget >= _artifact_library.get_minimal_score() and available_chunks.size() > 0:
-		var artifact := _artifact_library.get_random_artifact(budget)	
 		var random_chunk: Vector2i =  available_chunks.pop_at(_rng.randi_range(0, available_chunks.size() - 1))
+		if _rng.randf() >= ARTIFACT_CHUNK_SPAWN_CHANCE:
+			continue
+
+		var artifact := _artifact_library.get_random_artifact(budget)
+		if artifact == null:
+			continue
 		
 		artifact_map[random_chunk.y][random_chunk.x] = artifact
 		budget -= artifact.score_value
@@ -349,14 +397,14 @@ func _get_available_artifact_chunks(chunk_type_map) -> Array[Vector2i]:
 	
 	return available_chunks
 
-func _populate_chunk_map(chunk_type_map: Array[Array], chunk_map: Array[Array], require_double_jump: bool, require_dash: bool, difficulty_budget: int):
+func _populate_chunk_map(chunk_type_map: Array[Array], chunk_map: Array[Array], require_double_jump: bool, require_dash: bool, difficulty_budget: int, max_difficulty: int):
 	assert(chunk_type_map.size() == chunk_map.size(), "Chunk map does not have same dimensions as chunk type map")
 	var remaining_difficulty_budget := difficulty_budget
 	
 	for y in range(chunk_type_map.size()):
 		for x in range(chunk_type_map[y].size()):
 			if chunk_type_map[y][x] != null:
-				var template := _chunk_library.pick_chunk(chunk_type_map[y][x], require_double_jump, require_dash, remaining_difficulty_budget, _rng)
+				var template := _chunk_library.pick_chunk(chunk_type_map[y][x], require_double_jump, require_dash, remaining_difficulty_budget, max_difficulty, _rng)
 				chunk_map[y][x] = template.chunk_scene
 				remaining_difficulty_budget -= template.difficulty
 

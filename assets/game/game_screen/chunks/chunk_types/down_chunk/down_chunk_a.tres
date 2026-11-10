@@ -5,5 +5,6 @@
 
 [resource]
 script = ExtResource("1_14f5m")
+difficulty = 2
 chunk_scene = ExtResource("1_wllq3")
 metadata/_custom_type_script = "uid://wpcxsk870y80"

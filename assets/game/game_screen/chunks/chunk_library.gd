@@ -3,7 +3,7 @@ extends Resource
 
 @export var types: Array[ChunkType]
 
-func pick_chunk(chunk_type: StringName, can_double_jump: bool, can_dash: bool, remaining_difficulty_budget: int, rng: RandomNumberGenerator) -> ChunkTemplate:
+func pick_chunk(chunk_type: StringName, can_double_jump: bool, can_dash: bool, remaining_difficulty_budget: int, max_unlocked_difficulty: int, rng: RandomNumberGenerator) -> ChunkTemplate:
 	for type: ChunkType in types:
 		if type.type_name == chunk_type:
 			var available_templates: Array[ChunkTemplate] = []
@@ -17,19 +17,25 @@ func pick_chunk(chunk_type: StringName, can_double_jump: bool, can_dash: bool, r
 
 			assert(not available_templates.is_empty(), "Chunk type has no templates available for the player's abilities")
 
-			# Always keep a difficulty-1 option when the budget is exhausted. If a
-			# type has no difficulty-1 variant, fall back to its easiest variant.
-			var difficulty_limit := maxi(remaining_difficulty_budget, 1)
-			var affordable_templates: Array[ChunkTemplate] = []
+			var difficulty_cap := maxi(max_unlocked_difficulty, 1)
+			var unlocked_templates: Array[ChunkTemplate] = []
 			for template: ChunkTemplate in available_templates:
+				if template.difficulty <= difficulty_cap:
+					unlocked_templates.append(template)
+			assert(not unlocked_templates.is_empty(), "Chunk type has no template at or below the room's unlocked difficulty")
+
+			# The room budget can run out, but the easiest unlocked variant remains available.
+			var difficulty_limit := mini(maxi(remaining_difficulty_budget, 1), difficulty_cap)
+			var affordable_templates: Array[ChunkTemplate] = []
+			for template: ChunkTemplate in unlocked_templates:
 				if template.difficulty <= difficulty_limit:
 					affordable_templates.append(template)
 
 			if affordable_templates.is_empty():
-				var easiest_difficulty := available_templates[0].difficulty
-				for template: ChunkTemplate in available_templates:
+				var easiest_difficulty := unlocked_templates[0].difficulty
+				for template: ChunkTemplate in unlocked_templates:
 					easiest_difficulty = mini(easiest_difficulty, template.difficulty)
-				for template: ChunkTemplate in available_templates:
+				for template: ChunkTemplate in unlocked_templates:
 					if template.difficulty == easiest_difficulty:
 						affordable_templates.append(template)
 

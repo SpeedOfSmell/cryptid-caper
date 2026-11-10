@@ -4,7 +4,14 @@ extends Resource
 @export var artifacts: Array[ArtifactInfo]
 
 func get_minimal_score() -> int:
-	return artifacts.reduce(func(lowest: int, artifact: ArtifactInfo): return artifact.score_value if lowest == 0 or artifact.score_value < lowest else lowest, null).score_value
+	if artifacts.is_empty():
+		return 0
+
+	return artifacts.reduce(
+		func(lowest: int, artifact: ArtifactInfo) -> int:
+			return mini(lowest, artifact.score_value),
+		artifacts[0].score_value
+	)
 
 func get_random_artifact(max_score: int) -> ArtifactInfo:
 	var total := 0.0
