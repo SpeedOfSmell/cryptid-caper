@@ -7,4 +7,3 @@ script = ExtResource("1_nhl42")
 type = 1
 value = 2.0
 name = "Speed"
-description = "Increases movespeed"

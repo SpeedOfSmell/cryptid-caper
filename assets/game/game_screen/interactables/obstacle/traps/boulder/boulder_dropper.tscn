@@ -29,17 +29,23 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_opening")
 }, {
-"duration": 1.0,
+"duration": 4.0,
 "texture": SubResource("AtlasTexture_open")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_opening")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_closed")
 }],
 "loop": false,
 "name": &"open",
 "speed": 10.0
 }]
 
-[node name="BoulderDropper" type="Node2D" unique_id=1020526506 node_paths=PackedStringArray("hatch", "block", "spawn_point")]
+[node name="BoulderDropper" type="Node2D" unique_id=1020526506 node_paths=PackedStringArray("sprite", "block", "spawn_point")]
 script = ExtResource("1_spawner")
-hatch = NodePath("Block/AnimatedSprite2D")
+sprite = NodePath("Block/AnimatedSprite2D")
 block = NodePath("Block")
 obstacle_scene = ExtResource("2_boulder")
 max_alive = 3

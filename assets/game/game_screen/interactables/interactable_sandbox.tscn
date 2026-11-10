@@ -3,7 +3,8 @@
 [ext_resource type="Script" uid="uid://c6sbc782wq2lw" path="res://assets/game/game_screen/interactables/interactable_sandbox.gd" id="1_sandbox"]
 [ext_resource type="TileSet" uid="uid://dywhdftlbg8wv" path="res://assets/game/game_screen/chunks/room_tileset.tres" id="2_tiles"]
 [ext_resource type="PackedScene" uid="uid://b1jbsp8xj45we" path="res://assets/game/game_screen/player/player.tscn" id="3_player"]
-[ext_resource type="PackedScene" uid="uid://d0mhcb0l0g6sy" path="res://assets/game/game_screen/interactables/relic/relic.tscn" id="4_relic"]
+[ext_resource type="PackedScene" uid="uid://cy0peewlsl5h4" path="res://assets/game/game_screen/interactables/relic/dash_relic/dash_relic.tscn" id="4_dash_relic"]
+[ext_resource type="PackedScene" uid="uid://ocx3e2tqxikw" path="res://assets/game/game_screen/interactables/relic/double_jump_relic/double_jump_relic.tscn" id="4_jump_relic"]
 [ext_resource type="PackedScene" uid="uid://e4vourxxnuy1" path="res://assets/game/game_screen/interactables/obstacle/spike/spike.tscn" id="5_spike"]
 [ext_resource type="PackedScene" uid="uid://dwjbiqvl2voqc" path="res://assets/game/game_screen/interactables/obstacle/traps/piston/piston_trap.tscn" id="6_piston"]
 [ext_resource type="PackedScene" uid="uid://dxui1ugt02bf7" path="res://assets/game/game_screen/interactables/obstacle/traps/boulder/boulder_dropper.tscn" id="7_boulder"]
@@ -20,12 +21,11 @@ tile_set = ExtResource("2_tiles")
 [node name="Player" parent="." unique_id=405111128 instance=ExtResource("3_player")]
 position = Vector2(8, 16)
 
-[node name="JumpRelic" parent="." unique_id=1777570291 instance=ExtResource("4_relic")]
+[node name="JumpRelic" parent="." unique_id=1777570291 instance=ExtResource("4_jump_relic")]
 position = Vector2(139, 7)
 
-[node name="DashRelic" parent="." unique_id=871176782 instance=ExtResource("4_relic")]
+[node name="DashRelic" parent="." unique_id=871176782 instance=ExtResource("4_dash_relic")]
 position = Vector2(168, 8)
-upgrade_type = 3
 
 [node name="Spike" parent="." unique_id=998460766 instance=ExtResource("5_spike")]
 position = Vector2(192, -83)

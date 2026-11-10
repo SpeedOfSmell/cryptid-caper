@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://crp3q3vxk0x63"]
+
+[ext_resource type="Script" uid="uid://bekt12qd1uka7" path="res://assets/game/game_screen/interactables/relic/pickup_popup/pickup_popup.gd" id="1_popup"]
+[ext_resource type="FontFile" uid="uid://bf12joacxh8gs" path="res://assets/global/ui/monogram.ttf" id="2_font"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_popup"]
+line_spacing = 0.0
+font = ExtResource("2_font")
+font_color = Color(0.9411765, 0.9647059, 0.9411765, 1)
+outline_size = 4
+outline_color = Color(0.13333334, 0.13725491, 0.13725491, 1)
+
+[node name="PickupPopup" type="Label" unique_id=2077774242]
+z_index = 10
+offset_top = -28.0
+offset_bottom = -28.0
+grow_horizontal = 2
+grow_vertical = 0
+label_settings = SubResource("LabelSettings_popup")
+horizontal_alignment = 1
+script = ExtResource("1_popup")

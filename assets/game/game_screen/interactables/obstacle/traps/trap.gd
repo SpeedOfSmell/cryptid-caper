@@ -33,7 +33,7 @@ func _advance(delta: float) -> void:
 	if _elapsed >= interval:
 		_elapsed -= interval
 		_telegraphed = false
-		AudioManager.play_sfx(fire_sfx)
+		AudioManager.play_sfx_at(fire_sfx, global_position)
 		_fire()
 
 #overrideable
