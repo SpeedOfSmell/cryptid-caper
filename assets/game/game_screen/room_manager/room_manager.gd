@@ -7,7 +7,7 @@ signal transition_requested(state: States.GameState)
 @export var _room_change_sfx: SfxEvent
 
 # Time player has at start in seconds
-const START_TIME:float = 5 * 60
+const START_TIME:float = 5 #* 60
 
 var time_left: float
 
