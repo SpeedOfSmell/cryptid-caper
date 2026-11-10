@@ -10,6 +10,11 @@ signal transition_requested(state: States.GameState)
 
 func _ready():
 	%ScoreLabel.text = str(PlayerManager.get_score())
+	
+	if PlayerManager.get_score() > PlayerManager.get_hiscore():
+		%HiscoreSprite.visible = true
+	else:
+		%HiscoreSprite.visible = false
 
 func _switch_button_label_settings(button: TextureButton, settings: LabelSettings) -> void:
 	if not is_instance_valid(button) or not button.is_inside_tree():
