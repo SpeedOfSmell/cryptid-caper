@@ -1,0 +1,146 @@
+[gd_scene format=3 uid="uid://dkabx8v2yxqy1"]
+
+[ext_resource type="Script" uid="uid://cxv7h5171rn3j" path="res://assets/game/main_menu/main_menu.gd" id="1_7bqh3"]
+[ext_resource type="Texture2D" uid="uid://b7x2nakyw726r" path="res://assets/global/ui/Ui_1.png" id="2_8emhj"]
+[ext_resource type="AudioStream" uid="uid://247iodwew15" path="res://assets/audio/music/Main Menu.wav" id="2_tdavu"]
+[ext_resource type="LabelSettings" uid="uid://b3m4nbdxi31eb" path="res://assets/global/label_settings_black.tres" id="3_tdavu"]
+[ext_resource type="Texture2D" uid="uid://627mwcxj1jd1" path="res://assets/game/main_menu/Title.png" id="3_x4jpy"]
+[ext_resource type="Texture2D" uid="uid://cd11amfs4cvrb" path="res://assets/global/ui/Ui_4.png" id="6_aj6wj"]
+[ext_resource type="Texture2D" uid="uid://jj5ntj7dye0l" path="res://assets/global/ui/Artifacts_tracker.png" id="7_japdx"]
+[ext_resource type="LabelSettings" uid="uid://ck6ardbqhy8n1" path="res://assets/global/label_settings_white.tres" id="8_xdoka"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_davy8"]
+atlas = ExtResource("3_x4jpy")
+region = Rect2(0, 0, 384, 216)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4amxb"]
+atlas = ExtResource("3_x4jpy")
+region = Rect2(384, 0, 384, 216)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aj6wj"]
+atlas = ExtResource("3_x4jpy")
+region = Rect2(768, 0, 384, 216)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_japdx"]
+atlas = ExtResource("3_x4jpy")
+region = Rect2(0, 216, 384, 216)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xdoka"]
+atlas = ExtResource("3_x4jpy")
+region = Rect2(384, 216, 384, 216)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ji54b"]
+atlas = ExtResource("3_x4jpy")
+region = Rect2(768, 216, 384, 216)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1lvrn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_davy8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4amxb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aj6wj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_japdx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xdoka")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ji54b")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="MainMenu" type="Control" unique_id=1141875741]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7bqh3")
+music = ExtResource("2_tdavu")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=847682385]
+position = Vector2(192, 108)
+sprite_frames = SubResource("SpriteFrames_1lvrn")
+autoplay = "default"
+frame_progress = 0.38224497
+
+[node name="PlayButton" type="TextureButton" parent="." unique_id=847308401]
+layout_mode = 0
+offset_left = 222.0
+offset_top = 100.0
+offset_right = 290.0
+offset_bottom = 136.0
+texture_normal = ExtResource("2_8emhj")
+
+[node name="Label" type="Label" parent="PlayButton" unique_id=1718136977]
+layout_mode = 0
+offset_left = 1.0
+offset_right = 67.0
+offset_bottom = 35.0
+text = "Play"
+label_settings = ExtResource("3_tdavu")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1281614090]
+layout_mode = 0
+offset_left = 160.0
+offset_top = 91.0
+offset_right = 206.0
+offset_bottom = 131.0
+
+[node name="Control" type="Control" parent="." unique_id=738038175]
+anchors_preset = 0
+offset_left = -13.0
+offset_right = 27.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="Control" unique_id=1580115318]
+layout_mode = 0
+offset_left = 221.0
+offset_top = 149.0
+offset_right = 317.0
+offset_bottom = 209.0
+texture = ExtResource("6_aj6wj")
+stretch_mode = 4
+
+[node name="TextureRect2" type="TextureRect" parent="Control" unique_id=1415858645]
+layout_mode = 0
+offset_left = 251.0
+offset_top = 167.0
+offset_right = 318.0
+offset_bottom = 207.0
+texture = ExtResource("7_japdx")
+
+[node name="Label" type="Label" parent="Control" unique_id=1840176575]
+layout_mode = 0
+offset_left = 241.0
+offset_top = 152.0
+offset_right = 301.0
+offset_bottom = 175.0
+text = "Hiscore"
+label_settings = ExtResource("8_xdoka")
+
+[node name="HiscoreLabel" type="Label" parent="Control" unique_id=379150416]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 271.0
+offset_top = 176.0
+offset_right = 311.0
+offset_bottom = 199.0
+text = "999"
+label_settings = ExtResource("3_tdavu")
+horizontal_alignment = 2
+
+[connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]

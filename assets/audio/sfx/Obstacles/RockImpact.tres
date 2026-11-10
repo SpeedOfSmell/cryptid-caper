@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SfxEvent" format=3 uid="uid://bet22tetpk8fq"]
+
+[ext_resource type="Script" uid="uid://bs2frmocmdsle" path="res://assets/global/sfx_event.gd" id="1_x15ma"]
+[ext_resource type="AudioStream" uid="uid://dv1gi7vcvr3ef" path="res://assets/audio/sfx/Obstacles/SFX_Obstacle_RockImpact_1.wav" id="2_5slbp"]
+[ext_resource type="AudioStream" uid="uid://c45m7gj1rkvfl" path="res://assets/audio/sfx/Obstacles/SFX_Obstacle_RockImpact_2.wav" id="3_belgj"]
+[ext_resource type="AudioStream" uid="uid://bcpa636xmx1l2" path="res://assets/audio/sfx/Obstacles/SFX_Obstacle_RockImpact_3.wav" id="4_tpi4c"]
+[ext_resource type="AudioStream" uid="uid://c18meca31jqeu" path="res://assets/audio/sfx/Obstacles/SFX_Obstacle_RockImpact_4.wav" id="5_cxgt5"]
+
+[resource]
+script = ExtResource("1_x15ma")
+streams = Array[AudioStream]([ExtResource("2_5slbp"), ExtResource("3_belgj"), ExtResource("4_tpi4c"), ExtResource("5_cxgt5")])
+volume_db = 12.0
+pitch_min = 0.95
+metadata/_custom_type_script = "uid://bs2frmocmdsle"

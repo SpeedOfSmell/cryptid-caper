@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="SfxEvent" format=3 uid="uid://me2gwnowj8t6"]
+
+[ext_resource type="Script" uid="uid://bs2frmocmdsle" path="res://assets/global/sfx_event.gd" id="1_p7rol"]
+[ext_resource type="AudioStream" uid="uid://bfa5a2o6upyde" path="res://assets/audio/sfx/Ambience/AMB_Cave_Main_Loop.wav" id="2_4p5p7"]
+[ext_resource type="AudioStream" uid="uid://d0iin26iu35j5" path="res://assets/audio/sfx/Ambience/AMB_Cave_Wind_Loop.wav" id="3_buhdn"]
+
+[sub_resource type="AudioStreamSynchronized" id="AudioStreamSynchronized_ip73y"]
+stream_count = 2
+stream_0/stream = ExtResource("2_4p5p7")
+stream_0/volume = 0.0
+stream_1/stream = ExtResource("3_buhdn")
+stream_1/volume = 0.0
+
+[resource]
+script = ExtResource("1_p7rol")
+streams = Array[AudioStream]([SubResource("AudioStreamSynchronized_ip73y")])
+metadata/_custom_type_script = "uid://bs2frmocmdsle"

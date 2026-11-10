@@ -1,0 +1,2 @@
+class_name DoubleJumpState
+extends JumpState

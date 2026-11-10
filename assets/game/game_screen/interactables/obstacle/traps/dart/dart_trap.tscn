@@ -1,0 +1,66 @@
+[gd_scene format=3 uid="uid://beedmp5n2y2sx"]
+
+[ext_resource type="Script" uid="uid://djilk5qk3dk6y" path="res://assets/game/game_screen/interactables/obstacle/traps/obstacle_spawner.gd" id="1_spawner"]
+[ext_resource type="PackedScene" uid="uid://cp3620yvroyxg" path="res://assets/game/game_screen/interactables/obstacle/traps/dart/dart.tscn" id="2_dart"]
+[ext_resource type="Resource" uid="uid://bu6hvdg3ymq0l" path="res://assets/audio/sfx/Obstacles/Dart.tres" id="3_sfx"]
+[ext_resource type="Texture2D" uid="uid://b6br6hp0kkd0e" path="res://assets/game/game_screen/interactables/obstacle/traps/boulder/Boulder_open.png" id="4_hatch"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_block"]
+size = Vector2(16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_closed"]
+atlas = ExtResource("4_hatch")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_opening"]
+atlas = ExtResource("4_hatch")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_open"]
+atlas = ExtResource("4_hatch")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hatch"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_closed")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_opening")
+}, {
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_open")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_opening")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_closed")
+}],
+"loop": false,
+"name": &"open",
+"speed": 10.0
+}]
+
+[node name="DartTrap" type="Node2D" unique_id=1945229119 node_paths=PackedStringArray("spawn_point", "sprite")]
+script = ExtResource("1_spawner")
+obstacle_scene = ExtResource("2_dart")
+spawn_point = NodePath("SpawnPoint")
+sprite = NodePath("Block/AnimatedSprite2D")
+interval = 1.5
+fire_sfx = ExtResource("3_sfx")
+
+[node name="Block" type="StaticBody2D" parent="." unique_id=2138832340]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Block" unique_id=173938244]
+shape = SubResource("RectangleShape2D_block")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Block" unique_id=1115426410]
+rotation = 3.1415927
+sprite_frames = SubResource("SpriteFrames_hatch")
+animation = &"open"
+
+[node name="SpawnPoint" type="Marker2D" parent="." unique_id=1696172261]
+position = Vector2(0, -13)
+rotation = -1.5707964

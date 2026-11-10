@@ -1,0 +1,78 @@
+[gd_scene format=4 uid="uid://dgvm4xxwp2php"]
+
+[ext_resource type="Script" uid="uid://c6sbc782wq2lw" path="res://assets/game/game_screen/interactables/interactable_sandbox.gd" id="1_sandbox"]
+[ext_resource type="TileSet" uid="uid://dywhdftlbg8wv" path="res://assets/game/game_screen/chunks/room_tileset.tres" id="2_tiles"]
+[ext_resource type="PackedScene" uid="uid://b1jbsp8xj45we" path="res://assets/game/game_screen/player/player.tscn" id="3_player"]
+[ext_resource type="PackedScene" uid="uid://cy0peewlsl5h4" path="res://assets/game/game_screen/interactables/relic/dash_relic/dash_relic.tscn" id="4_dash_relic"]
+[ext_resource type="PackedScene" uid="uid://ocx3e2tqxikw" path="res://assets/game/game_screen/interactables/relic/double_jump_relic/double_jump_relic.tscn" id="4_jump_relic"]
+[ext_resource type="PackedScene" uid="uid://e4vourxxnuy1" path="res://assets/game/game_screen/interactables/obstacle/spike/spike.tscn" id="5_spike"]
+[ext_resource type="PackedScene" uid="uid://dwjbiqvl2voqc" path="res://assets/game/game_screen/interactables/obstacle/traps/piston/piston_trap.tscn" id="6_piston"]
+[ext_resource type="PackedScene" uid="uid://dxui1ugt02bf7" path="res://assets/game/game_screen/interactables/obstacle/traps/boulder/boulder_dropper.tscn" id="7_boulder"]
+[ext_resource type="PackedScene" uid="uid://beedmp5n2y2sx" path="res://assets/game/game_screen/interactables/obstacle/traps/dart/dart_trap.tscn" id="8_dart"]
+[ext_resource type="PackedScene" uid="uid://dwwtyffyihcp" path="res://assets/game/game_screen/interactables/obstacle/lava/lava.tscn" id="9_30end"]
+
+[node name="InteractableSandbox" type="Node2D" unique_id=502746101]
+script = ExtResource("1_sandbox")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1543069032]
+tile_map_data = PackedByteArray("AAD8//j/AAAFAAEAAAD8//n/AAAFAAEAAAD8//r/AAAFAAEAAAD8//v/AAAFAAEAAAD8//z/AAAFAAEAAAD8//3/AAAFAAEAAAD8//7/AAAFAAEAAAD8////AAAFAAEAAAD8/wAAAAAFAAEAAAD8/wEAAAAFAAEAAAD9/wEAAAAFAAEAAAD+/wEAAAAFAAEAAAD//wEAAAAFAAEAAAAAAAEAAAAFAAEAAAABAAEAAAAFAAEAAAACAAEAAAAFAAEAAAADAAEAAAAFAAEAAAAEAAEAAAAFAAEAAAAFAAEAAAAFAAEAAAAGAAEAAAAFAAEAAAAHAAEAAAAFAAEAAAAIAAEAAAAFAAEAAAAJAAEAAAAFAAEAAAAKAAEAAAAFAAEAAAALAAEAAAAFAAEAAAAMAAEAAAAFAAEAAAANAAEAAAAFAAEAAAAOAAEAAAAFAAEAAAAPAAEAAAAFAAEAAAAQAAEAAAAFAAEAAAARAAEAAAAFAAEAAAASAAEAAAAFAAEAAAATAAEAAAAFAAEAAAAUAAEAAAAFAAEAAAAVAAEAAAAFAAEAAAAWAAEAAAAFAAEAAAAXAAEAAAAFAAEAAAAYAAEAAAAFAAEAAAAZAAEAAAAFAAEAAAAaAAEAAAAFAAEAAAAbAAEAAAAFAAEAAAAcAAEAAAAFAAEAAAAdAAEAAAAFAAEAAAAeAAEAAAAFAAEAAAAfAAEAAAAFAAEAAAAgAAEAAAAFAAEAAAAhAAEAAAAFAAEAAAAiAPj/AAAFAAEAAAAiAPn/AAAFAAEAAAAiAPr/AAAFAAEAAAAiAPv/AAAFAAEAAAAiAPz/AAAFAAEAAAAiAP3/AAAFAAEAAAAiAP7/AAAFAAEAAAAiAP//AAAFAAEAAAAiAAAAAAAFAAEAAAAiAAEAAAAFAAEAAAALAAAAAAAFAAEAAAAMAAAAAAAFAAEAAAANAAAAAAAFAAEAAAAOAAAAAAAFAAEAAAAOAP//AAAFAAEAAAALAP//AAAFAAEAAAA=")
+tile_set = ExtResource("2_tiles")
+
+[node name="Player" parent="." unique_id=405111128 instance=ExtResource("3_player")]
+position = Vector2(8, 16)
+
+[node name="JumpRelic" parent="." unique_id=1777570291 instance=ExtResource("4_jump_relic")]
+position = Vector2(139, 7)
+
+[node name="DashRelic" parent="." unique_id=871176782 instance=ExtResource("4_dash_relic")]
+position = Vector2(168, 8)
+
+[node name="Spike" parent="." unique_id=998460766 instance=ExtResource("5_spike")]
+position = Vector2(192, -83)
+
+[node name="Spike2" parent="." unique_id=1530372755 instance=ExtResource("5_spike")]
+position = Vector2(208, -83)
+
+[node name="PistonTrap" parent="." unique_id=1455678261 instance=ExtResource("6_piston")]
+position = Vector2(244, -54)
+
+[node name="BoulderDropper" parent="." unique_id=1719934265 instance=ExtResource("7_boulder")]
+position = Vector2(440, -80)
+roll_direction = -1
+
+[node name="DartTrap" parent="." unique_id=350469854 instance=ExtResource("8_dart")]
+position = Vector2(520, 4)
+rotation = 4.741682
+
+[node name="PistonTrap2" parent="." unique_id=1581089923 instance=ExtResource("6_piston")]
+position = Vector2(339.00003, 8)
+rotation = -3.1309774
+phase = 0.193
+
+[node name="PistonTrap3" parent="." unique_id=1446007467 instance=ExtResource("6_piston")]
+position = Vector2(396, -24)
+rotation = 1.5881419
+scale = Vector2(0.99999994, 0.99999994)
+extend_time = 0.5
+retract_time = 1.0
+
+[node name="PistonTrap4" parent="." unique_id=1155748055 instance=ExtResource("6_piston")]
+position = Vector2(286, -54)
+phase = 0.149
+
+[node name="DartTrap2" parent="." unique_id=304328767 instance=ExtResource("8_dart")]
+position = Vector2(-32, 6)
+rotation = 0.008344294
+interval = 0.5
+
+[node name="Spike3" parent="." unique_id=1858360133 instance=ExtResource("5_spike")]
+position = Vector2(39, 8)
+
+[node name="Spike5" parent="." unique_id=497340528 instance=ExtResource("5_spike")]
+position = Vector2(104, 8)
+
+[node name="Lava" parent="." unique_id=1417855237 instance=ExtResource("9_30end")]
+position = Vector2(200, -8)
+
+[node name="Lava2" parent="." unique_id=1117231409 instance=ExtResource("9_30end")]
+position = Vector2(216, -8)

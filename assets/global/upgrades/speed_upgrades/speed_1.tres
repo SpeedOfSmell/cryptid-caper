@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="Upgrade" format=3 uid="uid://cs6io611xdmis"]
+
+[ext_resource type="Script" uid="uid://n0qanvi11kb1" path="res://assets/global/upgrades/upgrade.gd" id="1_xo151"]
+
+[resource]
+script = ExtResource("1_xo151")
+type = 2
+name = "Teleport"

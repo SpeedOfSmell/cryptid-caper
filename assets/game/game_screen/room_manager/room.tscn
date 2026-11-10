@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://c3l28xjwi58ex"]
+
+[ext_resource type="Script" uid="uid://dtmy6os2sqfq4" path="res://assets/game/game_screen/room_manager/room.gd" id="1_i24p6"]
+[ext_resource type="Texture2D" uid="uid://b4udp4yg5l33c" path="res://assets/game/game_screen/room_manager/backgrounds/Bg 1.png" id="2_bwcrb"]
+[ext_resource type="Texture2D" uid="uid://y4en5q26mt58" path="res://assets/game/game_screen/room_manager/backgrounds/Bg 2-fixed.png" id="3_07vbt"]
+[ext_resource type="TileSet" uid="uid://dywhdftlbg8wv" path="res://assets/game/game_screen/chunks/room_tileset.tres" id="3_i1cxt"]
+[ext_resource type="Texture2D" uid="uid://dxoihr7ryjvdp" path="res://assets/game/game_screen/room_manager/backgrounds/Bg 3- fixed.png" id="4_vs3ed"]
+[ext_resource type="Texture2D" uid="uid://c53nsnihqqgmr" path="res://assets/game/game_screen/room_manager/backgrounds/Bg 5.png" id="5_eeri4"]
+[ext_resource type="Texture2D" uid="uid://com22u5abj6k5" path="res://assets/game/game_screen/room_manager/backgrounds/Bg 6- fixed.png" id="5_rn2dv"]
+
+[node name="Room" type="Node2D" unique_id=1823068760]
+script = ExtResource("1_i24p6")
+backgrounds = Array[Resource]([ExtResource("2_bwcrb"), ExtResource("3_07vbt"), ExtResource("4_vs3ed"), ExtResource("5_rn2dv"), ExtResource("5_eeri4")])
+
+[node name="Parallax2D" type="Parallax2D" parent="." unique_id=219078819]
+z_index = -1
+repeat_size = Vector2(384, 216)
+
+[node name="Background" type="Sprite2D" parent="Parallax2D" unique_id=682294161]
+unique_name_in_owner = true
+centered = false
+
+[node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=426518524]
+tile_set = ExtResource("3_i1cxt")

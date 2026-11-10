@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SfxEvent" format=3 uid="uid://chj8brwoq2t44"]
+
+[ext_resource type="Script" uid="uid://bs2frmocmdsle" path="res://assets/global/sfx_event.gd" id="1_ydouk"]
+[ext_resource type="AudioStream" uid="uid://cv26xjbks3gw4" path="res://assets/audio/sfx/Obstacles/SFX_Obstacle_RockThrow_1.wav" id="2_x15ma"]
+[ext_resource type="AudioStream" uid="uid://dgqmjnnhab3wt" path="res://assets/audio/sfx/Obstacles/SFX_Obstacle_RockThrow_2.wav" id="3_mxt4q"]
+[ext_resource type="AudioStream" uid="uid://cwrk4s3jb3xj3" path="res://assets/audio/sfx/Obstacles/SFX_Obstacle_RockThrow_3.wav" id="4_xrfuw"]
+
+[resource]
+script = ExtResource("1_ydouk")
+streams = Array[AudioStream]([ExtResource("2_x15ma"), ExtResource("3_mxt4q"), ExtResource("4_xrfuw")])
+volume_db = 12.0
+pitch_min = 0.96
+pitch_max = 1.02
+metadata/_custom_type_script = "uid://bs2frmocmdsle"

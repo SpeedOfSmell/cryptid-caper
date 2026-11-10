@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://d1dk7mate4s7h"]
+
+[ext_resource type="Script" uid="uid://vnde0omvvvk6" path="res://assets/global/player_manager/player_manager.gd" id="1_646ok"]
+[ext_resource type="Resource" uid="uid://cxda3mfw7bafg" path="res://assets/audio/sfx/character/death.tres" id="2_7mqhj"]
+
+[node name="PlayerManager" type="Node2D" unique_id=2048007097]
+script = ExtResource("1_646ok")
+death_sound = ExtResource("2_7mqhj")

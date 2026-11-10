@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SfxEvent" format=3 uid="uid://cxda3mfw7bafg"]
+
+[ext_resource type="Script" uid="uid://bs2frmocmdsle" path="res://assets/global/sfx_event.gd" id="1_qcav3"]
+[ext_resource type="AudioStream" uid="uid://bi0pmdmhnf6wu" path="res://assets/audio/sfx/character/SFX_Death_1.wav" id="2_y81ch"]
+[ext_resource type="AudioStream" uid="uid://bslx61nqea15k" path="res://assets/audio/sfx/character/SFX_Death_2.wav" id="3_u2mqt"]
+[ext_resource type="AudioStream" uid="uid://4hr8iug0hl2p" path="res://assets/audio/sfx/character/SFX_Death_3.wav" id="4_ygby1"]
+
+[resource]
+script = ExtResource("1_qcav3")
+streams = Array[AudioStream]([ExtResource("2_y81ch"), ExtResource("3_u2mqt"), ExtResource("4_ygby1")])
+metadata/_custom_type_script = "uid://bs2frmocmdsle"

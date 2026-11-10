@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://bravhbok4cvo4"]
+
+[ext_resource type="PackedScene" uid="uid://bmi3t0kx1gnbo" path="res://assets/game/game_screen/interactables/interactable.tscn" id="1_ta18k"]
+[ext_resource type="Script" uid="uid://ldnh5hti4t5j" path="res://assets/game/game_screen/interactables/artifact/artifact.gd" id="2_toems"]
+[ext_resource type="Texture2D" uid="uid://bqw1cdlob2j02" path="res://icon.svg" id="3_rp4n8"]
+
+[node name="Artifact" unique_id=1616424487 instance=ExtResource("1_ta18k")]
+script = ExtResource("2_toems")
+score_value = 200
+one_shot = true
+
+[node name="Sprite2D" parent="." index="1" unique_id=271139163]
+position = Vector2(-3.8146973e-06, -0.9999962)
+scale = Vector2(0.0859375, 0.0859375)
+texture = ExtResource("3_rp4n8")

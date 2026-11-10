@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="SfxEvent" format=3 uid="uid://cdfn0414ayric"]
+
+[ext_resource type="Script" uid="uid://bs2frmocmdsle" path="res://assets/global/sfx_event.gd" id="1_nt707"]
+[ext_resource type="AudioStream" uid="uid://bgobydlfej4yk" path="res://assets/audio/sfx/SFX_RoomChange.wav" id="2_wxnlh"]
+
+[resource]
+script = ExtResource("1_nt707")
+streams = Array[AudioStream]([ExtResource("2_wxnlh")])
+volume_db = 4.4289999999999985
+pitch_min = 0.98
+pitch_max = 1.02
+metadata/_custom_type_script = "uid://bs2frmocmdsle"

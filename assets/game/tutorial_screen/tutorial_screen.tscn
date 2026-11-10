@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://do3nrld2r2dxu"]
+
+[ext_resource type="Script" uid="uid://c76x1hn5gcaxm" path="res://assets/game/tutorial_screen/tutorial_screen.gd" id="1_6krws"]
+[ext_resource type="Texture2D" uid="uid://dh2uyxotomv57" path="res://assets/game/tutorial_screen/Tutorial screen 1.png" id="1_dsg1a"]
+[ext_resource type="Resource" uid="uid://5w03n8ehiev2" path="res://assets/audio/UI/UIScreenChange.tres" id="2_g78hj"]
+[ext_resource type="Texture2D" uid="uid://dnk3uhxmf5cl8" path="res://assets/game/tutorial_screen/Tutorial updated.png" id="4_g78hj"]
+[ext_resource type="Texture2D" uid="uid://ky5ouy82xmvg" path="res://assets/game/tutorial_screen/Arrow Animation.png" id="4_mucqr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g78hj"]
+atlas = ExtResource("4_mucqr")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dslyj"]
+atlas = ExtResource("4_mucqr")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_52ar1"]
+atlas = ExtResource("4_mucqr")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m5u4i"]
+atlas = ExtResource("4_mucqr")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1lvrn"]
+animations = [{
+"frames": [{
+"duration": 5.0,
+"texture": SubResource("AtlasTexture_g78hj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dslyj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_52ar1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m5u4i")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="TutorialScreen" type="Control" unique_id=1174295234]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_6krws")
+next_sound = ExtResource("2_g78hj")
+
+[node name="Screen1" type="TextureRect" parent="." unique_id=1517132580]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource("1_dsg1a")
+
+[node name="Screen2" type="TextureRect" parent="." unique_id=1974380858]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+texture = ExtResource("4_g78hj")
+
+[node name="NextButton" type="AnimatedSprite2D" parent="." unique_id=1032819320]
+position = Vector2(348, 184)
+sprite_frames = SubResource("SpriteFrames_1lvrn")
+autoplay = "default"
+frame_progress = 0.77260303

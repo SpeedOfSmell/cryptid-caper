@@ -1,0 +1,132 @@
+[gd_scene format=3 uid="uid://p8j6gwwm7x8d"]
+
+[ext_resource type="Script" uid="uid://dnkdnq7pum2mv" path="res://assets/game/game_screen/room_manager/room_manager.gd" id="1_xylws"]
+[ext_resource type="AudioStream" uid="uid://2ex4o8yt15r2" path="res://assets/audio/music/Main Loop.wav" id="2_xtlk2"]
+[ext_resource type="PackedScene" uid="uid://b1jbsp8xj45we" path="res://assets/game/game_screen/player/player.tscn" id="3_u21wa"]
+[ext_resource type="Resource" uid="uid://cdfn0414ayric" path="res://assets/audio/sfx/RoomChange.tres" id="4_gn1bi"]
+[ext_resource type="Script" uid="uid://bnatdry6yu4yv" path="res://assets/game/game_screen/room_manager/room_generator.gd" id="4_wgytc"]
+[ext_resource type="PackedScene" uid="uid://c3l28xjwi58ex" path="res://assets/game/game_screen/room_manager/room.tscn" id="5_gfrpa"]
+[ext_resource type="Resource" uid="uid://cckd2ggtqurop" path="res://assets/game/game_screen/chunks/chunk_library.tres" id="6_bqyrq"]
+[ext_resource type="PackedScene" uid="uid://ocx3e2tqxikw" path="res://assets/game/game_screen/interactables/relic/double_jump_relic/double_jump_relic.tscn" id="7_fjksm"]
+[ext_resource type="LabelSettings" uid="uid://b3m4nbdxi31eb" path="res://assets/global/label_settings_black.tres" id="7_tfgok"]
+[ext_resource type="Script" uid="uid://bbyfvnwmopiua" path="res://assets/game/game_screen/interactables/artifact/artifact_info.gd" id="8_ojc38"]
+[ext_resource type="Resource" uid="uid://d3hkcd6jnf0go" path="res://assets/game/game_screen/interactables/artifact/artifact_a/artifact_a.tres" id="9_e307x"]
+[ext_resource type="Script" uid="uid://dc3stds6x18aq" path="res://assets/game/game_screen/interactables/artifact/artifact_library.gd" id="9_vtgo2"]
+[ext_resource type="PackedScene" uid="uid://cy0peewlsl5h4" path="res://assets/game/game_screen/interactables/relic/dash_relic/dash_relic.tscn" id="9_yk6y2"]
+[ext_resource type="Texture2D" uid="uid://jj5ntj7dye0l" path="res://assets/global/ui/Artifacts_tracker.png" id="11_e307x"]
+[ext_resource type="Resource" uid="uid://c2l0fpx0kydla" path="res://assets/game/game_screen/interactables/artifact/artifact_b/artifact_b.tres" id="12_ki0i3"]
+[ext_resource type="Resource" uid="uid://c7ltacixialla" path="res://assets/game/game_screen/interactables/artifact/artifact_c/artifact_c.tres" id="13_a0js4"]
+[ext_resource type="PackedScene" uid="uid://mjnwtqq0fvx0" path="res://assets/game/game_screen/pause_menu/pause_menu.tscn" id="13_lrkxs"]
+[ext_resource type="Texture2D" uid="uid://btkh2gik2mrfv" path="res://assets/global/ui/Ui_3.png" id="13_xtlk2"]
+[ext_resource type="Resource" uid="uid://8c42fll3c5ei" path="res://assets/game/game_screen/interactables/artifact/artifact_d/artifact_d.tres" id="14_gldra"]
+[ext_resource type="Shader" uid="uid://kqw2u5tniybr" path="res://assets/game/game_screen/room_manager/wipe.gdshader" id="14_khrly"]
+[ext_resource type="Shader" uid="uid://mqdvfso6cnh2" path="res://assets/game/game_screen/room_manager/dither_fade.gdshader" id="15_khrly"]
+[ext_resource type="Resource" uid="uid://wsryjlak8itp" path="res://assets/game/game_screen/interactables/artifact/artifact_e/artifact_e.tres" id="15_qu22k"]
+
+[sub_resource type="Resource" id="Resource_fjksm"]
+script = ExtResource("9_vtgo2")
+artifacts = Array[ExtResource("8_ojc38")]([ExtResource("9_e307x"), ExtResource("12_ki0i3"), ExtResource("13_a0js4"), ExtResource("14_gldra"), ExtResource("15_qu22k")])
+metadata/_custom_type_script = "uid://dc3stds6x18aq"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gn1bi"]
+shader = ExtResource("14_khrly")
+shader_parameter/progress = 0.0
+shader_parameter/fade_color = Color(0.13333334, 0.13725491, 0.13725491, 1)
+shader_parameter/reverse = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0ri6t"]
+shader = ExtResource("15_khrly")
+shader_parameter/progress = 0.0
+shader_parameter/fade_color = Color(0.13333334, 0.13725491, 0.13725491, 1)
+
+[node name="Room Manager" type="Node" unique_id=1475098114]
+script = ExtResource("1_xylws")
+music = ExtResource("2_xtlk2")
+_player_scene = ExtResource("3_u21wa")
+_room_change_sfx = ExtResource("4_gn1bi")
+
+[node name="Room Generator" type="Node" parent="." unique_id=1339619944]
+script = ExtResource("4_wgytc")
+_room_scene = ExtResource("5_gfrpa")
+_chunk_library = ExtResource("6_bqyrq")
+_relic_library = Dictionary[int, PackedScene]({
+1: ExtResource("7_fjksm"),
+2: ExtResource("9_yk6y2")
+})
+_artifact_library = SubResource("Resource_fjksm")
+
+[node name="PauseMenu" parent="." unique_id=1680195528 instance=ExtResource("13_lrkxs")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1099281372]
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer" unique_id=1510419244]
+offset_left = 313.0
+offset_top = 2.0
+offset_right = 380.0
+offset_bottom = 42.0
+texture = ExtResource("11_e307x")
+
+[node name="ScoreValueLabel" type="Label" parent="CanvasLayer" unique_id=1154238249]
+unique_name_in_owner = true
+offset_left = 345.0
+offset_top = 11.0
+offset_right = 372.0
+offset_bottom = 30.0
+text = "0
+"
+label_settings = ExtResource("7_tfgok")
+horizontal_alignment = 2
+
+[node name="TimerPanel" type="Control" parent="CanvasLayer" unique_id=1918048421]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 5.0
+offset_top = 8.0
+offset_right = 45.0
+offset_bottom = 48.0
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/TimerPanel" unique_id=1925726504]
+layout_mode = 0
+texture = ExtResource("13_xtlk2")
+
+[node name="TimeLabel" type="Label" parent="CanvasLayer/TimerPanel" unique_id=1851603118]
+unique_name_in_owner = true
+layout_mode = 0
+offset_top = -1.0
+offset_right = 67.0
+offset_bottom = 18.0
+text = "2:42"
+label_settings = ExtResource("7_tfgok")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Wipe" type="ColorRect" parent="CanvasLayer" unique_id=1764812639]
+unique_name_in_owner = true
+process_mode = 3
+z_index = 10
+material = SubResource("ShaderMaterial_gn1bi")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.9411765, 0.9647059, 0.9411765, 1)
+
+[node name="Fade" type="ColorRect" parent="CanvasLayer" unique_id=942266589]
+unique_name_in_owner = true
+process_mode = 3
+z_index = 10
+material = SubResource("ShaderMaterial_0ri6t")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.9411765, 0.9647059, 0.9411765, 1)
+
+[node name="DeathFreezeFrameTimer" type="Timer" parent="." unique_id=640618302]
+process_mode = 3
+wait_time = 0.2
+one_shot = true

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="SfxEvent" format=3 uid="uid://dvfrt4w6xp2i7"]
+
+[ext_resource type="Script" uid="uid://bs2frmocmdsle" path="res://assets/global/sfx_event.gd" id="1_40s4l"]
+[ext_resource type="AudioStream" uid="uid://d2jhkibscrynu" path="res://assets/audio/sfx/character/SFX_Footstep_1.wav" id="2_pkkt7"]
+[ext_resource type="AudioStream" uid="uid://bs0jrtw8n7ji8" path="res://assets/audio/sfx/character/SFX_Footstep_2.wav" id="3_40s4l"]
+
+[resource]
+script = ExtResource("1_40s4l")
+streams = Array[AudioStream]([ExtResource("2_pkkt7"), ExtResource("3_40s4l")])
+pitch_min = 0.95
+pitch_max = 1.05
+metadata/_custom_type_script = "uid://bs2frmocmdsle"
