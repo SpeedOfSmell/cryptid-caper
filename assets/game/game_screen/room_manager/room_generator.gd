@@ -445,7 +445,7 @@ func _stamp_chunk(chunk_scene: PackedScene, target_room: Room, origin: Vector2i,
 			target_room.add_child(room_relic)
 		
 	if spawn_artifact != null:
-		var artifact: Node2D = chunk.find_children("*", "Artifact", true, false).front()
+		var artifact: Node2D = chunk.find_children("*", "Artifact", true, false).pick_random()
 		if artifact != null:
 			var room_artifact = spawn_artifact.artifact_scene.instantiate()
 			room_artifact.position = artifact.position + Vector2(origin * target_room.tile_size)
