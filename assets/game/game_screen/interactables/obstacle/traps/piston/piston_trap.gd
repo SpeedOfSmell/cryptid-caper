@@ -12,6 +12,7 @@ extends Trap
 # kill block of the head, should be a child of it
 @export var hurtbox: Obstacle
 @export var middle: NinePatchRect
+@export var shaft: CollisionShape2D
 
 var _head_rest: Vector2
 var _stroke: Tween
@@ -23,6 +24,7 @@ func _ready() -> void:
 		return
 	_head_rest = head.position
 	hurtbox.monitoring = false
+	shaft.shape = shaft.shape.duplicate()
 	_set_extension(0.0)
 
 func _fire() -> void:
@@ -49,6 +51,9 @@ func _process(_delta: float) -> void:
 
 func _set_extension(extension: float) -> void:
 	head.position = _head_rest + Vector2(0, extension)
+	shaft.disabled = extension <= 0.0
+	shaft.shape.size.y = maxf(extension, 1.0)
+	shaft.position.y = middle.offset_bottom - extension / 2.0
 
 # head is an AnimatableBody2D synced to physics, so a position set by the tween only
 # shows up after the next physics step. size the middle from where the head actually

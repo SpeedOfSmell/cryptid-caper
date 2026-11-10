@@ -14,4 +14,5 @@ stream_1/volume = 0.0
 [resource]
 script = ExtResource("1_p7rol")
 streams = Array[AudioStream]([SubResource("AudioStreamSynchronized_ip73y")])
+volume_db = -8.0
 metadata/_custom_type_script = "uid://bs2frmocmdsle"

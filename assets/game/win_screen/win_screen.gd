@@ -2,6 +2,7 @@ extends Control
 
 signal transition_requested(state: States.GameState)
 
+@export var music: Resource
 @export var unfocusedLabel: LabelSettings
 @export var focusedLabel: LabelSettings
 
@@ -9,6 +10,7 @@ signal transition_requested(state: States.GameState)
 @onready var _quit_button: TextureButton = %QuitButton
 
 func _ready():
+	AudioManager.play_music(music)
 	%ScoreLabel.text = str(PlayerManager.get_score())
 	
 	if PlayerManager.get_score() > PlayerManager.get_hiscore():
@@ -23,10 +25,17 @@ func _switch_button_label_settings(button: TextureButton, settings: LabelSetting
 	label.label_settings = settings
 
 
-func _unhandled_key_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_down") or event.is_action_pressed("ui_up"):
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_cancel"):
+		transition_requested.emit(States.GameState.MAIN_MENU)
+		get_viewport().set_input_as_handled()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if (event.is_action_pressed("ui_down") or event.is_action_pressed("ui_up")) and get_viewport().gui_get_focus_owner() == null:
 		if is_instance_valid(_restart_button) and _restart_button.is_inside_tree():
 			_restart_button.grab_focus()
+			get_viewport().set_input_as_handled()
 
 
 func _on_restart_button_pressed() -> void:

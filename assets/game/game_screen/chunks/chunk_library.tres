@@ -4,6 +4,10 @@
 [ext_resource type="Script" uid="uid://5h2bvhg641l4" path="res://assets/game/game_screen/chunks/chunk_types/chunk_type.gd" id="2_nv6s5"]
 [ext_resource type="Script" uid="uid://wpcxsk870y80" path="res://assets/game/game_screen/chunks/chunk_types/chunk_template.gd" id="3_ulbcl"]
 [ext_resource type="Resource" uid="uid://dd3jc4hdqp02n" path="res://assets/game/game_screen/chunks/chunk_types/through_chunk/through_chunk_a.tres" id="4_0pfep"]
+[ext_resource type="Resource" uid="uid://c7hojwjibl1oy" path="res://assets/game/game_screen/chunks/chunk_types/through_chunk/through_chunk_t.tres" id="4_tht"]
+[ext_resource type="Resource" uid="uid://p81sig7x287f" path="res://assets/game/game_screen/chunks/chunk_types/through_chunk/through_chunk_u.tres" id="4_thu"]
+[ext_resource type="Resource" uid="uid://1jkbg0scnldx" path="res://assets/game/game_screen/chunks/chunk_types/through_chunk/through_chunk_v.tres" id="4_thv"]
+[ext_resource type="Resource" uid="uid://dn4jq1u7rl2ma" path="res://assets/game/game_screen/chunks/chunk_types/through_chunk/through_chunk_w.tres" id="4_thw"]
 [ext_resource type="Resource" uid="uid://h55e33b34rm5" path="res://assets/game/game_screen/chunks/chunk_types/through_chunk/through_chunk_x.tres" id="4_thx"]
 [ext_resource type="Resource" uid="uid://bgbpe8s208fv5" path="res://assets/game/game_screen/chunks/chunk_types/through_chunk/through_chunk_y.tres" id="4_thy"]
 [ext_resource type="Resource" uid="uid://c63e206pqrlv7" path="res://assets/game/game_screen/chunks/chunk_types/through_chunk/through_chunk_z.tres" id="4_thz"]
@@ -11,6 +15,10 @@
 [ext_resource type="Resource" uid="uid://ys4cm4opqwkn" path="res://assets/game/game_screen/chunks/chunk_types/up_chunk/up_chunk_a.tres" id="5_tb0yl"]
 [ext_resource type="Resource" uid="uid://bwfngkm7vpsqe" path="res://assets/game/game_screen/chunks/chunk_types/up_chunk/up_chunk_y.tres" id="5_upy"]
 [ext_resource type="Resource" uid="uid://d1b6ktwljpk10" path="res://assets/game/game_screen/chunks/chunk_types/up_chunk/up_chunk_z.tres" id="5_upz"]
+[ext_resource type="Resource" uid="uid://o6bin41oainx" path="res://assets/game/game_screen/chunks/chunk_types/down_chunk/down_chunk_u.tres" id="6_dnu"]
+[ext_resource type="Resource" uid="uid://blyo5r0dpbpon" path="res://assets/game/game_screen/chunks/chunk_types/down_chunk/down_chunk_v.tres" id="6_dnv"]
+[ext_resource type="Resource" uid="uid://ccf5evutfjedb" path="res://assets/game/game_screen/chunks/chunk_types/down_chunk/down_chunk_w.tres" id="6_dnw"]
+[ext_resource type="Resource" uid="uid://dns1c5yrpr5ts" path="res://assets/game/game_screen/chunks/chunk_types/down_chunk/down_chunk_x.tres" id="6_dnx"]
 [ext_resource type="Resource" uid="uid://tc25p5ik6gpe" path="res://assets/game/game_screen/chunks/chunk_types/down_chunk/down_chunk_y.tres" id="6_dny"]
 [ext_resource type="Resource" uid="uid://cf0orq8ouwtec" path="res://assets/game/game_screen/chunks/chunk_types/down_chunk/down_chunk_z.tres" id="6_dnz"]
 [ext_resource type="Resource" uid="uid://c6lxkdg2ib4nc" path="res://assets/game/game_screen/chunks/chunk_types/down_chunk/down_chunk_a.tres" id="6_gtp5l"]
@@ -27,23 +35,26 @@
 [ext_resource type="Resource" uid="uid://ctb2ftkk47uxj" path="res://assets/game/game_screen/chunks/chunk_types/through_chunk/through_chunk_f.tres" id="10_o4rtp"]
 [ext_resource type="Resource" uid="uid://3ffb052408r7" path="res://assets/game/game_screen/chunks/chunk_types/up_chunk/up_chunk_c.tres" id="12_m127g"]
 [ext_resource type="Resource" uid="uid://desblcubcxsw0" path="res://assets/game/game_screen/chunks/chunk_types/down_chunk/down_chunk_c.tres" id="16_it20n"]
+[ext_resource type="Resource" uid="uid://bt6gwo0mod4o6" path="res://assets/game/game_screen/chunks/chunk_types/up_chunk/up_chunk_u.tres" id="20_cltqs"]
+[ext_resource type="Resource" uid="uid://b2y1l1ad5ucdu" path="res://assets/game/game_screen/chunks/chunk_types/up_chunk/up_chunk_v.tres" id="21_4ufow"]
+[ext_resource type="Resource" uid="uid://dftbx8ryajquj" path="res://assets/game/game_screen/chunks/chunk_types/up_chunk/up_chunk_x.tres" id="22_rbtfr"]
 
 [sub_resource type="Resource" id="Resource_rl0yw"]
 script = ExtResource("2_nv6s5")
 type_name = &"Through Chunk"
-templates = Array[ExtResource("3_ulbcl")]([ExtResource("4_0pfep"), ExtResource("5_re7ud"), ExtResource("7_bocw6"), ExtResource("8_14768"), ExtResource("9_uv74b"), ExtResource("10_o4rtp"), ExtResource("4_thx"), ExtResource("4_thy"), ExtResource("4_thz")])
+templates = Array[ExtResource("3_ulbcl")]([ExtResource("4_0pfep"), ExtResource("5_re7ud"), ExtResource("7_bocw6"), ExtResource("8_14768"), ExtResource("9_uv74b"), ExtResource("10_o4rtp"), ExtResource("4_tht"), ExtResource("4_thu"), ExtResource("4_thv"), ExtResource("4_thw"), ExtResource("4_thx"), ExtResource("4_thy"), ExtResource("4_thz")])
 metadata/_custom_type_script = "uid://5h2bvhg641l4"
 
 [sub_resource type="Resource" id="Resource_a18a0"]
 script = ExtResource("2_nv6s5")
 type_name = &"Up Chunk"
-templates = Array[ExtResource("3_ulbcl")]([ExtResource("5_tb0yl"), ExtResource("7_jujpx"), ExtResource("12_m127g"), ExtResource("5_upy"), ExtResource("5_upz")])
+templates = Array[ExtResource("3_ulbcl")]([ExtResource("5_tb0yl"), ExtResource("7_jujpx"), ExtResource("12_m127g"), ExtResource("20_cltqs"), ExtResource("21_4ufow"), ExtResource("22_rbtfr"), ExtResource("5_upy"), ExtResource("5_upz")])
 metadata/_custom_type_script = "uid://5h2bvhg641l4"
 
 [sub_resource type="Resource" id="Resource_ve32x"]
 script = ExtResource("2_nv6s5")
 type_name = &"Down Chunk"
-templates = Array[ExtResource("3_ulbcl")]([ExtResource("6_gtp5l"), ExtResource("9_q3ydo"), ExtResource("16_it20n"), ExtResource("6_dny"), ExtResource("6_dnz")])
+templates = Array[ExtResource("3_ulbcl")]([ExtResource("6_gtp5l"), ExtResource("9_q3ydo"), ExtResource("16_it20n"), ExtResource("6_dnu"), ExtResource("6_dnv"), ExtResource("6_dnw"), ExtResource("6_dnx"), ExtResource("6_dny"), ExtResource("6_dnz")])
 metadata/_custom_type_script = "uid://5h2bvhg641l4"
 
 [sub_resource type="Resource" id="Resource_r5fn1"]

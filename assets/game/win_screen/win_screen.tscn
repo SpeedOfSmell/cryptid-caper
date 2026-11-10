@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c2rmq0w5trwp8"]
 
 [ext_resource type="Script" uid="uid://da4gi5ipqhdb0" path="res://assets/game/win_screen/win_screen.gd" id="1_iiuen"]
+[ext_resource type="AudioStream" uid="uid://cyg5e64c36hk7" path="res://assets/audio/music/Win.wav" id="2_0m4q2"]
 [ext_resource type="LabelSettings" uid="uid://b3m4nbdxi31eb" path="res://assets/global/label_settings_black.tres" id="2_f5prf"]
 [ext_resource type="Texture2D" uid="uid://cvqg50ugrvmvt" path="res://assets/game/win_screen/You escaped.png" id="4_asavl"]
 [ext_resource type="Texture2D" uid="uid://b7x2nakyw726r" path="res://assets/global/ui/Ui_1.png" id="5_acuu4"]
@@ -53,6 +54,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_iiuen")
+music = ExtResource("2_0m4q2")
 unfocusedLabel = ExtResource("2_f5prf")
 focusedLabel = ExtResource("8_focused_label")
 

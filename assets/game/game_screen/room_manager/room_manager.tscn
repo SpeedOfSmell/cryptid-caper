@@ -2,10 +2,12 @@
 
 [ext_resource type="Script" uid="uid://dnkdnq7pum2mv" path="res://assets/game/game_screen/room_manager/room_manager.gd" id="1_xylws"]
 [ext_resource type="AudioStream" uid="uid://2ex4o8yt15r2" path="res://assets/audio/music/Main Loop.wav" id="2_xtlk2"]
+[ext_resource type="Resource" uid="uid://clj3bwx5jyabv" path="res://assets/audio/sfx/BigfootYell.tres" id="3_qu22k"]
 [ext_resource type="PackedScene" uid="uid://b1jbsp8xj45we" path="res://assets/game/game_screen/player/player.tscn" id="3_u21wa"]
 [ext_resource type="Resource" uid="uid://cdfn0414ayric" path="res://assets/audio/sfx/RoomChange.tres" id="4_gn1bi"]
 [ext_resource type="Script" uid="uid://bnatdry6yu4yv" path="res://assets/game/game_screen/room_manager/room_generator.gd" id="4_wgytc"]
 [ext_resource type="PackedScene" uid="uid://c3l28xjwi58ex" path="res://assets/game/game_screen/room_manager/room.tscn" id="5_gfrpa"]
+[ext_resource type="Resource" uid="uid://me2gwnowj8t6" path="res://assets/audio/sfx/Ambience/ambience.tres" id="5_gldra"]
 [ext_resource type="Resource" uid="uid://cckd2ggtqurop" path="res://assets/game/game_screen/chunks/chunk_library.tres" id="6_bqyrq"]
 [ext_resource type="PackedScene" uid="uid://ocx3e2tqxikw" path="res://assets/game/game_screen/interactables/relic/double_jump_relic/double_jump_relic.tscn" id="7_fjksm"]
 [ext_resource type="LabelSettings" uid="uid://b3m4nbdxi31eb" path="res://assets/global/label_settings_black.tres" id="7_tfgok"]
@@ -22,11 +24,18 @@
 [ext_resource type="Shader" uid="uid://kqw2u5tniybr" path="res://assets/game/game_screen/room_manager/wipe.gdshader" id="14_khrly"]
 [ext_resource type="Shader" uid="uid://mqdvfso6cnh2" path="res://assets/game/game_screen/room_manager/dither_fade.gdshader" id="15_khrly"]
 [ext_resource type="Resource" uid="uid://wsryjlak8itp" path="res://assets/game/game_screen/interactables/artifact/artifact_e/artifact_e.tres" id="15_qu22k"]
+[ext_resource type="FontFile" uid="uid://bf12joacxh8gs" path="res://assets/global/ui/monogram.ttf" id="21_a0js4"]
 
 [sub_resource type="Resource" id="Resource_fjksm"]
 script = ExtResource("9_vtgo2")
 artifacts = Array[ExtResource("8_ojc38")]([ExtResource("9_e307x"), ExtResource("12_ki0i3"), ExtResource("13_a0js4"), ExtResource("14_gldra"), ExtResource("15_qu22k")])
 metadata/_custom_type_script = "uid://dc3stds6x18aq"
+
+[sub_resource type="LabelSettings" id="LabelSettings_gldra"]
+font = ExtResource("21_a0js4")
+font_size = 17
+font_color = Color(0.13333334, 0.13725491, 0.13725491, 1)
+shadow_size = 0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gn1bi"]
 shader = ExtResource("14_khrly")
@@ -42,8 +51,10 @@ shader_parameter/fade_color = Color(0.13333334, 0.13725491, 0.13725491, 1)
 [node name="Room Manager" type="Node" unique_id=1475098114]
 script = ExtResource("1_xylws")
 music = ExtResource("2_xtlk2")
+bigfootSfx = ExtResource("3_qu22k")
 _player_scene = ExtResource("3_u21wa")
 _room_change_sfx = ExtResource("4_gn1bi")
+_ambiance_sfx = ExtResource("5_gldra")
 
 [node name="Room Generator" type="Node" parent="." unique_id=1339619944]
 script = ExtResource("4_wgytc")
@@ -80,10 +91,10 @@ horizontal_alignment = 2
 [node name="TimerPanel" type="Control" parent="CanvasLayer" unique_id=1918048421]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 5.0
-offset_top = 8.0
-offset_right = 45.0
-offset_bottom = 48.0
+offset_left = 4.0
+offset_top = 3.0
+offset_right = 44.0
+offset_bottom = 43.0
 
 [node name="TextureRect2" type="TextureRect" parent="CanvasLayer/TimerPanel" unique_id=1925726504]
 layout_mode = 0
@@ -97,6 +108,29 @@ offset_right = 67.0
 offset_bottom = 18.0
 text = "2:42"
 label_settings = ExtResource("7_tfgok")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RoomPanel" type="Control" parent="CanvasLayer" unique_id=1263780362]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 4.0
+offset_top = 25.0
+offset_right = 44.0
+offset_bottom = 65.0
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/RoomPanel" unique_id=1848978941]
+layout_mode = 0
+texture = ExtResource("13_xtlk2")
+
+[node name="RoomLabel" type="Label" parent="CanvasLayer/RoomPanel" unique_id=1015411013]
+unique_name_in_owner = true
+layout_mode = 0
+offset_top = -1.0
+offset_right = 67.0
+offset_bottom = 18.0
+text = "Room 01"
+label_settings = SubResource("LabelSettings_gldra")
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -130,3 +164,9 @@ color = Color(0.9411765, 0.9647059, 0.9411765, 1)
 process_mode = 3
 wait_time = 0.2
 one_shot = true
+
+[node name="AmbianceTimer" type="Timer" parent="." unique_id=1996736816]
+unique_name_in_owner = true
+one_shot = true
+
+[connection signal="timeout" from="AmbianceTimer" to="." method="_on_ambiance_timer_timeout"]

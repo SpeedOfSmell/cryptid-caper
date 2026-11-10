@@ -16,9 +16,15 @@ var _music_player: AudioStreamPlayer
 var _sfx_pool: Array[AudioStreamPlayer] = []
 var _sfx_next_idx := 0
 var _music_tween: Tween
+var _bus_volume_limits: Dictionary = {}
+var _bus_volume_levels: Dictionary = {}
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	for bus in [Bus.MASTER, Bus.MUSIC, Bus.SFX]:
+		var bus_index := AudioServer.get_bus_index(_BUS_NAMES[bus])
+		_bus_volume_limits[bus] = AudioServer.get_bus_volume_linear(bus_index)
+		_bus_volume_levels[bus] = 10
 	_music_player = AudioStreamPlayer.new()
 	_music_player.name = "MusicPlayer"
 	_music_player.bus = _BUS_NAMES[Bus.MUSIC]
@@ -70,10 +76,18 @@ func play_sfx_on(event: SfxEvent, emitter: Node2D) -> AudioStreamPlayer2D:
 	return player
 
 func set_bus_volume(bus: Bus, linear: float) -> void:
-	AudioServer.set_bus_volume_linear(AudioServer.get_bus_index(_BUS_NAMES[bus]), clampf(linear, 0.0, 1.0))
+	AudioServer.set_bus_volume_linear(AudioServer.get_bus_index(_BUS_NAMES[bus]), maxf(linear, 0.0))
 
 func get_bus_volume(bus: Bus) -> float:
 	return AudioServer.get_bus_volume_linear(AudioServer.get_bus_index(_BUS_NAMES[bus]))
+
+func set_bus_volume_level(bus: Bus, level: int) -> void:
+	var clamped_level := clampi(level, 0, 10)
+	_bus_volume_levels[bus] = clamped_level
+	set_bus_volume(bus, _bus_volume_limits[bus] * float(clamped_level) / 10.0)
+
+func get_bus_volume_level(bus: Bus) -> int:
+	return _bus_volume_levels.get(bus, 10)
 
 func _transition_music(stream: AudioStream) -> void:
 	if _music_tween:

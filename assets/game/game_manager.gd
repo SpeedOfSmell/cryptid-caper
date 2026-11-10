@@ -11,7 +11,7 @@ extends Node
 
 const VALID_TRANSITIONS := {
 	States.GameState.MAIN_MENU: [States.GameState.TUTORIAL],
-	States.GameState.TUTORIAL: [States.GameState.GAME],
+	States.GameState.TUTORIAL: [States.GameState.MAIN_MENU, States.GameState.GAME],
 	States.GameState.GAME: [States.GameState.MAIN_MENU, States.GameState.GAME_OVER, States.GameState.WIN],
 	States.GameState.GAME_OVER: [States.GameState.MAIN_MENU, States.GameState.GAME],
 	States.GameState.WIN: [States.GameState.MAIN_MENU, States.GameState.GAME]
