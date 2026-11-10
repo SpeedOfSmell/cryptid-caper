@@ -14,7 +14,7 @@ var time_left: float
 var _current_room: Room
 var _player: CharacterBody2D
 var _transition_pending := false
-var _next_room_id := 1
+var _next_room_id := 20
 var _fade_tween: Tween
 
 @onready var _room_generator: RoomGenerator = $"Room Generator"

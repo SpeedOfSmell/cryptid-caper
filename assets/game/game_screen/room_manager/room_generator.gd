@@ -32,6 +32,7 @@ func generate_room(room_id: int) -> Room:
 	var require_double_jump = room_id >= DOUBLE_JUMP_UNLOCK_LEVEL
 	var require_dash = room_id >= DASH_UNLOCK_LEVEL
 	var artifact_budget = 200
+	var difficulty_budget = 20
 	
 	var room_size := Vector2i(3 + floori(room_id / ROOM_HORIZONTAL_SIZE_INCREASE_FREQUENCY), 1 + floori((room_id - 2) / ROOM_VERTICAL_SIZE_INCREASE_FREQUENCY))
 	var chunk_type_map: Array[Array] = _initialize_chunk_map(room_size.x, room_size.y)
@@ -46,7 +47,7 @@ func generate_room(room_id: int) -> Room:
 	var artifact_map = _generate_artifact_map(chunk_type_map, artifact_budget)
 	
 	var chunk_map: Array[Array] = _initialize_chunk_map(room_size.x, room_size.y)
-	_populate_chunk_map(chunk_type_map, chunk_map, require_double_jump, require_dash)
+	_populate_chunk_map(chunk_type_map, chunk_map, require_double_jump, require_dash, difficulty_budget)
 	
 	var room: Room = _room_scene.instantiate()
 	room.tilemap = room.get_node("TileMapLayer")
@@ -348,13 +349,16 @@ func _get_available_artifact_chunks(chunk_type_map) -> Array[Vector2i]:
 	
 	return available_chunks
 
-func _populate_chunk_map(chunk_type_map: Array[Array], chunk_map: Array[Array], require_double_jump: bool, require_dash: bool):
+func _populate_chunk_map(chunk_type_map: Array[Array], chunk_map: Array[Array], require_double_jump: bool, require_dash: bool, difficulty_budget: int):
 	assert(chunk_type_map.size() == chunk_map.size(), "Chunk map does not have same dimensions as chunk type map")
+	var remaining_difficulty_budget := difficulty_budget
 	
 	for y in range(chunk_type_map.size()):
 		for x in range(chunk_type_map[y].size()):
 			if chunk_type_map[y][x] != null:
-				chunk_map[y][x] = _chunk_library.pick_chunk(chunk_type_map[y][x], require_double_jump, require_dash)
+				var template := _chunk_library.pick_chunk(chunk_type_map[y][x], require_double_jump, require_dash, remaining_difficulty_budget, _rng)
+				chunk_map[y][x] = template.chunk_scene
+				remaining_difficulty_budget -= template.difficulty
 
 func _spawn_chunks(chunk_map: Array[Array], artifact_map: Array[Array], target_room: Room, starting_coords: Vector2i, ending_coords: Vector2i, spawn_relic: RelicType):
 	for y in range(chunk_map.size()):
