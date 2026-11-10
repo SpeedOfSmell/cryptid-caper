@@ -1,9 +1,8 @@
 [gd_resource type="Resource" script_class="SfxEvent" format=3 uid="uid://dmuqqvps5swyq"]
 
 [ext_resource type="Script" uid="uid://bs2frmocmdsle" path="res://assets/global/sfx_event.gd" id="1_hp8lf"]
-[ext_resource type="AudioStream" uid="uid://boxie6n1c4nsm" path="res://assets/audio/sfx/Obstacles/SFX_Obstacle_Lava.wav" id="2_ixgjy"]
 
 [resource]
 script = ExtResource("1_hp8lf")
-streams = Array[AudioStream]([ExtResource("2_ixgjy")])
+volume_db = -24.0
 metadata/_custom_type_script = "uid://bs2frmocmdsle"

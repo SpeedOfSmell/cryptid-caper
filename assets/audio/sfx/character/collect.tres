@@ -7,4 +7,6 @@
 [resource]
 script = ExtResource("1_pwtsm")
 streams = Array[AudioStream]([ExtResource("2_7cvrx"), ExtResource("3_pwtsm")])
+pitch_min = 0.97
+pitch_max = 1.02
 metadata/_custom_type_script = "uid://bs2frmocmdsle"
