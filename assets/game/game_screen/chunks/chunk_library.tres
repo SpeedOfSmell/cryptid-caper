@@ -5,9 +5,13 @@
 [ext_resource type="Script" uid="uid://wpcxsk870y80" path="res://assets/game/game_screen/chunks/chunk_types/chunk_template.gd" id="3_ulbcl"]
 [ext_resource type="Resource" uid="uid://dd3jc4hdqp02n" path="res://assets/game/game_screen/chunks/chunk_types/through_chunk/through_chunk_a.tres" id="4_0pfep"]
 [ext_resource type="Resource" uid="uid://c63e206pqrlv7" path="res://assets/game/game_screen/chunks/chunk_types/through_chunk/through_chunk_z.tres" id="4_thz"]
+[ext_resource type="Resource" uid="uid://h55e33b34rm5" path="res://assets/game/game_screen/chunks/chunk_types/through_chunk/through_chunk_x.tres" id="4_thx"]
+[ext_resource type="Resource" uid="uid://bgbpe8s208fv5" path="res://assets/game/game_screen/chunks/chunk_types/through_chunk/through_chunk_y.tres" id="4_thy"]
 [ext_resource type="Resource" uid="uid://ys4cm4opqwkn" path="res://assets/game/game_screen/chunks/chunk_types/up_chunk/up_chunk_a.tres" id="5_tb0yl"]
 [ext_resource type="Resource" uid="uid://d1b6ktwljpk10" path="res://assets/game/game_screen/chunks/chunk_types/up_chunk/up_chunk_z.tres" id="5_upz"]
+[ext_resource type="Resource" uid="uid://bwfngkm7vpsqe" path="res://assets/game/game_screen/chunks/chunk_types/up_chunk/up_chunk_y.tres" id="5_upy"]
 [ext_resource type="Resource" uid="uid://cf0orq8ouwtec" path="res://assets/game/game_screen/chunks/chunk_types/down_chunk/down_chunk_z.tres" id="6_dnz"]
+[ext_resource type="Resource" uid="uid://tc25p5ik6gpe" path="res://assets/game/game_screen/chunks/chunk_types/down_chunk/down_chunk_y.tres" id="6_dny"]
 [ext_resource type="Resource" uid="uid://c6lxkdg2ib4nc" path="res://assets/game/game_screen/chunks/chunk_types/down_chunk/down_chunk_a.tres" id="6_gtp5l"]
 [ext_resource type="Resource" uid="uid://wxkimqec370u" path="res://assets/game/game_screen/chunks/chunk_types/left_chunk/left_chunk_z.tres" id="7_lfz"]
 [ext_resource type="Resource" uid="uid://ogm4c1ej3x84" path="res://assets/game/game_screen/chunks/chunk_types/left_chunk/left_chunk_a.tres" id="7_re7ud"]
@@ -18,19 +22,19 @@
 [sub_resource type="Resource" id="Resource_rl0yw"]
 script = ExtResource("2_nv6s5")
 type_name = &"Through Chunk"
-templates = Array[ExtResource("3_ulbcl")]([ExtResource("4_0pfep"), ExtResource("4_thz")])
+templates = Array[ExtResource("3_ulbcl")]([ExtResource("4_0pfep"), ExtResource("4_thz"), ExtResource("4_thx"), ExtResource("4_thy")])
 metadata/_custom_type_script = "uid://5h2bvhg641l4"
 
 [sub_resource type="Resource" id="Resource_a18a0"]
 script = ExtResource("2_nv6s5")
 type_name = &"Up Chunk"
-templates = Array[ExtResource("3_ulbcl")]([ExtResource("5_tb0yl"), ExtResource("5_upz")])
+templates = Array[ExtResource("3_ulbcl")]([ExtResource("5_tb0yl"), ExtResource("5_upz"), ExtResource("5_upy")])
 metadata/_custom_type_script = "uid://5h2bvhg641l4"
 
 [sub_resource type="Resource" id="Resource_ve32x"]
 script = ExtResource("2_nv6s5")
 type_name = &"Down Chunk"
-templates = Array[ExtResource("3_ulbcl")]([ExtResource("6_gtp5l"), ExtResource("6_dnz")])
+templates = Array[ExtResource("3_ulbcl")]([ExtResource("6_gtp5l"), ExtResource("6_dnz"), ExtResource("6_dny")])
 metadata/_custom_type_script = "uid://5h2bvhg641l4"
 
 [sub_resource type="Resource" id="Resource_r5fn1"]
