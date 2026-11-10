@@ -8,4 +8,4 @@ type = 3
 level = 1
 value = 2.0
 name = "Dash"
-description = "extra dash unlocked"
+description = "press Shift to dash"

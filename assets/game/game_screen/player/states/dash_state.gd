@@ -1,8 +1,8 @@
 class_name DashState
 extends PlayerState
 
-@export var dash_speed : float = 450
-@export var dash_duration : float = 0.15
+@export var dash_speed : float = 340
+@export var dash_duration : float = 0.2
 @export var ground_dash_cooldown : float = 0.4
 @export var sfx: SfxEvent
 
