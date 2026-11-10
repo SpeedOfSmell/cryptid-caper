@@ -35,6 +35,9 @@
 [ext_resource type="Resource" uid="uid://ctb2ftkk47uxj" path="res://assets/game/game_screen/chunks/chunk_types/through_chunk/through_chunk_f.tres" id="10_o4rtp"]
 [ext_resource type="Resource" uid="uid://3ffb052408r7" path="res://assets/game/game_screen/chunks/chunk_types/up_chunk/up_chunk_c.tres" id="12_m127g"]
 [ext_resource type="Resource" uid="uid://desblcubcxsw0" path="res://assets/game/game_screen/chunks/chunk_types/down_chunk/down_chunk_c.tres" id="16_it20n"]
+[ext_resource type="Resource" uid="uid://bt6gwo0mod4o6" path="res://assets/game/game_screen/chunks/chunk_types/up_chunk/up_chunk_u.tres" id="20_cltqs"]
+[ext_resource type="Resource" uid="uid://b2y1l1ad5ucdu" path="res://assets/game/game_screen/chunks/chunk_types/up_chunk/up_chunk_v.tres" id="21_4ufow"]
+[ext_resource type="Resource" uid="uid://dftbx8ryajquj" path="res://assets/game/game_screen/chunks/chunk_types/up_chunk/up_chunk_x.tres" id="22_rbtfr"]
 
 [sub_resource type="Resource" id="Resource_rl0yw"]
 script = ExtResource("2_nv6s5")
@@ -45,7 +48,7 @@ metadata/_custom_type_script = "uid://5h2bvhg641l4"
 [sub_resource type="Resource" id="Resource_a18a0"]
 script = ExtResource("2_nv6s5")
 type_name = &"Up Chunk"
-templates = Array[ExtResource("3_ulbcl")]([ExtResource("5_tb0yl"), ExtResource("7_jujpx"), ExtResource("12_m127g"), ExtResource("5_upy"), ExtResource("5_upz")])
+templates = Array[ExtResource("3_ulbcl")]([ExtResource("5_tb0yl"), ExtResource("7_jujpx"), ExtResource("12_m127g"), ExtResource("20_cltqs"), ExtResource("21_4ufow"), ExtResource("22_rbtfr"), ExtResource("5_upy"), ExtResource("5_upz")])
 metadata/_custom_type_script = "uid://5h2bvhg641l4"
 
 [sub_resource type="Resource" id="Resource_ve32x"]
