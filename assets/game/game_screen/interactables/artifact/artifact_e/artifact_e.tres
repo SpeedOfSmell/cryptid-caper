@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ArtifactInfo" format=3 uid="uid://wsryjlak8itp"]
+
+[ext_resource type="PackedScene" uid="uid://de4cacqop5s73" path="res://assets/game/game_screen/interactables/artifact/artifact_e/artifact_e.tscn" id="1_umtei"]
+[ext_resource type="Script" uid="uid://bbyfvnwmopiua" path="res://assets/game/game_screen/interactables/artifact/artifact_info.gd" id="2_q0i5l"]
+
+[resource]
+script = ExtResource("2_q0i5l")
+artifact_type = 5
+artifact_scene = ExtResource("1_umtei")
+score_value = 100
+weight = 0.05
+metadata/_custom_type_script = "uid://bbyfvnwmopiua"

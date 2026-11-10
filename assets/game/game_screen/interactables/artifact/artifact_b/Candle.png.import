@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b5ksu5ovek27w"
-path="res://.godot/imported/Gem.png-77a11cd5330e7be99cb965bdc485b116.ctex"
+uid="uid://bbnitwqwh405o"
+path="res://.godot/imported/Candle.png-53060172949ca80fa03043189196cb18.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/game/game_screen/interactables/artifact/artifact_b/Gem.png"
-dest_files=["res://.godot/imported/Gem.png-77a11cd5330e7be99cb965bdc485b116.ctex"]
+source_file="res://assets/game/game_screen/interactables/artifact/artifact_b/Candle.png"
+dest_files=["res://.godot/imported/Candle.png-53060172949ca80fa03043189196cb18.ctex"]
 
 [params]
 

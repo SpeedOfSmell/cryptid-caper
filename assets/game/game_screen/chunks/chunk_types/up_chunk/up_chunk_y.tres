@@ -5,7 +5,5 @@
 
 [resource]
 script = ExtResource("1_tmpl")
-requires_double_jump = true
-difficulty = 2
 chunk_scene = ExtResource("2_scene")
 metadata/_custom_type_script = "uid://wpcxsk870y80"

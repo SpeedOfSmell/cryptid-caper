@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ArtifactInfo" format=3 uid="uid://c7ltacixialla"]
+
+[ext_resource type="PackedScene" uid="uid://djade63s3gcps" path="res://assets/game/game_screen/interactables/artifact/artifact_c/artifact_c.tscn" id="1_g20tg"]
+[ext_resource type="Script" uid="uid://bbyfvnwmopiua" path="res://assets/game/game_screen/interactables/artifact/artifact_info.gd" id="2_gw47j"]
+
+[resource]
+script = ExtResource("2_gw47j")
+artifact_type = 3
+artifact_scene = ExtResource("1_g20tg")
+score_value = 20
+weight = 0.2
+metadata/_custom_type_script = "uid://bbyfvnwmopiua"
