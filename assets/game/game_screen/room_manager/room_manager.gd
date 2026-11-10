@@ -3,6 +3,7 @@ extends Node
 signal transition_requested(state: States.GameState)
 
 @export var music: Resource
+@export var bigfootSfx: SfxEvent
 @export var _player_scene: PackedScene
 @export var _room_change_sfx: SfxEvent
 @export var _ambiance_sfx: SfxEvent
@@ -18,7 +19,7 @@ var _player: CharacterBody2D
 var _transition_pending := false
 var _next_room_id := 1
 var _fade_tween: Tween
-
+var bigfoot_sounded: bool
 
 var _min_ambiance_interval := 90
 var _max_ambiance_interval := 140
@@ -48,6 +49,10 @@ func _ready() -> void:
 func _process(delta: float):
 	time_left -= delta
 	_update_time(ceili(time_left))
+	
+	if time_left <= 60 and not bigfoot_sounded:
+		AudioManager.play_sfx(bigfootSfx)
+		bigfoot_sounded = true
 	
 	if time_left <= 0.0:
 		time_left = 0.0

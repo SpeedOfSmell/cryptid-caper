@@ -13,6 +13,10 @@ func _ready():
 	%Screen2.visible = false
 
 func _unhandled_input(event):
+	if event.is_action_pressed("ui_cancel"):
+		transition_requested.emit(States.GameState.MAIN_MENU)
+		get_viewport().set_input_as_handled()
+		return
 	if event.is_action_pressed("ui_accept") or (event is InputEventMouseButton and event.is_pressed()):
 		AudioManager.play_sfx(next_sound)
 		if page_number == 1:
