@@ -13,9 +13,12 @@ signal request_quit()
 @onready var _menu_panel: Control = %MenuPanel
 @onready var _confirmation_panel: PanelContainer = %ConfirmationPanel
 @onready var _options_button: TextureButton = %OptionsButton
+var _options_normal_texture: Texture2D
 
 func _ready() -> void:
 	%VolumePanel.initialize()
+	_options_normal_texture = _options_button.texture_normal
+	%VolumePanel.visibility_changed.connect(_on_volume_panel_visibility_changed)
 
 var _fade_tween: Tween
 
@@ -190,16 +193,29 @@ func _on_cancel_button_mouse_exited():
 		_switch_button_label_settings(%CancelButton, unfocusedLabel)
 
 func _on_options_button_focus_entered() -> void:
-	_switch_button_label_settings(_options_button, pauseFocusedLabel)
+	_set_options_button_highlighted(true)
 
 func _on_options_button_focus_exited() -> void:
-	if not _options_button.is_hovered():
-		_switch_button_label_settings(_options_button, pauseUnfocusedLabel)
+	_set_options_button_highlighted(_options_button.is_hovered())
 
 func _on_options_button_mouse_entered() -> void:
-	_switch_button_label_settings(_options_button, pauseFocusedLabel)
+	_set_options_button_highlighted(true)
 	get_viewport().gui_release_focus()
 
 func _on_options_button_mouse_exited() -> void:
-	if not _options_button.has_focus():
-		_switch_button_label_settings(_options_button, pauseUnfocusedLabel)
+	_set_options_button_highlighted(_options_button.has_focus())
+
+func _on_volume_panel_visibility_changed() -> void:
+	if %VolumePanel.visible:
+		return
+	call_deferred("_restore_options_button_style")
+
+func _restore_options_button_style() -> void:
+	if not is_instance_valid(_options_button) or %VolumePanel.visible:
+		return
+	var pointer_over_button := Rect2(_options_button.global_position, _options_button.size).has_point(_options_button.get_global_mouse_position())
+	_set_options_button_highlighted(_options_button.has_focus() or pointer_over_button)
+
+func _set_options_button_highlighted(highlighted: bool) -> void:
+	_options_button.texture_normal = _options_button.texture_hover if highlighted else _options_normal_texture
+	_switch_button_label_settings(_options_button, pauseFocusedLabel if highlighted else pauseUnfocusedLabel)
