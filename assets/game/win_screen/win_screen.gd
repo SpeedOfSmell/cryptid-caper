@@ -2,6 +2,7 @@ extends Control
 
 signal transition_requested(state: States.GameState)
 
+@export var music: Resource
 @export var unfocusedLabel: LabelSettings
 @export var focusedLabel: LabelSettings
 
@@ -9,6 +10,7 @@ signal transition_requested(state: States.GameState)
 @onready var _quit_button: TextureButton = %QuitButton
 
 func _ready():
+	AudioManager.play_music(music)
 	%ScoreLabel.text = str(PlayerManager.get_score())
 	
 	if PlayerManager.get_score() > PlayerManager.get_hiscore():

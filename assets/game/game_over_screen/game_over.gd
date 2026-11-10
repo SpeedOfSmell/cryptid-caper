@@ -2,12 +2,15 @@ extends Control
 
 signal transition_requested(state: States.GameState)
 
+@export var music: Resource
 @export var unfocusedLabel: LabelSettings
 @export var focusedLabel: LabelSettings
 
 @onready var _restart_button: TextureButton = %RestartButton
 @onready var _quit_button: TextureButton = %QuitButton
 
+func _ready():
+	AudioManager.play_music(music)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
