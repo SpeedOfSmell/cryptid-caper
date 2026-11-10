@@ -10,5 +10,5 @@ enum UpgradeType { JUMP_LEVEL, SPEED, TELEPORT, DASH }
 @export var value: float = 0.0
 
 @export var name: String
-@export var description: String
+@export_multiline var description: String
 @export var sprite: Texture2D

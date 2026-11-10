@@ -5,6 +5,9 @@
 [ext_resource type="Texture2D" uid="uid://g7rxfi0ibg5s" path="res://assets/game/game_screen/interactables/obstacle/traps/piston/Piston base.png" id="3_base"]
 [ext_resource type="Texture2D" uid="uid://b0i3ey143qqqt" path="res://assets/game/game_screen/interactables/obstacle/traps/piston/Piston middle.png" id="4_middle"]
 [ext_resource type="Texture2D" uid="uid://fg7vx40j3n1t" path="res://assets/game/game_screen/interactables/obstacle/traps/piston/Piston bottom.png" id="5_head"]
+[ext_resource type="Resource" uid="uid://dhqbfed5tvf6y" path="res://assets/audio/sfx/Obstacles/PistonExtend.tres" id="6_extend"]
+[ext_resource type="Resource" uid="uid://hrsl8c4lnd74" path="res://assets/audio/sfx/Obstacles/PistonHit.tres" id="7_hit"]
+[ext_resource type="Resource" uid="uid://b8h14hy0lyc2m" path="res://assets/audio/sfx/Obstacles/PistonRetract.tres" id="8_retract"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_head"]
 size = Vector2(16, 16)
@@ -17,6 +20,9 @@ size = Vector2(16, 16)
 
 [node name="PistonTrap" type="Node2D" unique_id=1099493609 node_paths=PackedStringArray("head", "hurtbox", "middle")]
 script = ExtResource("1_piston")
+hit_sfx = ExtResource("7_hit")
+retract_sfx = ExtResource("8_retract")
+fire_sfx = ExtResource("6_extend")
 head = NodePath("Head")
 hurtbox = NodePath("Head/Hurtbox")
 middle = NodePath("Head/Middle")

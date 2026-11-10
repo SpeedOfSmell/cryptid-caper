@@ -26,7 +26,7 @@ func _on_body_entered(body: Node2D) -> void:
 	if player == null or _used or Engine.get_physics_frames() < _armed_at_physics_frame:
 		return
 	_used = one_shot
-	AudioManager.play_sfx(sfx)
+	AudioManager.play_sfx_at(sfx, global_position)
 	_on_player_touched(player)
 	triggered.emit(player)
 	if one_shot:

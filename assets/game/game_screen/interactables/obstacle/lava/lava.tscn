@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://heoyfeygh4e8" path="res://assets/game/game_screen/interactables/obstacle/obstacle.gd" id="1_6yjb6"]
 [ext_resource type="Texture2D" uid="uid://ex2670k6ic27" path="res://assets/game/game_screen/interactables/obstacle/lava/Lava.png" id="1_vfcfx"]
+[ext_resource type="AudioStream" uid="uid://boxie6n1c4nsm" path="res://assets/audio/sfx/Obstacles/SFX_Obstacle_Lava.wav" id="2_bubble"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6yjb6"]
 atlas = ExtResource("1_vfcfx")
@@ -67,3 +68,9 @@ frame_progress = 0.3847925
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=124661137]
 position = Vector2(0, 1)
 shape = SubResource("RectangleShape2D_1lvrn")
+
+[node name="Bubbling" type="AudioStreamPlayer2D" parent="." unique_id=1039795405]
+stream = ExtResource("2_bubble")
+autoplay = true
+max_distance = 480.0
+bus = &"SFX"

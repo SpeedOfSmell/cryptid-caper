@@ -8,4 +8,4 @@ type = 3
 level = 1
 value = 2.0
 name = "Dash"
-description = "Increases the number of dashes in the air"
+description = "extra dash unlocked"
