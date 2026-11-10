@@ -7,4 +7,4 @@ script = ExtResource("1_4qubk")
 level = 1
 value = 2.0
 name = "Jump"
-description = "press jump again to double jump"
+description = "press jump in the air to double jump"

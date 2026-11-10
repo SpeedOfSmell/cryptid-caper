@@ -4,43 +4,48 @@
 [ext_resource type="Script" uid="uid://5h2bvhg641l4" path="res://assets/game/game_screen/chunks/chunk_types/chunk_type.gd" id="2_nv6s5"]
 [ext_resource type="Script" uid="uid://wpcxsk870y80" path="res://assets/game/game_screen/chunks/chunk_types/chunk_template.gd" id="3_ulbcl"]
 [ext_resource type="Resource" uid="uid://dd3jc4hdqp02n" path="res://assets/game/game_screen/chunks/chunk_types/through_chunk/through_chunk_a.tres" id="4_0pfep"]
+[ext_resource type="Resource" uid="uid://c63e206pqrlv7" path="res://assets/game/game_screen/chunks/chunk_types/through_chunk/through_chunk_z.tres" id="4_thz"]
 [ext_resource type="Resource" uid="uid://dgb8pfpnqhyyf" path="res://assets/game/game_screen/chunks/chunk_types/through_chunk/through_chunk_b.tres" id="5_re7ud"]
 [ext_resource type="Resource" uid="uid://ys4cm4opqwkn" path="res://assets/game/game_screen/chunks/chunk_types/up_chunk/up_chunk_a.tres" id="5_tb0yl"]
+[ext_resource type="Resource" uid="uid://d1b6ktwljpk10" path="res://assets/game/game_screen/chunks/chunk_types/up_chunk/up_chunk_z.tres" id="5_upz"]
+[ext_resource type="Resource" uid="uid://cf0orq8ouwtec" path="res://assets/game/game_screen/chunks/chunk_types/down_chunk/down_chunk_z.tres" id="6_dnz"]
 [ext_resource type="Resource" uid="uid://c6lxkdg2ib4nc" path="res://assets/game/game_screen/chunks/chunk_types/down_chunk/down_chunk_a.tres" id="6_gtp5l"]
 [ext_resource type="Resource" uid="uid://cmvoys8j7bl6w" path="res://assets/game/game_screen/chunks/chunk_types/up_chunk/up_chunk_b.tres" id="7_jujpx"]
+[ext_resource type="Resource" uid="uid://wxkimqec370u" path="res://assets/game/game_screen/chunks/chunk_types/left_chunk/left_chunk_z.tres" id="7_lfz"]
 [ext_resource type="Resource" uid="uid://ogm4c1ej3x84" path="res://assets/game/game_screen/chunks/chunk_types/left_chunk/left_chunk_a.tres" id="7_re7ud"]
 [ext_resource type="Resource" uid="uid://bmjksf2cb3b8t" path="res://assets/game/game_screen/chunks/chunk_types/blank_chunk/blank_chunk.tres" id="7_ulbcl"]
 [ext_resource type="Resource" uid="uid://ckoh202bk2yei" path="res://assets/game/game_screen/chunks/chunk_types/right_chunk/right_chunk_a.tres" id="8_jujpx"]
+[ext_resource type="Resource" uid="uid://cvpwvr45nvrle" path="res://assets/game/game_screen/chunks/chunk_types/right_chunk/right_chunk_z.tres" id="8_rtz"]
 [ext_resource type="Resource" uid="uid://dbraixtuaqb8j" path="res://assets/game/game_screen/chunks/chunk_types/down_chunk/down_chunk_b.tres" id="9_q3ydo"]
 
 [sub_resource type="Resource" id="Resource_rl0yw"]
 script = ExtResource("2_nv6s5")
 type_name = &"Through Chunk"
-templates = Array[ExtResource("3_ulbcl")]([ExtResource("4_0pfep"), ExtResource("5_re7ud")])
+templates = Array[ExtResource("3_ulbcl")]([ExtResource("4_0pfep"), ExtResource("4_thz"), ExtResource("5_re7ud")])
 metadata/_custom_type_script = "uid://5h2bvhg641l4"
 
 [sub_resource type="Resource" id="Resource_a18a0"]
 script = ExtResource("2_nv6s5")
 type_name = &"Up Chunk"
-templates = Array[ExtResource("3_ulbcl")]([ExtResource("5_tb0yl"), ExtResource("7_jujpx")])
+templates = Array[ExtResource("3_ulbcl")]([ExtResource("5_tb0yl"), ExtResource("5_upz"), ExtResource("7_jujpx")])
 metadata/_custom_type_script = "uid://5h2bvhg641l4"
 
 [sub_resource type="Resource" id="Resource_ve32x"]
 script = ExtResource("2_nv6s5")
 type_name = &"Down Chunk"
-templates = Array[ExtResource("3_ulbcl")]([ExtResource("6_gtp5l"), ExtResource("9_q3ydo")])
+templates = Array[ExtResource("3_ulbcl")]([ExtResource("6_gtp5l"), ExtResource("6_dnz"), ExtResource("9_q3ydo")])
 metadata/_custom_type_script = "uid://5h2bvhg641l4"
 
 [sub_resource type="Resource" id="Resource_r5fn1"]
 script = ExtResource("2_nv6s5")
 type_name = &"Left Chunk"
-templates = Array[ExtResource("3_ulbcl")]([ExtResource("7_re7ud")])
+templates = Array[ExtResource("3_ulbcl")]([ExtResource("7_re7ud"), ExtResource("7_lfz")])
 metadata/_custom_type_script = "uid://5h2bvhg641l4"
 
 [sub_resource type="Resource" id="Resource_h3utt"]
 script = ExtResource("2_nv6s5")
 type_name = &"Right Chunk"
-templates = Array[ExtResource("3_ulbcl")]([ExtResource("8_jujpx")])
+templates = Array[ExtResource("3_ulbcl")]([ExtResource("8_jujpx"), ExtResource("8_rtz")])
 metadata/_custom_type_script = "uid://5h2bvhg641l4"
 
 [sub_resource type="Resource" id="Resource_udg3m"]

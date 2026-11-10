@@ -16,6 +16,9 @@
 [ext_resource type="Texture2D" uid="uid://fmfcgs0vglib" path="res://assets/game/game_screen/player/Ch_jump.png" id="13_jump"]
 [ext_resource type="Texture2D" uid="uid://y1kawkwbf76o" path="res://assets/game/game_screen/player/Ch_crouch.png" id="14_crouch"]
 [ext_resource type="Resource" uid="uid://dvfrt4w6xp2i7" path="res://assets/audio/sfx/character/footstep.tres" id="15_step"]
+[ext_resource type="Texture2D" uid="uid://d2gc2vh0j3pkr" path="res://assets/game/game_screen/player/Ch_dash.png" id="16_dash"]
+[ext_resource type="Texture2D" uid="uid://vknmxsej4wuu" path="res://assets/game/game_screen/player/Ch_double_jump.png" id="17_djump"]
+[ext_resource type="Script" uid="uid://sehn0smf7ves" path="res://assets/game/game_screen/player/states/double_jump_state.gd" id="18_djump"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_crouch0"]
 atlas = ExtResource("14_crouch")
@@ -88,8 +91,50 @@ region = Rect2(16, 32, 16, 32)
 atlas = ExtResource("12_run")
 region = Rect2(32, 32, 16, 32)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_dash0"]
+atlas = ExtResource("16_dash")
+region = Rect2(0, 0, 32, 20)
+margin = Rect2(0, 12, 16, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dash1"]
+atlas = ExtResource("16_dash")
+region = Rect2(32, 0, 32, 20)
+margin = Rect2(0, 12, 16, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_djump0"]
+atlas = ExtResource("17_djump")
+region = Rect2(21, 41, 21, 41)
+margin = Rect2(0, 9, 1, 9)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_djump1"]
+atlas = ExtResource("17_djump")
+region = Rect2(42, 41, 21, 41)
+margin = Rect2(0, 9, 1, 9)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_qe432"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dash0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dash1")
+}],
+"loop": false,
+"name": &"dash",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_djump0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_djump1")
+}],
+"loop": false,
+"name": &"double_jump",
+"speed": 8.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_crouch0")
@@ -234,4 +279,9 @@ animation = &"fall"
 
 [node name="Dash" type="Node" parent="State Machine" unique_id=547373932]
 script = ExtResource("11_dash")
-animation = &"run"
+animation = &"dash"
+
+[node name="DoubleJump" type="Node" parent="State Machine" unique_id=1912846355]
+script = ExtResource("18_djump")
+sfx = ExtResource("8_vusm5")
+animation = &"double_jump"

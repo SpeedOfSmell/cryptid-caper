@@ -23,6 +23,9 @@ func max_air_jumps() -> int:
 func max_air_dashes() -> int:
 	return maxi(int(UpgradeDatabase.get_value(Upgrade.UpgradeType.DASH)), 0)
 
+func has_dash() -> bool:
+	return max_air_dashes() > 0
+
 func _physics_process(delta):
 	if velocity.x != 0:
 		facing = signf(velocity.x)

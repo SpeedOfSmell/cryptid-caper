@@ -38,9 +38,9 @@ func _fire() -> void:
 	_stroke.tween_method(_set_extension, 0.0, reach, extend_time) \
 		.set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
 	_stroke.tween_callback(hurtbox.set_deferred.bind(&"monitoring", false))
-	_stroke.tween_callback(func(): AudioManager.play_sfx_at(hit_sfx, head.global_position))
+	_stroke.tween_callback(AudioManager.play_sfx_on.bind(hit_sfx, head))
 	_stroke.tween_interval(hold_time)
-	_stroke.tween_callback(func(): AudioManager.play_sfx_at(retract_sfx, head.global_position))
+	_stroke.tween_callback(AudioManager.play_sfx_on.bind(retract_sfx, head))
 	_stroke.tween_method(_set_extension, reach, 0.0, retract_time) \
 		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
 

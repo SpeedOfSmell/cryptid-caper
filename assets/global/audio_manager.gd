@@ -54,19 +54,20 @@ func play_sfx(event: SfxEvent) -> void:
 	player.pitch_scale = randf_range(event.pitch_min, event.pitch_max)
 	player.play()
 
-func play_sfx_at(event: SfxEvent, position: Vector2) -> void:
+func play_sfx_on(event: SfxEvent, emitter: Node2D) -> AudioStreamPlayer2D:
 	if event == null or event.streams.is_empty():
-		return
+		return null
 	var player := AudioStreamPlayer2D.new()
 	player.bus = _BUS_NAMES[Bus.SFX]
-	player.max_distance = 480.0 
-	player.position = position
+	player.max_distance = 480.0
+	player.process_mode = Node.PROCESS_MODE_PAUSABLE
 	player.stream = event.streams.pick_random()
 	player.volume_db = event.volume_db
 	player.pitch_scale = randf_range(event.pitch_min, event.pitch_max)
 	player.finished.connect(player.queue_free)
-	add_child(player)
+	emitter.add_child(player)
 	player.play()
+	return player
 
 func set_bus_volume(bus: Bus, linear: float) -> void:
 	AudioServer.set_bus_volume_linear(AudioServer.get_bus_index(_BUS_NAMES[bus]), clampf(linear, 0.0, 1.0))

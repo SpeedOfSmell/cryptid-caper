@@ -4,7 +4,7 @@ extends PlayerState
 func next_state() -> StringName:
 	if Input.is_action_just_pressed("jump") and player.air_jumps_left > 0:
 		player.air_jumps_left -= 1
-		return JUMP
+		return DOUBLE_JUMP
 	if Input.is_action_just_pressed("dash") and player.air_dashes_left > 0:
 		player.air_dashes_left -= 1
 		return DASH
