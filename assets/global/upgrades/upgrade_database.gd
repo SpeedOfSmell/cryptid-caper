@@ -16,10 +16,13 @@ func _ready():
 		Upgrade.UpgradeType.DASH: dash_upgrades,
 	}
 
-# the effect magnitude for the player's current level of upgrade
-func get_value(type: Upgrade.UpgradeType) -> float:
+func get_current(type: Upgrade.UpgradeType) -> Upgrade:
 	var level: int = PlayerManager.get_upgrade_level(type)
 	var list: Array = upgrades_dictionary.get(type, [])
 	if level < 0 or level >= list.size():
-		return 0.0
-	return list[level].value
+		return null
+	return list[level]
+
+func get_value(type: Upgrade.UpgradeType) -> float:
+	var upgrade := get_current(type)
+	return upgrade.value if upgrade else 0.0

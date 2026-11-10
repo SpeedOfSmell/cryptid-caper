@@ -1,12 +1,22 @@
 class_name ObstacleSpawner
 extends Trap
 
+const OPEN_ANIMATION := &"open"
+
 @export var obstacle_scene: PackedScene #the launched obstacle
 @export var max_alive := 4
 
 @export var spawn_point: Marker2D #where obstacles appear; its rotation (local +x) is the launch direction
 
+@export var sprite: AnimatedSprite2D
+
 var _alive: Array = []
+
+func _telegraph() -> void:
+	if sprite == null:
+		return
+	sprite.stop()
+	sprite.play(OPEN_ANIMATION)
 
 func _fire() -> void:
 	_alive = _alive.filter(func(node) -> bool: return is_instance_valid(node)) #convenient way to easily keep at max projectiles

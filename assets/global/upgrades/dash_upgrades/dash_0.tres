@@ -7,4 +7,4 @@ script = ExtResource("1_upg")
 type = 3
 value = 1.0
 name = "Dash"
-description = "Increases the number of dashes in the air"
+description = "press Shift to dash"
