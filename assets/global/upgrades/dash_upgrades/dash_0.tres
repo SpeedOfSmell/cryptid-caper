@@ -5,6 +5,5 @@
 [resource]
 script = ExtResource("1_upg")
 type = 3
-value = 0.0
 name = "Dash"
 description = "press Shift to dash"

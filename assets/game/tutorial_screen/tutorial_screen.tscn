@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://c76x1hn5gcaxm" path="res://assets/game/tutorial_screen/tutorial_screen.gd" id="1_6krws"]
 [ext_resource type="Texture2D" uid="uid://dh2uyxotomv57" path="res://assets/game/tutorial_screen/Tutorial screen 1.png" id="1_dsg1a"]
-[ext_resource type="Texture2D" uid="uid://bw6mk361h1wmp" path="res://assets/game/tutorial_screen/Tutorial screen 2.png" id="2_6krws"]
 [ext_resource type="Resource" uid="uid://5w03n8ehiev2" path="res://assets/audio/UI/UIScreenChange.tres" id="2_g78hj"]
+[ext_resource type="Texture2D" uid="uid://dnk3uhxmf5cl8" path="res://assets/game/tutorial_screen/Tutorial updated.png" id="4_g78hj"]
 [ext_resource type="Texture2D" uid="uid://ky5ouy82xmvg" path="res://assets/game/tutorial_screen/Arrow Animation.png" id="4_mucqr"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_g78hj"]
@@ -67,7 +67,7 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 mouse_filter = 2
-texture = ExtResource("2_6krws")
+texture = ExtResource("4_g78hj")
 
 [node name="NextButton" type="AnimatedSprite2D" parent="." unique_id=1032819320]
 position = Vector2(348, 184)

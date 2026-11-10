@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://djade63s3gcps"]
+[gd_scene format=3 uid="uid://ckupsxf4j5jo1"]
 
 [ext_resource type="Script" uid="uid://ldnh5hti4t5j" path="res://assets/game/game_screen/interactables/artifact/artifact.gd" id="1_0nu5p"]
 [ext_resource type="Resource" uid="uid://bwku2lmhrrx50" path="res://assets/audio/sfx/character/collect.tres" id="2_51a01"]
