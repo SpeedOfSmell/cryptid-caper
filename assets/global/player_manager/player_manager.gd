@@ -7,14 +7,15 @@ signal score_changed(new_score: int)
 
 @export var death_sound: SfxEvent
 
-const SAVE_PATH := "user://player_data.tres" #i think this is right? we'll have to figure this out but seems simple enough
+const SAVE_PATH := "user://hiscore.dat" #i think this is right? we'll have to figure this out but seems simple enough
 
 var data: PlayerData
+var hiscore: int = 0
 
 #base funct
 
 func _ready() -> void:
-	data = load_from_disk()
+	hiscore = load_from_disk()
 	if data == null:
 		data = PlayerData.new()
 		
@@ -40,6 +41,16 @@ func add_score(amount: int) -> void:
 	
 func get_score() -> int:
 	return data.score
+
+func get_hiscore() -> int:
+	return hiscore
+
+func set_hiscore(score: int):
+	hiscore = score
+	save_hiscore()
+	
+func save_hiscore():
+	save_to_disk()
 	
 func get_upgrade_level(type: Upgrade.UpgradeType) -> int:
 	return data.upgrades.get(type, 0) #i mean, do we need this? or can we just do data.upgrades.get from the consumer. maybe we keep this just in case for calcs later, safest option
@@ -65,16 +76,21 @@ func consume_event(event: PlayerData.GameEvent) -> bool:
 #save functionality
 
 func save_to_disk() -> void:
-	ResourceSaver.save(data, SAVE_PATH)
+	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
+	if file:
+		file.store_32(hiscore)
+		file.close() 
 
-func load_from_disk() -> PlayerData:
-	if ResourceLoader.exists(SAVE_PATH):
-		#need to force a reload without cached data, otherwise we can save fish in the same day, quit, then return and still have the fish.
-		return ResourceLoader.load(SAVE_PATH, "", ResourceLoader.CACHE_MODE_IGNORE) as PlayerData
-	return null
-
-func has_save() -> bool:
-	return ResourceLoader.exists(SAVE_PATH)
+# Loads from the browser's IndexedDB storage
+func load_from_disk() -> int:
+	if FileAccess.file_exists(SAVE_PATH):
+		var file = FileAccess.open(SAVE_PATH, FileAccess.READ)
+		if file:
+			var value = file.get_32()
+			file.close()
+			return value
+			
+	return 0 
 
 func new_game() -> void:
 	data = PlayerData.new()

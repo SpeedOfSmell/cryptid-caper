@@ -138,3 +138,5 @@ func _on_timer_expired():
 	
 func _on_player_exited():
 	transition_requested.emit(States.GameState.GAME_OVER)
+	if PlayerManager.get_score() > PlayerManager.get_hiscore():
+		PlayerManager.set_hiscore(PlayerManager.get_score())
