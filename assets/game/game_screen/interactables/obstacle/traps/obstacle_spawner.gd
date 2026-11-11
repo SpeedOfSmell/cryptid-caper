@@ -23,6 +23,7 @@ func _fire() -> void:
 	if _alive.size() >= max_alive:
 		return
 	var obstacle := obstacle_scene.instantiate() as Node2D
+	obstacle.add_to_group("room_projectiles")
 	add_sibling(obstacle)
 	obstacle.global_position = spawn_point.global_position
 	_launch(obstacle)

@@ -39,6 +39,12 @@ func prepare_for_entry() -> void:
 	# Ignore stale overlap events while the physics server applies the player's new position.
 	transition_requested = true
 	entry_settle_physics_frames = 2
+	_clear_projectiles()
+
+func _clear_projectiles() -> void:
+	for projectile in get_children():
+		if projectile.is_in_group("room_projectiles"):
+			projectile.queue_free()
 
 func _physics_process(_delta: float) -> void:
 	if entry_settle_physics_frames > 0:
